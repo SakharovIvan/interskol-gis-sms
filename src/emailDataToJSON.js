@@ -1,5 +1,4 @@
 import reader from 'xlsx'
-//const fsp = require("file-system");
 
 const createJSONfromXLSX=  (filename)=>{
 const file =  reader.readFile('./downloads/'+filename+'.XLSX')
@@ -18,4 +17,3 @@ return data
 }
 
 export default createJSONfromXLSX
-//console.log(createJSONfromXLSX('i.sakharov_2134'))

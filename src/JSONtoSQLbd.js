@@ -3,8 +3,10 @@ import {
   createsqlgis,
   addsqlgisData,
   updatesqlgisData,
+  getGISdata
 } from "../__fixtures__/GISSQLBD.js";
 import log from 'simple-node-logger'
+import updatecalculationdata from './datacalculation.js'
 
 const logger = log.createSimpleLogger( { logFilePath:'sqlupdate.log', timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS' } );
 
@@ -21,18 +23,7 @@ const createGISbd = async () => {
   }
 };
 
-const getGISdata = async () => {
-  try {
-    //await pool.connect();
-    let GISbd = await pool.query(`SELECT asc_kod, asc_ndk FROM GIS;`);
-    //await pool.end();
-    console.log('GIS Table Data get')
-    //console.log(GISbd.fields)
-    return GISbd.rows;
-  } catch (err) {
-    console.log(err);
-  }
-};
+
 
 const containGISdata = (GISbd, kod, ndk) => {
   //console.log(kod, ndk)
@@ -72,7 +63,7 @@ const updateGISbd = async (jsonfile) => {
       date_vipoln,
       date_vidach,
       rem_work,
-    } of jsonfile)
+    } of jsonfile){
       if (containGISdata(gisBD, asc_kod, asc_ndk)) {
        await pool.query (updatesqlgisData(
           asc_name,
@@ -123,6 +114,7 @@ const updateGISbd = async (jsonfile) => {
           date_vipoln,
           date_vidach,
           rem_work}`)
+          
       } else {
         await pool.query(
         addsqlgisData(
@@ -175,7 +167,10 @@ const updateGISbd = async (jsonfile) => {
           date_vipoln,
           date_vidach,
           rem_work}`)
+          
       }
+      await updatecalculationdata(asc_ndk,asc_kod)
+    }
   } catch (err) {
     console.log(err);
   } finally {
