@@ -1,6 +1,5 @@
 import {emailConfig as config} from '../config.js'
 
-const markAsRead = (config.imapOptions && config.imapOptions.markAsRead) ? config.imapOptions.markAsRead : false;
 import fs from 'fs';
 import { Base64Decode } from 'base64-stream'
 import Imap from 'imap';
@@ -8,10 +7,12 @@ const imap = new Imap(config.imap);
 
 // Simple logger:
 import log from 'simple-node-logger'
+const func=()=>{
 const logger = log.createSimpleLogger( config.logs?.simpleNodeLogger || { logFilePath:'mail-downloader.log', timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS' } );
 logger.setLevel(config.logs?.level || 'debug');
 
 
+const markAsRead = (config.imapOptions && config.imapOptions.markAsRead) ? config.imapOptions.markAsRead : false;
 // var emailDate;
 // var emailFrom;
 function formatFilename(filename, emailFrom, emailDate) {
@@ -78,6 +79,7 @@ function buildAttMessageFunction(attachment, emailFrom, emailDate) {
     });
   };
 }
+
 
 imap.once('ready', function() {
   logger.info('Connected');
@@ -180,4 +182,5 @@ imap.once('end', function() {
   logger.info('Connection ended');
 });
 
-imap.connect();
+imap.connect();}
+export default func

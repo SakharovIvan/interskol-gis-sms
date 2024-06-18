@@ -13,6 +13,9 @@ for (let i=0; i<sheets.length;i++){
         data.push(res)
     })
 }
+console.log('createJSONfromXLSX done')
 return data
 }
-console.log(createJSONfromXLSX('i.sakharov_2134'))
+
+export default createJSONfromXLSX
+//console.log(createJSONfromXLSX('i.sakharov_2134'))
