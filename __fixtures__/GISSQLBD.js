@@ -122,6 +122,10 @@ const getGISdatabyData = ()=>{
   FROM gis WHERE term_rep_wosogl <=3 ;`
 }
 
+const getTelephonestoSent = (filter ='')=>{
+    return `SELECT cli_telephone FROM gis ${filter} ;`
+}
+
 export {
   createsqlgis,
   addsqlgisData,
@@ -129,5 +133,6 @@ export {
   calculatedata,
   getGISdata,
   getGISdatabyFilter,
-  getGISdatabyData 
+  getGISdatabyData,
+  getTelephonestoSent
 };

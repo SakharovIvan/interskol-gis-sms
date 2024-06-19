@@ -1,24 +1,31 @@
 import nodemailer from 'nodemailer'
 import {emailConfig} from '../config.js'
-import fs from 'fs'
+
 
 let transporter = nodemailer.createTransport(emailConfig.nodemailer)
 
-const sentmail=()=>{
+const sentmail=( emailto,subject,text='',attFile='',)=>{
+if (attFile===''){
+    transporter.sendMail({
+        from: '<gis@kls-gr.ru>',
+        to: emailto,
+        subject: subject,
+        text: text,
+        html: text    
+    })
+}else{
  transporter.sendMail({
     from: '<gis@kls-gr.ru>',
-    to: emailConfig.emailArray,
-    subject: 'Attachments',
-    text: 'This message with attachments.',
-    html: 'This message with attachments.',
-    attachments: [
-        {
-            filename: 'text4.xlsx',
-            content: fs.createReadStream('/home/petProjects/interskol-gis-sms/GISdata.xlsx')    
-        }
+    to: emailto,
+    subject: subject,
+    text: text,
+    html: text,
+    attachments: [attFile
+
     ]
 
 })
+}
 }
 
 export default sentmail
