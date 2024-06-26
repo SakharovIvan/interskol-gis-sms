@@ -7,7 +7,7 @@ const imap = new Imap(config.imap);
 
 // Simple logger:
 import log from 'simple-node-logger'
-const func=()=>{
+const getPost=()=>{
 const logger = log.createSimpleLogger( config.logs?.simpleNodeLogger || { logFilePath:'mail-downloader.log', timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS' } );
 logger.setLevel(config.logs?.level || 'debug');
 
@@ -183,4 +183,4 @@ imap.once('end', function() {
 });
 
 imap.connect();}
-export default func
+export default getPost

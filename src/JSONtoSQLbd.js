@@ -3,7 +3,9 @@ import {
   createsqlgis,
   addsqlgisData,
   updatesqlgisData,
-  getGISdata
+  getGISdata,
+  addsqlsmsStatusData,
+  updatesqlsmsStatusData
 } from "../__fixtures__/GISSQLBD.js";
 import log from 'simple-node-logger'
 import updatecalculationdata from './datacalculation.js'
@@ -26,7 +28,6 @@ const createGISbd = async () => {
 
 
 const containGISdata = (GISbd, kod, ndk) => {
-  //console.log(kod, ndk)
   for (let kodndk of GISbd) {
     if (kodndk.asc_kod === kod && kodndk.asc_ndk === ndk) {
       return true;
@@ -36,6 +37,7 @@ const containGISdata = (GISbd, kod, ndk) => {
 };
 
 const updateGISbd = async (jsonfile) => {
+  //console.log(jsonfile)
   try {
     //console.log(jsonfile)
     const gisBD = await getGISdata();
@@ -64,6 +66,7 @@ const updateGISbd = async (jsonfile) => {
       date_vidach,
       rem_work,
     } of jsonfile){
+     
       if (containGISdata(gisBD, asc_kod, asc_ndk)) {
        await pool.query (updatesqlgisData(
           asc_name,
@@ -90,30 +93,31 @@ const updateGISbd = async (jsonfile) => {
           date_vidach,
           rem_work)
         );
-        logger.info(`data update: ${
-          asc_name,
-          asc_gor,
-          asc_adr,
-          asc_ndk,
-          asc_kod,
-          asc_telephone,
-          asc_email,
-          cli_name,
-          cli_telephone,
-          vr,
-          snNo_tool,
-          matNo_tool,
-          dateofpurch_tool,
-          torgorg_tool,
-          date_prin,
-          date_dia,
-          date_sogl1,
-          date_sogl2,
-          date_ojod1,
-          date_ojod2,
-          date_vipoln,
-          date_vidach,
-          rem_work}`)
+        await pool.query(updatesqlsmsStatusData(asc_ndk,asc_kod,cli_telephone))
+       // logger.info(`data update: ${
+       //   asc_name,
+       //   asc_gor,
+       //   asc_adr,
+       //   asc_ndk,
+       //   asc_kod,
+       //   asc_telephone,
+       //   asc_email,
+       //   cli_name,
+       //   cli_telephone,
+       //   vr,
+       //   snNo_tool,
+       //   matNo_tool,
+       //   dateofpurch_tool,
+       //   torgorg_tool,
+       //   date_prin,
+       //   date_dia,
+       //   date_sogl1,
+       //   date_sogl2,
+       //   date_ojod1,
+       //   date_ojod2,
+       //   date_vipoln,
+       //   date_vidach,
+       //   rem_work}`)
           
       } else {
         await pool.query(
@@ -141,41 +145,40 @@ const updateGISbd = async (jsonfile) => {
           date_vipoln,
           date_vidach,
           rem_work
-          
         ))
-        logger.info(`data add: ${
-          asc_name,
-          asc_gor,
-          asc_adr,
-          asc_ndk,
-          asc_kod,
-          asc_telephone,
-          asc_email,
-          cli_name,
-          cli_telephone,
-          vr,
-          snNo_tool,
-          matNo_tool,
-          dateofpurch_tool,
-          torgorg_tool,
-          date_prin,
-          date_dia,
-          date_sogl1,
-          date_sogl2,
-          date_ojod1,
-          date_ojod2,
-          date_vipoln,
-          date_vidach,
-          rem_work}`)
+        await pool.query(addsqlsmsStatusData(asc_ndk,asc_kod,cli_telephone))
+        //logger.info(`data add: ${
+        //  asc_name,
+        //  asc_gor,
+        //  asc_adr,
+        //  asc_ndk,
+        //  asc_kod,
+        //  asc_telephone,
+        //  asc_email,
+        //  cli_name,
+        //  cli_telephone,
+        //  vr,
+        //  snNo_tool,
+        //  matNo_tool,
+        //  dateofpurch_tool,
+        //  torgorg_tool,
+        //  date_prin,
+        //  date_dia,
+        //  date_sogl1,
+        //  date_sogl2,
+        //  date_ojod1,
+        //  date_ojod2,
+        //  date_vipoln,
+        //  date_vidach,
+        //  rem_work}`)
           
       }
       await updatecalculationdata(asc_ndk,asc_kod)
     }
   } catch (err) {
     console.log(err);
-  } finally {
-    pool.end();
-    
+  }finally{
+    console.log('sql updated')
   }
 };
 

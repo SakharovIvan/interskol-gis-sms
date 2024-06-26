@@ -23,4 +23,4 @@ try{
 
 createJSONfromGISBD()
 .then((res)=> createXLSXfromJSON(res))
-.then(console.log('escledoc created'))
+.then(console.log('exceledoc created'))

@@ -27,6 +27,24 @@ const createsqlgis = `CREATE TABLE GIS (
       rem_work TEXT
       );`;
 
+const smsStatus = `
+CREATE TABLE SMSstatus (
+id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+asc_ndk INTEGER,
+asc_kod INTEGER,
+cli_telephone TEXT,
+SMS_status_prin BOOLEAN DEFAULT FALSE,
+SMS_statusdia BOOLEAN DEFAULT FALSE,
+SMS_status_sogl1 BOOLEAN DEFAULT FALSE,
+SMS_status_sogl2 BOOLEAN DEFAULT FALSE,
+SMS_status_ojod1 BOOLEAN DEFAULT FALSE,
+SMS_status_ojod2 BOOLEAN DEFAULT FALSE,
+SMS_status_vipoln BOOLEAN DEFAULT FALSE,
+SMS_status_vidach BOOLEAN DEFAULT FALSE,
+SMS_status_opros BOOLEAN DEFAULT FALSE
+);
+`
+
 const addsqlgisData = (
   asc_name,
   asc_gor,
@@ -52,7 +70,7 @@ const addsqlgisData = (
   date_vidach,
   rem_work
 ) => {
-  return `INSERT INTO GIS (asc_name, asc_gor, asc_adr, asc_ndk, asc_kod, asc_telephone, asc_email, cli_name, cli_telephone, vr, snNo_tool, matNo_tool, dateofpurch_tool, torgorg_tool, date_prin, date_dia, date_sogl1, date_sogl2, date_ojod1, date_ojod2, date_vipoln, date_vidach, rem_work ) 
+return `INSERT INTO GIS (asc_name, asc_gor, asc_adr, asc_ndk, asc_kod, asc_telephone, asc_email, cli_name, cli_telephone, vr, snNo_tool, matNo_tool, dateofpurch_tool, torgorg_tool, date_prin, date_dia, date_sogl1, date_sogl2, date_ojod1, date_ojod2, date_vipoln, date_vidach, rem_work) 
 VALUES ( '${asc_name}', '${asc_gor}', '${asc_adr}', ${asc_ndk}, ${asc_kod}, '${asc_telephone}', '${asc_email}', '${cli_name}', '${cli_telephone}', '${vr}', '${snNo_tool}', '${matNo_tool}', '${dateofpurch_tool}', '${torgorg_tool}', '${date_prin}', '${date_dia}', '${date_sogl1}', '${date_sogl2}', '${date_ojod1}', '${date_ojod2}', '${date_vipoln}', '${date_vidach}', '${rem_work}' );`;
 };
 
@@ -83,6 +101,36 @@ const updatesqlgisData = (
 ) => {
   return `UPDATE GIS SET asc_name='${asc_name}', asc_gor='${asc_gor}', asc_adr='${asc_adr}', asc_telephone='${asc_telephone}', asc_email='${asc_email}', cli_name='${cli_name}', cli_telephone='${cli_telephone}', vr='${vr}', snNo_tool='${snNo_tool}', matNo_tool='${matNo_tool}', dateofpurch_tool='${dateofpurch_tool}', torgorg_tool='${torgorg_tool}', date_prin='${date_prin}', date_dia='${date_dia}', date_sogl1='${date_sogl1}', date_sogl2='${date_sogl2}', date_ojod1='${date_ojod1}', date_ojod2='${date_ojod2}', date_vipoln='${date_vipoln}', date_vidach='${date_vidach}', rem_work='${rem_work}' 
 WHERE asc_ndk = ${asc_ndk} and asc_kod=${asc_kod};`;
+};
+
+const addsqlsmsStatusData = (
+  asc_ndk,
+  asc_kod,
+  cli_telephone
+) => {
+  return `INSERT INTO SMSstatus (asc_ndk,
+  asc_kod,
+  cli_telephone) 
+VALUES ( ${asc_ndk},
+  ${asc_kod},
+  '${cli_telephone}');`;
+};
+
+const updatesqlsmsStatusData = (
+  asc_ndk,
+  asc_kod,
+  cli_telephone,
+  status =''
+) => {
+
+  if (status!==''){
+    console.log(asc_ndk,
+      asc_kod,status)
+    return `UPDATE SMSstatus SET 
+  cli_telephone = '${cli_telephone}', ${status}=TRUE WHERE asc_ndk = ${asc_ndk} and asc_kod=${asc_kod};`
+  }
+  return `UPDATE SMSstatus SET 
+  cli_telephone = '${cli_telephone}' WHERE asc_ndk = ${asc_ndk} and asc_kod=${asc_kod};`;
 };
 
 const calculatedata = (
@@ -122,9 +170,15 @@ const getGISdatabyData = ()=>{
   FROM gis WHERE term_rep_wosogl <=3 ;`
 }
 
-const getTelephonestoSent = (filter ='')=>{
-    return `SELECT cli_telephone FROM gis ${filter} ;`
+const getTelephonestoSent = (date1,date2,status)=>{
+  console.log(`SELECT gis.cli_telephone, gis.asc_ndk, gis.asc_kod FROM GIS INNER JOIN SMSstatus ON 
+gis.asc_ndk=SMSstatus.asc_ndk and gis.asc_kod=SMSstatus.asc_kod 
+WHERE gis.date_prin='${date1}' OR gis.date_prin='${date2}' AND SMSstatus.${status} = 'f';`)
+    return `SELECT gis.cli_telephone, gis.asc_ndk, gis.asc_kod FROM GIS INNER JOIN SMSstatus ON 
+gis.asc_ndk=SMSstatus.asc_ndk and gis.asc_kod=SMSstatus.asc_kod 
+WHERE (gis.date_prin='${date1}' OR gis.date_prin='${date2}') AND SMSstatus.${status} = 'f';`
 }
+
 
 export {
   createsqlgis,
@@ -134,5 +188,7 @@ export {
   getGISdata,
   getGISdatabyFilter,
   getGISdatabyData,
-  getTelephonestoSent
+  getTelephonestoSent,
+  addsqlsmsStatusData,
+  updatesqlsmsStatusData
 };
