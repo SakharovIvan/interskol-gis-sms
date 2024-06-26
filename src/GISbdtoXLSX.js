@@ -13,14 +13,14 @@ const createXLSXfromJSON = (jsa)=>{
 const createJSONfromGISBD = async()=>{
 try{
    const result = await pool.query(getGISdatabyData())
-   console.log(result.rows)
+   //console.log(result.rows)
     return result.rows
 }catch(err){
     console.log(err)
 }
 } 
 
+export default ()=>{createJSONfromGISBD()
+    .then((res)=> createXLSXfromJSON(res))
+    .then(console.log('exceledoc created'))}
 
-createJSONfromGISBD()
-.then((res)=> createXLSXfromJSON(res))
-.then(console.log('exceledoc created'))

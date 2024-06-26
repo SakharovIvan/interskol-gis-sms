@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer'
 import {emailConfig} from '../config.js'
-
+import fs from 'fs'
 
 let transporter = nodemailer.createTransport(emailConfig.nodemailer)
 
@@ -20,7 +20,10 @@ if (attFile===''){
     subject: subject,
     text: text,
     html: text,
-    attachments: [attFile
+    attachments: [{
+        filename: attFile,
+        content: fs.createReadStream('/home/petProjects/interskol-gis-sms/'+`${attFile}`)    
+    }
 
     ]
 

@@ -41,4 +41,25 @@ const ctreateTlfArrayOpros = ()=>{
     return tlfArray
 }
 
-export  {ctreateTlfArrayPrin,ctreateTlfArrayOpros}
+const ctreateTlfArrayVipoln = ()=>{
+    let now = new Date()
+    let year = now.getFullYear()
+    let month = now.getMonth() + 1
+    let day = now.getDate()
+    month<=9 ? month = `0${month}`: month = month
+    const date1= day+'-'+month+'-'+year
+    const date2 = (day-1)+'-'+month+'-'+year
+    const tlfArray=  pool.query(getTelephonestoSent(date1,date2,'sms_status_vipoln'))
+    .then((tlfobject)=>{
+        return tlfobject.rows.map((obj)=>{
+            pool.query(updatesqlsmsStatusData(obj.asc_ndk,obj.asc_kod,obj.cli_telephone,'sms_status_vipoln'))
+            
+            return obj.cli_telephone})})
+    .then((tlfArrayfromObj)=>{
+        return [...new Set(tlfArrayfromObj)]
+    })
+    
+    return tlfArray
+}
+
+export  {ctreateTlfArrayPrin,ctreateTlfArrayOpros,ctreateTlfArrayVipoln}
