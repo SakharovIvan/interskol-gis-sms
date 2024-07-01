@@ -30,54 +30,59 @@ try {
   //let timer = setInterval(getPost,10000)
   //setTimeout(()=>{clearInterval(timer);console.log('stop')},60000)
   setInterval(() => {
-    
-      sentmail(
-        emailConfig.SMTPSentreport.emailto,
-        emailConfig.SMTPSentreport.subject,
-        "SomeText",
-        "GISdata.xlsx"
+    sentmail(
+      emailConfig.SMTPSentreport.emailto,
+      emailConfig.SMTPSentreport.subject,
+      "SomeText",
+      "GISdata.xlsx"
     );
     logger.info(`GIS report sent`);
-  }, mchour);
+  }, mcday);
 
   setInterval(async () => {
-    getPost();
-    updateGISbd(createJSONfromXLSX("i.sakharov_LLWarranty17062024"));
-    createGISreport()
-    ctreateTlfArray("SMS_status_prin").then((tlfArray) => {
-      console.log(tlfArray);
-      if (tlfArray.length > 1) {
-        logger.info(`Text prin sent for ${tlfArray}`);
-        return sentmail(
-          emailConfig.SMTPSentcliSMS.emailto,
-          normalizeTlf(tlfArray),
-          emailConfig.SMTPSentcliSMS.textprin
-        );
-      }
-    });
+    const promise1 = getPost();
+    const promise2 = updateGISbd(
+      createJSONfromXLSX("i.sakharov_LLWarranty17062024")
+    );
+    const promise3 = createGISreport();
 
-    ctreateTlfArray("SMS_status_vipoln").then((tlfArray) => {
-      console.log(tlfArray);
-      if (tlfArray.length > 1) {
-        logger.info(`Text vipoln sent for ${tlfArray}`);
-        return sentmail(
-          emailConfig.SMTPSentcliSMS.emailto,
-          normalizeTlf(tlfArray),
-          emailConfig.SMTPSentcliSMS.textvipoln
-        );
-      }
-    });
+    const promises = Promise.all([promise1, promise2, promise3]);
+    return promises.then(() => {
+      ctreateTlfArray("SMS_status_prin").then((tlfArray) => {
+        console.log(tlfArray);
+        if (tlfArray.length > 1) {
+          logger.info(`Text prin sent for ${tlfArray}`);
+          return sentmail(
+            emailConfig.SMTPSentcliSMS.emailto,
+            normalizeTlf(tlfArray),
+            emailConfig.SMTPSentcliSMS.textprin
+          );
+        }
+      });
 
-    ctreateTlfArrayOpros().then((tlfArray) => {
-      console.log(tlfArray);
-      if (tlfArray.length > 1) {
-        logger.info(`Text opros sent for ${tlfArray}`);
-        return sentmail(
-          emailConfig.SMTPSentcliSMS.emailto,
-          normalizeTlf(tlfArray),
-          emailConfig.SMTPSentcliSMS.textopros
-        );
-      }
+      ctreateTlfArray("SMS_status_vipoln").then((tlfArray) => {
+        console.log(tlfArray);
+        if (tlfArray.length > 1) {
+          logger.info(`Text vipoln sent for ${tlfArray}`);
+          return sentmail(
+            emailConfig.SMTPSentcliSMS.emailto,
+            normalizeTlf(tlfArray),
+            emailConfig.SMTPSentcliSMS.textvipoln
+          );
+        }
+      });
+
+      ctreateTlfArrayOpros("SMS_status_opros").then((tlfArray) => {
+        console.log(tlfArray);
+        if (tlfArray.length > 1) {
+          logger.info(`Text opros sent for ${tlfArray}`);
+          return sentmail(
+            emailConfig.SMTPSentcliSMS.emailto,
+            normalizeTlf(tlfArray),
+            emailConfig.SMTPSentcliSMS.textopros
+          );
+        }
+      });
     });
   }, mchour / 6);
 } catch (err) {
