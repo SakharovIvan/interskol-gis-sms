@@ -30,21 +30,20 @@ try {
   //let timer = setInterval(getPost,10000)
   //setTimeout(()=>{clearInterval(timer);console.log('stop')},60000)
   setInterval(() => {
-    createGISreport().then(
+    
       sentmail(
         emailConfig.SMTPSentreport.emailto,
         emailConfig.SMTPSentreport.subject,
         "SomeText",
         "GISdata.xlsx"
-      )
     );
     logger.info(`GIS report sent`);
-  }, mchour / 6);
+  }, mchour);
 
   setInterval(async () => {
     getPost();
     updateGISbd(createJSONfromXLSX("i.sakharov_LLWarranty17062024"));
-
+    createGISreport()
     ctreateTlfArray("SMS_status_prin").then((tlfArray) => {
       console.log(tlfArray);
       if (tlfArray.length > 1) {
