@@ -4,5 +4,6 @@ import { emailConfig } from '../config.js'
 sentmail(
   emailConfig.SMTPSentreport.emailto,
   emailConfig.SMTPSentreport.subject,
-  "SomeText"
+  "SomeText",
+  "GISdata.xlsx"
 );
