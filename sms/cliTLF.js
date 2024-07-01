@@ -1,65 +1,36 @@
 import {getTelephonestoSent,updatesqlsmsStatusData} from '../__fixtures__/GISSQLBD.js'
 import { pool } from "../config.js";
 
-const ctreateTlfArrayPrin = ()=>{
+const sqlformatdate=(number=0)=>{
     let now = new Date()
+    now.setDate(now.getDate()-number)
     let year = now.getFullYear()
     let month = now.getMonth() + 1
     let day = now.getDate()
     month<=9 ? month = `0${month}`: month = month
-    const date1= day+'-'+month+'-'+year
-    const date2 = (day-1)+'-'+month+'-'+year
-    const tlfArray=  pool.query(getTelephonestoSent(date1,date2,'sms_status_prin'))
-    .then((tlfobject)=>{
-        return tlfobject.rows.map((obj)=>{
-            pool.query(updatesqlsmsStatusData(obj.asc_ndk,obj.asc_kod,obj.cli_telephone,'sms_status_prin'))
-            
-            return obj.cli_telephone})})
-    .then((tlfArrayfromObj)=>{
-        return [...new Set(tlfArrayfromObj)]
-    })
-    return tlfArray
-}
-const ctreateTlfArrayOpros = ()=>{
-    let now = new Date()
-    let year = now.getFullYear()
-    let month = now.getMonth() + 1
-    let day = now.getDate()
-    month<=9 ? month = `0${month}`: month = month
-    const date1= (day-8)+'-'+month+'-'+year
-    const date2 = (day-7)+'-'+month+'-'+year
-    const tlfArray=  pool.query(getTelephonestoSent(date1,date2,'sms_status_opros'))
-    .then((tlfobject)=>{
-        return tlfobject.rows.map((obj)=>{
-            pool.query(updatesqlsmsStatusData(obj.asc_ndk,obj.asc_kod,obj.cli_telephone,'sms_status_opros'))
-            
-            return obj.cli_telephone})})
-    .then((tlfArrayfromObj)=>{
-        return [...new Set(tlfArrayfromObj)]
-    })
-    
-    return tlfArray
+return `${day}-${month}-${year}`
 }
 
-const ctreateTlfArrayVipoln = ()=>{
-    let now = new Date()
-    let year = now.getFullYear()
-    let month = now.getMonth() + 1
-    let day = now.getDate()
-    month<=9 ? month = `0${month}`: month = month
-    const date1= day+'-'+month+'-'+year
-    const date2 = (day-1)+'-'+month+'-'+year
-    const tlfArray=  pool.query(getTelephonestoSent(date1,date2,'sms_status_vipoln'))
-    .then((tlfobject)=>{
-        return tlfobject.rows.map((obj)=>{
-            pool.query(updatesqlsmsStatusData(obj.asc_ndk,obj.asc_kod,obj.cli_telephone,'sms_status_vipoln'))
-            
-            return obj.cli_telephone})})
-    .then((tlfArrayfromObj)=>{
-        return [...new Set(tlfArrayfromObj)]
-    })
-    
-    return tlfArray
+const ctreateTlfArrayOpros =async ()=>{
+    const date1= sqlformatdate(8)
+    const date2 = sqlformatdate(7)
+    const tlfobject =  await pool.query(getTelephonestoSent(date1,date2,'sms_status_opros'))
+    const tlfArray = await tlfobject.rows.map(async(obj)=>{
+       await pool.query(updatesqlsmsStatusData(obj.asc_ndk,obj.asc_kod,obj.cli_telephone,'sms_status_opros'))
+        return obj.cli_telephone})
+    return Promise.all(tlfArray)
 }
 
-export  {ctreateTlfArrayPrin,ctreateTlfArrayOpros,ctreateTlfArrayVipoln}
+const ctreateTlfArray = async (smsStatus)=>{
+
+    const date1= sqlformatdate()
+    const date2 = sqlformatdate(1)
+    const tlfobject =  await pool.query(getTelephonestoSent(date1,date2,smsStatus))
+    const tlfArray = await tlfobject.rows.map(async(obj)=>{
+        await pool.query(updatesqlsmsStatusData(obj.asc_ndk,obj.asc_kod,obj.cli_telephone,smsStatus))
+         return obj.cli_telephone})
+     return Promise.all(tlfArray)
+
+}
+
+export  {ctreateTlfArray,ctreateTlfArrayOpros}
