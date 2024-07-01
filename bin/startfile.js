@@ -11,6 +11,15 @@ const week = mcday * 7;
 const emailReport = "a.rogov@kls-gr.ru; i.sakharov@kls-gr.ru";
 import log from "simple-node-logger";
 
+
+const normalizeTlf = (array)=>{
+  return array.join()
+  .replaceAll(")", "")
+  .replaceAll("(", "")
+  .replaceAll(" ", "")
+  .replaceAll("+", "")
+}
+
 const logger = log.createSimpleLogger(
   {
     logFilePath: "logger.log",
@@ -23,13 +32,14 @@ try {
   //let timer = setInterval(getPost,10000)
   //setTimeout(()=>{clearInterval(timer);console.log('stop')},60000)
    setInterval(()=>{
-  createGISreport();
+  createGISreport()
+  .then(
   sentmail(
     emailConfig.SMTPSentreport.emailto,
-    emailConfig.SMTPSentreport.subject,
+  emailConfig.SMTPSentreport.subject,
     "SomeText",
     "GISdata.xlsx"
-  );
+  ))
   logger.info(`GIS report sent`);
   },mchour/6)
 
@@ -43,12 +53,7 @@ try {
       logger.info(`Text prin sent for ${tlfArray}`);
       return sentmail(
         emailConfig.SMTPSentcliSMS.emailto,
-        tlfArray
-          .join()
-          .replaceAll(")", "")
-          .replaceAll("(", "")
-          .replaceAll(" ", "")
-          .replaceAll("+", ""),
+        normalizeTlf(tlfArray),
         emailConfig.SMTPSentcliSMS.textprin
       );
     }
@@ -60,12 +65,7 @@ try {
       logger.info(`Text vipoln sent for ${tlfArray}`);
       return sentmail(
         emailConfig.SMTPSentcliSMS.emailto,
-        tlfArray
-          .join()
-          .replaceAll(")", "")
-          .replaceAll("(", "")
-          .replaceAll(" ", "")
-          .replaceAll("+", ""),
+        normalizeTlf(tlfArray),
         emailConfig.SMTPSentcliSMS.textvipoln
       );
     }
@@ -77,12 +77,7 @@ try {
        logger.info(`Text opros sent for ${tlfArray}`)
       return sentmail(
         emailConfig.SMTPSentcliSMS.emailto,
-        tlfArray
-          .join()
-          .replaceAll(")", "")
-          .replaceAll("(", "")
-          .replaceAll(" ", "")
-          .replaceAll("+", ""),
+        normalizeTlf(tlfArray),
         emailConfig.SMTPSentcliSMS.textopros
       );
     }
@@ -92,3 +87,4 @@ try {
 } catch (err) {
   console.log(err);
 }
+
