@@ -24,7 +24,10 @@ const createsqlgis = `CREATE TABLE GIS (
       date_ojod2 VARCHAR(10),
       date_vipoln VARCHAR(10),
       date_vidach VARCHAR(10),
-      rem_work TEXT
+      rem_work TEXT,
+      last_update_date TEXT,
+      term_rep_all INTEGER,
+      term_rep_wosogl INTEGER
       );`;
 
 const smsStatus = `

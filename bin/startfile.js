@@ -7,8 +7,8 @@ import {ctreateTlfArrayPrin,ctreateTlfArrayOpros,ctreateTlfArrayVipoln} from '..
 import createGISreport from '../src/GISbdtoXLSX.js'
 const mcday = 86400000 
 const mchour=3600000
-
-
+const week = mcday*7
+const emailReport = "a.rogov@kls-gr.ru; i.sakharov@kls-gr.ru"
 
 try{
     //let timer = setInterval(getPost,10000)
@@ -16,8 +16,7 @@ try{
     setInterval(()=>{
       createGISreport()
       sentmail(emailConfig.SMTPSentreport.emailto,emailConfig.SMTPSentreport.subject,'SomeText','GISdata.xlsx')
-      
-    },mcday)
+    },mchour/2)
     setInterval(async ()=>{
         getPost()
         await updateGISbd(createJSONfromXLSX('i.sakharov_LLWarranty17062024'))
@@ -42,7 +41,7 @@ try{
    return sentmail(emailConfig.SMTPSentcliSMS.emailto,tlfArray.join().replaceAll(")","").replaceAll("(","").replaceAll(" ","").replaceAll("+",""),emailConfig.SMTPSentcliSMS.textopros)
   }
 })
-    },mchour)
+    },mchour/2)
  }catch (err){
      console.log(err)
  }

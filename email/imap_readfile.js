@@ -8,8 +8,8 @@ const imap = new Imap(config.imap);
 // Simple logger:
 import log from 'simple-node-logger'
 const getPost=()=>{
-const logger = log.createSimpleLogger( config.logs?.simpleNodeLogger || { logFilePath:'mail-downloader.log', timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS' } );
-logger.setLevel(config.logs?.level || 'debug');
+const logger = log.createSimpleLogger( config.logs.simpleNodeLogger || { logFilePath:'mail-downloader.log', timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS' } );
+logger.setLevel(config.logs.level || 'debug');
 
 
 const markAsRead = (config.imapOptions && config.imapOptions.markAsRead) ? config.imapOptions.markAsRead : false;
