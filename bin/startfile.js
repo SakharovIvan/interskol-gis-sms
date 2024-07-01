@@ -17,13 +17,14 @@ logger.setLevel(emailConfig.logs.level || 'debug');
 try{
     //let timer = setInterval(getPost,10000)
     //setTimeout(()=>{clearInterval(timer);console.log('stop')},60000)
-    setInterval(()=>{
+   // setInterval(()=>{
       createGISreport()
       sentmail(emailConfig.SMTPSentreport.emailto,emailConfig.SMTPSentreport.subject,'SomeText','GISdata.xlsx')
       logger.info(`GIS report sent`)
-    },mchour/3)
+    //},mchour/3)
 
-    setInterval(async ()=>{
+    //setInterval(
+    async ()=>{
         getPost()
         await updateGISbd(createJSONfromXLSX('i.sakharov_LLWarranty17062024'))
         ctreateTlfArrayPrin()
@@ -50,7 +51,8 @@ try{
    return sentmail(emailConfig.SMTPSentcliSMS.emailto,tlfArray.join().replaceAll(")","").replaceAll("(","").replaceAll(" ","").replaceAll("+",""),emailConfig.SMTPSentcliSMS.textopros)
   }
 })
-    },mchour/3)
+}
+ //   ,mchour/3)
  }catch (err){
      console.log(err)
  }
