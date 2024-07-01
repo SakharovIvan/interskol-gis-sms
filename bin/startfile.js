@@ -31,7 +31,7 @@ logger.setLevel(emailConfig.logs.level || "debug");
 try {
   //let timer = setInterval(getPost,10000)
   //setTimeout(()=>{clearInterval(timer);console.log('stop')},60000)
-   setInterval(()=>{
+   setInterval(async()=>{
   createGISreport()
   .then(
   sentmail(
