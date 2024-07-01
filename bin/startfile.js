@@ -11,8 +11,8 @@ const week = mcday*7
 const emailReport = "a.rogov@kls-gr.ru; i.sakharov@kls-gr.ru"
 import log from 'simple-node-logger'
 
-const logger = log.createSimpleLogger( config.logs.simpleNodeLogger || { logFilePath:'logger.log', timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS' } );
-logger.setLevel(config.logs.level || 'debug');
+const logger = log.createSimpleLogger( emailConfig.logs.simpleNodeLogger || { logFilePath:'logger.log', timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS' } );
+logger.setLevel(emailConfig.logs.level || 'debug');
 
 try{
     //let timer = setInterval(getPost,10000)
