@@ -11,80 +11,76 @@ const week = mcday * 7;
 const emailReport = "a.rogov@kls-gr.ru; i.sakharov@kls-gr.ru";
 import log from "simple-node-logger";
 
+const normalizeTlf = (array) => {
+  return array
+    .join()
+    .replaceAll(")", "")
+    .replaceAll("(", "")
+    .replaceAll(" ", "")
+    .replaceAll("+", "");
+};
 
-const normalizeTlf = (array)=>{
-  return array.join()
-  .replaceAll(")", "")
-  .replaceAll("(", "")
-  .replaceAll(" ", "")
-  .replaceAll("+", "")
-}
-
-const logger = log.createSimpleLogger(
-  {
-    logFilePath: "logger.log",
-    timestampFormat: "YYYY-MM-DD HH:mm:ss.SSS",
-  }
-);
+const logger = log.createSimpleLogger({
+  logFilePath: "logger.log",
+  timestampFormat: "YYYY-MM-DD HH:mm:ss.SSS",
+});
 logger.setLevel(emailConfig.logs.level || "debug");
 
 try {
   //let timer = setInterval(getPost,10000)
   //setTimeout(()=>{clearInterval(timer);console.log('stop')},60000)
-   setInterval(async()=>{
-  createGISreport()
-  .then(
-  sentmail(
-    emailConfig.SMTPSentreport.emailto,
-  emailConfig.SMTPSentreport.subject,
-    "SomeText",
-    "GISdata.xlsx"
-  ))
-  logger.info(`GIS report sent`);
-  },mchour/6)
+  setInterval(async () => {
+    await createGISreport();
 
-  setInterval(    async ()=>{
-  getPost();
-  updateGISbd(createJSONfromXLSX("i.sakharov_LLWarranty17062024"));
+    sentmail(
+      emailConfig.SMTPSentreport.emailto,
+      emailConfig.SMTPSentreport.subject,
+      "SomeText",
+      "GISdata.xlsx"
+    );
+    logger.info(`GIS report sent`);
+  }, mchour / 6);
 
-  ctreateTlfArray("SMS_status_prin").then((tlfArray) => {
-    console.log(tlfArray);
-    if (tlfArray.length > 1) {
-      logger.info(`Text prin sent for ${tlfArray}`);
-      return sentmail(
-        emailConfig.SMTPSentcliSMS.emailto,
-        normalizeTlf(tlfArray),
-        emailConfig.SMTPSentcliSMS.textprin
-      );
-    }
-  });
+  setInterval(async () => {
+    getPost();
+    updateGISbd(createJSONfromXLSX("i.sakharov_LLWarranty17062024"));
 
-  ctreateTlfArray("SMS_status_vipoln").then((tlfArray) => {
-    console.log(tlfArray);
-    if (tlfArray.length > 1) {
-      logger.info(`Text vipoln sent for ${tlfArray}`);
-      return sentmail(
-        emailConfig.SMTPSentcliSMS.emailto,
-        normalizeTlf(tlfArray),
-        emailConfig.SMTPSentcliSMS.textvipoln
-      );
-    }
-  });
+    ctreateTlfArray("SMS_status_prin").then((tlfArray) => {
+      console.log(tlfArray);
+      if (tlfArray.length > 1) {
+        logger.info(`Text prin sent for ${tlfArray}`);
+        return sentmail(
+          emailConfig.SMTPSentcliSMS.emailto,
+          normalizeTlf(tlfArray),
+          emailConfig.SMTPSentcliSMS.textprin
+        );
+      }
+    });
 
-  ctreateTlfArrayOpros().then((tlfArray) => {
-    console.log(tlfArray);
-    if (tlfArray.length > 1) {
-       logger.info(`Text opros sent for ${tlfArray}`)
-      return sentmail(
-        emailConfig.SMTPSentcliSMS.emailto,
-        normalizeTlf(tlfArray),
-        emailConfig.SMTPSentcliSMS.textopros
-      );
-    }
-  });
+    ctreateTlfArray("SMS_status_vipoln").then((tlfArray) => {
+      console.log(tlfArray);
+      if (tlfArray.length > 1) {
+        logger.info(`Text vipoln sent for ${tlfArray}`);
+        return sentmail(
+          emailConfig.SMTPSentcliSMS.emailto,
+          normalizeTlf(tlfArray),
+          emailConfig.SMTPSentcliSMS.textvipoln
+        );
+      }
+    });
 
-     },mchour/6)
+    ctreateTlfArrayOpros().then((tlfArray) => {
+      console.log(tlfArray);
+      if (tlfArray.length > 1) {
+        logger.info(`Text opros sent for ${tlfArray}`);
+        return sentmail(
+          emailConfig.SMTPSentcliSMS.emailto,
+          normalizeTlf(tlfArray),
+          emailConfig.SMTPSentcliSMS.textopros
+        );
+      }
+    });
+  }, mchour / 6);
 } catch (err) {
   console.log(err);
 }
-
