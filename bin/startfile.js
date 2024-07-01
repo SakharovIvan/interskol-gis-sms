@@ -29,14 +29,14 @@ logger.setLevel(emailConfig.logs.level || "debug");
 try {
   //let timer = setInterval(getPost,10000)
   //setTimeout(()=>{clearInterval(timer);console.log('stop')},60000)
-  setInterval(async () => {
-    await createGISreport();
-
-    sentmail(
-      emailConfig.SMTPSentreport.emailto,
-      emailConfig.SMTPSentreport.subject,
-      "SomeText",
-      "GISdata.xlsx"
+  setInterval(() => {
+    createGISreport().then(
+      sentmail(
+        emailConfig.SMTPSentreport.emailto,
+        emailConfig.SMTPSentreport.subject,
+        "SomeText",
+        "GISdata.xlsx"
+      )
     );
     logger.info(`GIS report sent`);
   }, mchour / 6);
