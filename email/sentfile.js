@@ -22,7 +22,7 @@ if (attFile===''){
     html: text,
     attachments: [{
         filename: attFile,
-        content: fs.createReadStream('/home/petProjects/interskol-gis-sms/'+`${attFile}`)    
+        content: fs.createReadStream('/interskol-gis-sms/'+`${attFile}`)    
     }
 
     ]
