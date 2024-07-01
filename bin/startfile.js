@@ -9,6 +9,10 @@ const mcday = 86400000
 const mchour=3600000
 const week = mcday*7
 const emailReport = "a.rogov@kls-gr.ru; i.sakharov@kls-gr.ru"
+import log from 'simple-node-logger'
+
+const logger = log.createSimpleLogger( config.logs.simpleNodeLogger || { logFilePath:'logger.log', timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS' } );
+logger.setLevel(config.logs.level || 'debug');
 
 try{
     //let timer = setInterval(getPost,10000)
@@ -16,7 +20,9 @@ try{
     setInterval(()=>{
       createGISreport()
       sentmail(emailConfig.SMTPSentreport.emailto,emailConfig.SMTPSentreport.subject,'SomeText','GISdata.xlsx')
-    },mchour/2)
+      logger.info(`GIS report sent`)
+    },mchour/3)
+
     setInterval(async ()=>{
         getPost()
         await updateGISbd(createJSONfromXLSX('i.sakharov_LLWarranty17062024'))
@@ -24,6 +30,7 @@ try{
         .then((tlfArray)=>{
           console.log(tlfArray)
           if (tlfArray.length>1){
+            logger.info(`Text prin sent for ${tlfArray}`)
        return sentmail(emailConfig.SMTPSentcliSMS.emailto,tlfArray.join().replaceAll(")","").replaceAll("(","").replaceAll(" ","").replaceAll("+",""),emailConfig.SMTPSentcliSMS.textprin)
       }
     })
@@ -31,6 +38,7 @@ try{
     .then((tlfArray)=>{
       console.log(tlfArray)
       if (tlfArray.length>1){
+        logger.info(`Text vipoln sent for ${tlfArray}`)
    return sentmail(emailConfig.SMTPSentcliSMS.emailto,tlfArray.join().replaceAll(")","").replaceAll("(","").replaceAll(" ","").replaceAll("+",""),emailConfig.SMTPSentcliSMS.textvipoln)
   }
 })
@@ -38,10 +46,11 @@ try{
     .then((tlfArray)=>{
       console.log(tlfArray)
       if (tlfArray.length>1){
+        logger.info(`Text opros sent for ${tlfArray}`)
    return sentmail(emailConfig.SMTPSentcliSMS.emailto,tlfArray.join().replaceAll(")","").replaceAll("(","").replaceAll(" ","").replaceAll("+",""),emailConfig.SMTPSentcliSMS.textopros)
   }
 })
-    },mchour/2)
+    },mchour/3)
  }catch (err){
      console.log(err)
  }
