@@ -15,8 +15,9 @@ const ctreateTlfArrayOpros =async ()=>{
     const date1= sqlformatdate(8)
     const date2 = sqlformatdate(7)
     const tlfobject =  await pool.query(getTelephonestoSent(date1,date2,'sms_status_opros'))
-    const tlfArray = await tlfobject.rows.map(async(obj)=>{
-       await pool.query(updatesqlsmsStatusData(obj.asc_ndk,obj.asc_kod,obj.cli_telephone,'sms_status_opros'))
+    const tlfArray =  tlfobject.rows.map((obj)=>{
+        pool.query(updatesqlsmsStatusData(obj.asc_ndk,obj.asc_kod,obj.cli_telephone,'sms_status_opros'))
+        console.log(obj.cli_telephone)
         return obj.cli_telephone})
     return Promise.all(tlfArray)
 }
@@ -25,8 +26,8 @@ const ctreateTlfArray = async (smsStatus)=>{
     const date1= sqlformatdate()
     const date2 = sqlformatdate(1)
     const tlfobject =  await pool.query(getTelephonestoSent(date1,date2,smsStatus))
-    const tlfArray = await tlfobject.rows.map(async(obj)=>{
-        await pool.query(updatesqlsmsStatusData(obj.asc_ndk,obj.asc_kod,obj.cli_telephone,smsStatus))
+    const tlfArray =  tlfobject.rows.map((obj)=>{
+         pool.query(updatesqlsmsStatusData(obj.asc_ndk,obj.asc_kod,obj.cli_telephone,smsStatus))
          return obj.cli_telephone})
      return Promise.all(tlfArray)
 
