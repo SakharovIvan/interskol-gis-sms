@@ -44,10 +44,11 @@ try {
     const promise2 = updateGISbd(
       createJSONfromXLSX("i.sakharov_LLWarranty17062024")
     );
-    const promise3 = createGISreport();
+    //const promise3 = createGISreport();
 
-    const promises = Promise.all([promise1, promise2, promise3]);
+    const promises = Promise.all([promise1, promise2]);
     return promises.then(() => {
+      createGISreport();
       ctreateTlfArray("SMS_status_prin").then((tlfArray) => {
         console.log(tlfArray);
         if (tlfArray.length > 1) {
@@ -58,6 +59,7 @@ try {
             emailConfig.SMTPSentcliSMS.textprin
           );
         }
+        return;
       });
 
       ctreateTlfArray("SMS_status_vipoln").then((tlfArray) => {
@@ -70,6 +72,7 @@ try {
             emailConfig.SMTPSentcliSMS.textvipoln
           );
         }
+        return;
       });
 
       ctreateTlfArrayOpros("SMS_status_opros").then((tlfArray) => {
@@ -82,6 +85,7 @@ try {
             emailConfig.SMTPSentcliSMS.textopros
           );
         }
+        return;
       });
     });
   }, mchour / 6);
