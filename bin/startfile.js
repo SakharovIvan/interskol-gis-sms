@@ -37,7 +37,7 @@ try {
       "GISdata.xlsx"
     );
     logger.info(`GIS report sent`);
-  }, mcday);
+  }, mchour/6);
 
   setInterval(async () => {
     const promise1 = getPost();
