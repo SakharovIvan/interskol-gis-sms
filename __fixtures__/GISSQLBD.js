@@ -170,7 +170,7 @@ const getGISdatabyFilter = async (asc_ndk, asc_kod) => {
 
 const getGISdatabyData = ()=>{
   return `SELECT snNo_tool, date_prin, date_vidach,date_vipoln, cli_telephone, date_sogl1, date_sogl2, term_rep_wosogl, cli_name, asc_gor, matNo_tool 
-  FROM gis WHERE term_rep_wosogl <=3 ;`
+  FROM gis WHERE term_rep_wosogl <=3 OR term_rep_all <=3;`
 }
 
 const getTelephonestoSent = (date1,date2,status)=>{

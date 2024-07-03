@@ -20,9 +20,9 @@ const sentMasSMS =async()=>{
     const promise2 = updateGISbd(
       createJSONfromXLSX("i.sakharov_LLWarranty17062024")
     );
-    const promise3 = createGISreport()
+    createGISreport()
 
-    const promises = Promise.all([promise1, promise2,promise3]);
+    const promises = Promise.all([promise1, promise2]);
     return promises.then(() => {
       //createGISreport();
       
