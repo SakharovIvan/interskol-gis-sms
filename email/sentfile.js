@@ -4,9 +4,9 @@ import fs from "fs";
 
 let transporter = nodemailer.createTransport(emailConfig.nodemailer);
 
-const sentmail = (emailto, subject, text = "", attFile = "") => {
+const sentmail = async (emailto, subject, text = "", attFile = "") => {
   if (attFile === "") {
-    transporter.sendMail({
+    await transporter.sendMail({
       from: "<gis@kls-gr.ru>",
       to: emailto,
       subject: subject,
@@ -14,7 +14,7 @@ const sentmail = (emailto, subject, text = "", attFile = "") => {
       html: text,
     });
   } else {
-    transporter.sendMail({
+    await transporter.sendMail({
       from: "<gis@kls-gr.ru>",
       to: emailto,
       subject: subject,

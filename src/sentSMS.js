@@ -8,74 +8,77 @@ import { emailConfig } from "../config.js";
 import sentmail from "../email/sentfile.js";
 
 const logger = log.createSimpleLogger({
-    logFilePath: "logger.log",
-    timestampFormat: "YYYY-MM-DD HH:mm:ss.SSS",
-  });
-  logger.setLevel(emailConfig.logs.level || "debug");
+  logFilePath: "logger.log",
+  timestampFormat: "YYYY-MM-DD HH:mm:ss.SSS",
+});
+logger.setLevel(emailConfig.logs.level || "debug");
 
-  
-const sentMasSMS =async()=>{
+const sentMasSMS = async () => {
+  const promise1 = getPost();
+  //.then(()=>{console.log('Promise1 worked')})
+  const promise2 = updateGISbd(
+    createJSONfromXLSX("i.sakharov_LLWarranty17062024")
+  );
+  //.then(()=>{console.log('Promise2 worked')})
+  const promise3 = createGISreport();
+  //.then(()=>{console.log('Promise3 worked')})
 
-    const promise1 = getPost();
-    const promise2 = updateGISbd(
-      createJSONfromXLSX("i.sakharov_LLWarranty17062024")
-    );
-    createGISreport()
-
-    const promises = Promise.all([promise1, promise2]);
-    return promises.then(() => {
+  const promises = Promise.all([promise1, promise2, promise3]);
+  return promises
+    .then(() => {
+      console.log("Promises worked");
+    })
+    .then(() => {
       //createGISreport();
-      
-      ctreateTlfArray("SMS_status_prin").then((tlfArray) => {
-        console.log(tlfArray);
-        if (tlfArray.length > 1) {
-          logger.info(`Text prin sent for ${tlfArray}`);
-          return sentmail(
+      const promTlfArrayPrin = ctreateTlfArray("SMS_status_prin");
+      const promTlfArrayVipoln = ctreateTlfArray("SMS_status_vipoln");
+      const promTlfArrayOpros = ctreateTlfArrayOpros();
+
+      const promisesTlf = Promise.all([
+        promTlfArrayPrin,
+        promTlfArrayVipoln,
+        promTlfArrayOpros,
+      ]);
+      return promisesTlf.then(
+        async ([tlfArrayPrin, tlfArrayVipoln, tlfArrayOpros]) => {
+          const tlfArrayPrinMail = tlfArrayPrin.filter((item, index) => {
+            return tlfArrayPrin.indexOf(item) === index;
+          });
+          const tlfArrayVipolnMail = tlfArrayVipoln.filter((item, index) => {
+            return tlfArrayVipoln.indexOf(item) === index;
+          });
+          const tlfArrayOprosMail = tlfArrayOpros.filter((item, index) => {
+            return tlfArrayOpros.indexOf(item) === index;
+          });
+
+          await sentmail(
             emailConfig.SMTPSentcliSMS.emailto,
-            normalizeTlf(tlfArray),
+            normalizeTlf(tlfArrayPrinMail),
             emailConfig.SMTPSentcliSMS.textprin
           );
-        }
-        return;
-      });
-
-      ctreateTlfArray("SMS_status_vipoln").then((tlfArray) => {
-        console.log(tlfArray);
-        if (tlfArray.length > 1) {
-          logger.info(`Text vipoln sent for ${tlfArray}`);
-          return sentmail(
+          await sentmail(
             emailConfig.SMTPSentcliSMS.emailto,
-            normalizeTlf(tlfArray),
+            normalizeTlf(tlfArrayVipolnMail),
             emailConfig.SMTPSentcliSMS.textvipoln
           );
-        }
-        return;
-      });
-
-      ctreateTlfArrayOpros("SMS_status_opros").then((tlfArray) => {
-        console.log(tlfArray);
-        if (tlfArray.length > 1) {
-          logger.info(`Text opros sent for ${tlfArray}`);
-          return sentmail(
+          console.log(tlfArrayOprosMail);
+          await sentmail(
             emailConfig.SMTPSentcliSMS.emailto,
-            normalizeTlf(tlfArray),
+            normalizeTlf(tlfArrayOprosMail),
             emailConfig.SMTPSentcliSMS.textopros
           );
         }
-        return;
-      });
-    }
-)
-}
-
+      );
+    });
+};
 
 const normalizeTlf = (array) => {
-    return array
-      .join()
-      .replaceAll(")", "")
-      .replaceAll("(", "")
-      .replaceAll(" ", "")
-      .replaceAll("+", "");
-  };
+  return array
+    .join()
+    .replaceAll(")", "")
+    .replaceAll("(", "")
+    .replaceAll(" ", "")
+    .replaceAll("+", "");
+};
 
-export default sentMasSMS
+export default sentMasSMS;

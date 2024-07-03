@@ -23,7 +23,8 @@ createJSONfromGISBD()
   .then((res) => createXLSXfromJSON(res))
   .then(console.log("exceledoc created"));
 
-export default async() => {
- const res = await createJSONfromGISBD()
-  return await createXLSXfromJSON(res)
+export default () => {
+  createJSONfromGISBD()
+    .then((res) => createXLSXfromJSON(res))
+    .then(console.log("exceledoc created"));
 };
