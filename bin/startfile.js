@@ -14,9 +14,6 @@ const logger = log.createSimpleLogger({
 });
 logger.setLevel(emailConfig.logs.level || "debug");
 
-//try {
-//let timer = setInterval(getPost,10000)
-//setTimeout(()=>{clearInterval(timer);console.log('stop')},60000)
 setInterval(async () => {
   try {
     await sentmail(
@@ -29,16 +26,8 @@ setInterval(async () => {
   } catch (err) {
     console.log(err);
   }
-}, mchour);
+}, mchour * 4);
 
 setInterval(async () => {
-  try {
-    await sentMasSMS();
-  } catch (err) {
-    console.log(err);
-  }
-}, mchour);
-//} catch (err) {
-//  console.log(err);
-//
-//}
+  sentMasSMS();
+}, mchour * 4);

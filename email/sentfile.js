@@ -24,7 +24,7 @@ const sentmail = async (emailto, subject, text = "", attFile = "") => {
         {
           filename: attFile,
           content: fs.createReadStream(
-            "/root/interskol-gis-sms/" + `${attFile}`
+            emailConfig.SMTPSentreport.attachment + `${attFile}`
           ),
         },
       ],

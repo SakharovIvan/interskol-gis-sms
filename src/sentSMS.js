@@ -15,18 +15,16 @@ logger.setLevel(emailConfig.logs.level || "debug");
 
 const sentMasSMS = async () => {
   const promise1 = getPost();
-  //.then(()=>{console.log('Promise1 worked')})
   const promise2 = updateGISbd(
     createJSONfromXLSX("i.sakharov_LLWarranty17062024")
   );
-  //.then(()=>{console.log('Promise2 worked')})
   const promise3 = createGISreport();
-  //.then(()=>{console.log('Promise3 worked')})
 
   const promises = Promise.all([promise1, promise2, promise3]);
   return promises
     .then(() => {
       console.log("Promises worked");
+      logger.info(`Promises worked`);
     })
     .then(() => {
       //createGISreport();
@@ -41,6 +39,9 @@ const sentMasSMS = async () => {
       ]);
       return promisesTlf.then(
         async ([tlfArrayPrin, tlfArrayVipoln, tlfArrayOpros]) => {
+          logger.info(`tlfArrayPrin ${tlfArrayPrin}`);
+          logger.info(`tlfArrayVipoln ${tlfArrayVipoln}`);
+          logger.info(`tlfArrayOpros ${tlfArrayOpros}`);
           const tlfArrayPrinMail = tlfArrayPrin.filter((item, index) => {
             return tlfArrayPrin.indexOf(item) === index;
           });
@@ -50,23 +51,28 @@ const sentMasSMS = async () => {
           const tlfArrayOprosMail = tlfArrayOpros.filter((item, index) => {
             return tlfArrayOpros.indexOf(item) === index;
           });
-
-          await sentmail(
-            emailConfig.SMTPSentcliSMS.emailto,
-            normalizeTlf(tlfArrayPrinMail),
-            emailConfig.SMTPSentcliSMS.textprin
-          );
-          await sentmail(
-            emailConfig.SMTPSentcliSMS.emailto,
-            normalizeTlf(tlfArrayVipolnMail),
-            emailConfig.SMTPSentcliSMS.textvipoln
-          );
-          console.log(tlfArrayOprosMail);
-          await sentmail(
-            emailConfig.SMTPSentcliSMS.emailto,
-            normalizeTlf(tlfArrayOprosMail),
-            emailConfig.SMTPSentcliSMS.textopros
-          );
+          if (tlfArrayPrinMail.length > 1) {
+            await sentmail(
+              emailConfig.SMTPSentcliSMS.emailto,
+              normalizeTlf(tlfArrayPrinMail),
+              emailConfig.SMTPSentcliSMS.textprin
+            );
+          }
+          if (tlfArrayVipolnMail.length > 1) {
+            await sentmail(
+              emailConfig.SMTPSentcliSMS.emailto,
+              normalizeTlf(tlfArrayVipolnMail),
+              emailConfig.SMTPSentcliSMS.textvipoln
+            );
+          }
+          //console.log(tlfArrayOprosMail);
+          if (tlfArrayOprosMail.length > 1) {
+            await sentmail(
+              emailConfig.SMTPSentcliSMS.emailto,
+              normalizeTlf(tlfArrayOprosMail),
+              emailConfig.SMTPSentcliSMS.textopros
+            );
+          }
         }
       );
     });
