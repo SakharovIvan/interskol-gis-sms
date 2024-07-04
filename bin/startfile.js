@@ -31,7 +31,7 @@ setInterval(async () => {
 
 setInterval(async () => {
   try{
-  sentMasSMS();
+  await sentMasSMS();
 }catch(err){
   console.log(err)
   logger.info(err);
