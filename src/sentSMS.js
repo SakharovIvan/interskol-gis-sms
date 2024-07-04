@@ -38,24 +38,27 @@ const sentMasSMS = async () => {
             return tlfArrayOpros.indexOf(item) === index;
           });
           if (tlfArrayPrinMail.length > 1) {
+            const normPrinTlf=normalizeTlf(tlfArrayPrinMail)
             await sentmail(
               emailConfig.SMTPSentcliSMS.emailto,
-              normalizeTlf(tlfArrayPrinMail),
+              normPrinTlf,
               emailConfig.SMTPSentcliSMS.textprin
             );
           }
           if (tlfArrayVipolnMail.length > 1) {
+            const normVipolnTlf=normalizeTlf(tlfArrayVipolnMail)
             await sentmail(
               emailConfig.SMTPSentcliSMS.emailto,
-              normalizeTlf(tlfArrayVipolnMail),
+              normVipolnTlf,
               emailConfig.SMTPSentcliSMS.textvipoln
             );
           }
           //console.log(tlfArrayOprosMail);
           if (tlfArrayOprosMail.length > 1) {
+            const normOprosTlf=normalizeTlf(tlfArrayOprosMail)
             await sentmail(
               emailConfig.SMTPSentcliSMS.emailto,
-              normalizeTlf(tlfArrayOprosMail),
+              normOprosTlf,
               emailConfig.SMTPSentcliSMS.textopros
             );
           }
