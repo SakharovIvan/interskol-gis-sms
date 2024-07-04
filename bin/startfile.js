@@ -32,7 +32,7 @@ setInterval(async () => {
     console.log(err);
     logger.info(err);
   }
-}, mchour / 6);
+}, mchour);
 
 setInterval(async () => {
   try {
@@ -60,4 +60,4 @@ setInterval(async () => {
     console.log(err);
     logger.info(err);
   }
-}, mchour / 6);
+}, mchour);
