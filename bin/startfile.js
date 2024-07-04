@@ -26,8 +26,8 @@ setInterval(async () => {
   } catch (err) {
     console.log(err);
   }
-}, mchour * 4);
+}, mchour);
 
 setInterval(async () => {
   sentMasSMS();
-}, mchour * 4);
+}, mchour);
