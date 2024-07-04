@@ -20,29 +20,30 @@ logger.setLevel(emailConfig.logs.level || "debug");
 
 setInterval(async () => {
   try {
-    createGISreport()
-    
-       await sentmail(
-        emailConfig.SMTPSentreport.emailto,
-        emailConfig.SMTPSentreport.subject,
-        "SomeText",
-        "GISdata.xlsx"
-      )
-      logger.info(`GIS report sent`)
+   await createGISreport();
+
+    await sentmail(
+      emailConfig.SMTPSentreport.emailto,
+      emailConfig.SMTPSentreport.subject,
+      "SomeText",
+      "GISdata.xlsx"
+    );
+    logger.info(`GIS report sent`);
   } catch (err) {
     console.log(err);
     logger.info(err);
   }
-}, mchour/6);
+}, mchour / 6);
 
-setInterval(async() => {
-  try{
-    const json= createJSONfromXLSX("i.sakharov_LLWarranty17062024")
-    getPost()
-    updateGISbd(json)
-    .then(()=>{sentMasSMS()}) 
-}catch(err){
-  console.log(err)
-  logger.info(err);
-}
-}, mchour/6);
+setInterval(async () => {
+  try {
+    const json = createJSONfromXLSX("i.sakharov_LLWarranty17062024");
+     getPost();
+     await updateGISbd(json)
+     await sentMasSMS();    
+  } catch (err) {
+    console.log(err);
+    logger.info(err);
+  }
+}, mchour / 6);
+
