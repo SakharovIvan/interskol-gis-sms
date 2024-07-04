@@ -37,13 +37,29 @@ setInterval(async () => {
 
 setInterval(async () => {
   try {
+getPost();
+} catch (err) {
+  console.log(err);
+  logger.info(err);
+}
+}, mchour / 6);
+
+setInterval(async () => {
+  try {
     const json = createJSONfromXLSX("i.sakharov_LLWarranty17062024");
-     getPost();
+
      await updateGISbd(json)
-     await sentMasSMS();    
   } catch (err) {
     console.log(err);
     logger.info(err);
   }
 }, mchour / 6);
 
+setInterval(async () => {
+  try {
+await sentMasSMS();      
+} catch (err) {
+  console.log(err);
+  logger.info(err);
+}
+}, mchour / 6);
