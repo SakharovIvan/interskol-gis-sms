@@ -25,9 +25,15 @@ setInterval(async () => {
     logger.info(`GIS report sent`);
   } catch (err) {
     console.log(err);
+    logger.info(err);
   }
-}, mchour);
+}, mchour/6);
 
 setInterval(async () => {
+  try{
   sentMasSMS();
-}, mchour);
+}catch(err){
+  console.log(err)
+  logger.info(err);
+}
+}, mchour/6);
