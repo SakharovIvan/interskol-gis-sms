@@ -49,7 +49,7 @@ const sentMasSMS = async () => {
           });
           if (tlfArrayPrinMail.length > 1) {
             const normPrinTlf=normalizeTlf(tlfArrayPrinMail)
-            await sentmail(
+            sentmail(
               emailConfig.SMTPSentcliSMS.emailto,
               normPrinTlf,
               emailConfig.SMTPSentcliSMS.textprin
@@ -63,7 +63,7 @@ const sentMasSMS = async () => {
           }
           if (tlfArrayVipolnMail.length > 1) {
             const normVipolnTlf=normalizeTlf(tlfArrayVipolnMail)
-            await sentmail(
+            sentmail(
               emailConfig.SMTPSentcliSMS.emailto,
               normVipolnTlf,
               emailConfig.SMTPSentcliSMS.textvipoln
