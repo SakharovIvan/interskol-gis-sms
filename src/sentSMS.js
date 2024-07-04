@@ -1,8 +1,6 @@
-import updateGISbd from "../src/JSONtoSQLbd.js";
-import createJSONfromXLSX from "../src/emailDataToJSON.js";
-import getPost from "../email/imap_readfile.js";
+
 import { ctreateTlfArray, ctreateTlfArrayOpros } from "../sms/cliTLF.js";
-import createGISreport from "../src/GISbdtoXLSX.js";
+
 import log from "simple-node-logger";
 import { emailConfig } from "../config.js";
 import sentmail from "../email/sentfile.js";
@@ -14,19 +12,7 @@ const logger = log.createSimpleLogger({
 logger.setLevel(emailConfig.logs.level || "debug");
 
 const sentMasSMS = async () => {
-  const promise1 = getPost();
-  const promise2 = updateGISbd(
-    createJSONfromXLSX("i.sakharov_LLWarranty17062024")
-  );
-  const promise3 = createGISreport();
 
-  const promises = Promise.all([promise1, promise2, promise3]);
-  return promises
-    .then(() => {
-      console.log("Promises worked");
-      logger.info(`Promises worked`);
-    })
-    .then(() => {
       //createGISreport();
       const promTlfArrayPrin = ctreateTlfArray("SMS_status_prin");
       const promTlfArrayVipoln = ctreateTlfArray("SMS_status_vipoln");
@@ -75,7 +61,7 @@ const sentMasSMS = async () => {
           }
         }
       );
-    });
+    ;
 };
 
 const normalizeTlf = (array) => {

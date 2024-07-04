@@ -1,6 +1,10 @@
 import sentmail from "../email/sentfile.js";
 import { emailConfig } from "../config.js";
 import sentMasSMS from "../src/sentSMS.js";
+import updateGISbd from "../src/JSONtoSQLbd.js";
+import createJSONfromXLSX from "../src/emailDataToJSON.js";
+import createGISreport from "../src/GISbdtoXLSX.js";
+import getPost from "../email/imap_readfile.js";
 
 const mcday = 86400000;
 const mchour = 3600000;
@@ -16,13 +20,16 @@ logger.setLevel(emailConfig.logs.level || "debug");
 
 setInterval(async () => {
   try {
-    await sentmail(
-      emailConfig.SMTPSentreport.emailto,
-      emailConfig.SMTPSentreport.subject,
-      "SomeText",
-      "GISdata.xlsx"
-    );
-    logger.info(`GIS report sent`);
+    createGISreport()
+    .then(()=>{
+       sentmail(
+        emailConfig.SMTPSentreport.emailto,
+        emailConfig.SMTPSentreport.subject,
+        "SomeText",
+        "GISdata.xlsx"
+      );
+    })
+.then(()=>{logger.info(`GIS report sent`)})
   } catch (err) {
     console.log(err);
     logger.info(err);
@@ -31,6 +38,10 @@ setInterval(async () => {
 
 setInterval(async () => {
   try{
+    await getPost()
+    await updateGISbd(
+      createJSONfromXLSX("i.sakharov_LLWarranty17062024")
+    );
   await sentMasSMS();
 }catch(err){
   console.log(err)
