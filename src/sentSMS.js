@@ -34,6 +34,7 @@ const sentMasSMS = async () => {
       ]);
       return promisesTlf.then(
         async ([tlfArrayPrin, tlfArrayVipoln, tlfArrayOpros]) => {
+          console.log(tlfArrayPrin, tlfArrayVipoln, tlfArrayOpros)
           logger.info(`tlfArrayPrin ${tlfArrayPrin}`);
           logger.info(`tlfArrayVipoln ${tlfArrayVipoln}`);
           logger.info(`tlfArrayOpros ${tlfArrayOpros}`);
