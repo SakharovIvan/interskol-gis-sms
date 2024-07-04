@@ -36,13 +36,13 @@ setInterval(async () => {
   }
 }, mchour/6);
 
-setInterval(async () => {
+setInterval(async() => {
   try{
-    await getPost()
-    await updateGISbd(
+    getPost()
+    .then(()=>{updateGISbd(
       createJSONfromXLSX("i.sakharov_LLWarranty17062024")
-    );
-  await sentMasSMS();
+    );})
+    .then(()=>{sentMasSMS()}) 
 }catch(err){
   console.log(err)
   logger.info(err);
