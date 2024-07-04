@@ -11,8 +11,17 @@ const logger = log.createSimpleLogger({
 });
 logger.setLevel(emailConfig.logs.level || "debug");
 
-const sentMasSMS = async () => {
 
+const normalizeTlf = (array) => {
+  return array
+    .join()
+    .replaceAll(")", "")
+    .replaceAll("(", "")
+    .replaceAll(" ", "")
+    .replaceAll("+", "");
+};
+
+const sentMasSMS = async () => {
       //createGISreport();
       const promTlfArrayPrin = ctreateTlfArray("SMS_status_prin");
       const promTlfArrayVipoln = ctreateTlfArray("SMS_status_vipoln");
@@ -53,7 +62,6 @@ const sentMasSMS = async () => {
               emailConfig.SMTPSentcliSMS.textvipoln
             );
           }
-          //console.log(tlfArrayOprosMail);
           if (tlfArrayOprosMail.length > 1) {
             const normOprosTlf=normalizeTlf(tlfArrayOprosMail)
             await sentmail(
@@ -67,13 +75,6 @@ const sentMasSMS = async () => {
     ;
 };
 
-const normalizeTlf = (array) => {
-  return array
-    .join()
-    .replaceAll(")", "")
-    .replaceAll("(", "")
-    .replaceAll(" ", "")
-    .replaceAll("+", "");
-};
+
 
 export default sentMasSMS;

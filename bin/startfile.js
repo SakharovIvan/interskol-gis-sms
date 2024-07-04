@@ -37,10 +37,9 @@ setInterval(async () => {
 
 setInterval(async() => {
   try{
+    const json= createJSONfromXLSX("i.sakharov_LLWarranty17062024")
     getPost()
-    updateGISbd(
-      createJSONfromXLSX("i.sakharov_LLWarranty17062024")
-    )
+    updateGISbd(json)
     .then(()=>{sentMasSMS()}) 
 }catch(err){
   console.log(err)
