@@ -38,7 +38,7 @@ setInterval(async () => {
 setInterval(async() => {
   try{
     getPost()
-    awaitupdateGISbd(
+    updateGISbd(
       createJSONfromXLSX("i.sakharov_LLWarranty17062024")
     )
     .then(()=>{sentMasSMS()}) 
