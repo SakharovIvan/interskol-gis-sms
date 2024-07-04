@@ -21,15 +21,14 @@ logger.setLevel(emailConfig.logs.level || "debug");
 setInterval(async () => {
   try {
     createGISreport()
-    .then(()=>{
-       sentmail(
+    
+       await sentmail(
         emailConfig.SMTPSentreport.emailto,
         emailConfig.SMTPSentreport.subject,
         "SomeText",
         "GISdata.xlsx"
-      );
-    })
-.then(()=>{logger.info(`GIS report sent`)})
+      )
+      logger.info(`GIS report sent`)
   } catch (err) {
     console.log(err);
     logger.info(err);
@@ -39,9 +38,9 @@ setInterval(async () => {
 setInterval(async() => {
   try{
     getPost()
-    .then(()=>{updateGISbd(
+    awaitupdateGISbd(
       createJSONfromXLSX("i.sakharov_LLWarranty17062024")
-    );})
+    )
     .then(()=>{sentMasSMS()}) 
 }catch(err){
   console.log(err)
