@@ -53,10 +53,13 @@ const sentMasSMS = async () => {
               emailConfig.SMTPSentcliSMS.emailto,
               normPrinTlf,
               emailConfig.SMTPSentcliSMS.textprin
-            );
-            logger.info(emailConfig.SMTPSentcliSMS.emailto,
-              normPrinTlf,
-              emailConfig.SMTPSentcliSMS.textprin);
+            )
+            .then(()=>{
+              logger.info(emailConfig.SMTPSentcliSMS.emailto,
+                normPrinTlf,
+                emailConfig.SMTPSentcliSMS.textprin)
+            })
+
           }
           if (tlfArrayVipolnMail.length > 1) {
             const normVipolnTlf=normalizeTlf(tlfArrayVipolnMail)
@@ -64,21 +67,27 @@ const sentMasSMS = async () => {
               emailConfig.SMTPSentcliSMS.emailto,
               normVipolnTlf,
               emailConfig.SMTPSentcliSMS.textvipoln
-            );
-            logger.info(emailConfig.SMTPSentcliSMS.emailto,
-              normVipolnTlf,
-              emailConfig.SMTPSentcliSMS.textvipoln);
+            )
+            .then(()=>{
+              logger.info(emailConfig.SMTPSentcliSMS.emailto,
+                normVipolnTlf,
+                emailConfig.SMTPSentcliSMS.textvipoln)
+            })
+
           }
           if (tlfArrayOprosMail.length > 1) {
             const normOprosTlf=normalizeTlf(tlfArrayOprosMail)
-            await sentmail(
+            sentmail(
               emailConfig.SMTPSentcliSMS.emailto,
               normOprosTlf,
               emailConfig.SMTPSentcliSMS.textopros
-            );
-            logger.info(emailConfig.SMTPSentcliSMS.emailto,
-              normOprosTlf,
-              emailConfig.SMTPSentcliSMS.textopros);
+            )
+            .then(()=>{
+              logger.info(emailConfig.SMTPSentcliSMS.emailto,
+                normOprosTlf,
+                emailConfig.SMTPSentcliSMS.textopros);
+            })
+
           }
         }
       );
