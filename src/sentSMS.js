@@ -14,7 +14,7 @@ logger.setLevel(emailConfig.logs.level || "debug");
 
 const normalizeTlf = (array) => {
   return array
-    .join()
+    .toString()
     .replaceAll(")", "")
     .replaceAll("(", "")
     .replaceAll(" ", "")

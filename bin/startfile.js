@@ -7,7 +7,7 @@ import createGISreport from "../src/GISbdtoXLSX.js";
 import getPost from "../email/imap_readfile.js";
 
 const mcday = 86400000;
-const mchour = 3600000;
+const mchour = 3600000/6;
 const week = mcday * 7;
 const emailReport = "a.rogov@kls-gr.ru; i.sakharov@kls-gr.ru";
 import log from "simple-node-logger";
