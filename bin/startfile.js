@@ -7,7 +7,7 @@ import createGISreport from "../src/GISbdtoXLSX.js";
 import getPost from "../email/imap_readfile.js";
 
 const mcday = 86400000;
-const mchour = 3600000/6;
+const mchour = 3600000 / 6;
 const week = mcday * 7;
 const emailReport = "a.rogov@kls-gr.ru; i.sakharov@kls-gr.ru";
 import log from "simple-node-logger";
@@ -20,13 +20,22 @@ logger.setLevel(emailConfig.logs.level || "debug");
 
 setInterval(async () => {
   try {
-    await createGISreport();
-    await sentmail(
-      emailConfig.SMTPSentreport.emailto,
-      emailConfig.SMTPSentreport.subject,
-      "SomeText",
-      "GISdata.xlsx"
-    );
+    createGISreport()
+      .then(() => {
+        sentmail(
+          emailConfig.SMTPSentreport.emailto,
+          emailConfig.SMTPSentreport.subject,
+          "SomeText",
+          "GISdata.xlsx"
+        );
+      })
+      .then(() => {
+        logger.info(
+          `GIS report sent ${
+            (emailConfig.SMTPSentreport.emailto,
+            emailConfig.SMTPSentreport.subject)}`
+        );
+      });
     logger.info(`GIS report sent`);
   } catch (err) {
     console.log(err);
