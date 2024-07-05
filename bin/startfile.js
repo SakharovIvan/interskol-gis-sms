@@ -64,22 +64,27 @@ setInterval(async () => {
 
 setInterval(async () => {
   try {
+    if (massms[0].length()>0){
     const massms = await createMasSMS();
     await sentmail(
       emailConfig.SMTPSentcliSMS.emailto,
       massms[0],
       emailConfig.SMTPSentcliSMS.textprin
-    )
+    )}
+    if (massms[1].length()>0){
     await sentmail(
       emailConfig.SMTPSentcliSMS.emailto,
       massms[1],
       emailConfig.SMTPSentcliSMS.textvipoln
     );
+  }
+  if (massms[2].length()>0){
     await sentmail(
       emailConfig.SMTPSentcliSMS.emailto,
       massms[2],
       emailConfig.SMTPSentcliSMS.textopros
     )
+  }
   } catch (err) {
     console.log(err);
     logger.info(err);
