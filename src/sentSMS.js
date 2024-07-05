@@ -21,7 +21,7 @@ const normalizeTlf = (array) => {
     .replaceAll("+", "");
 };
 
-const sentMasSMS = async () => {
+const createMasSMS = async () => {
       //createGISreport();
       const promTlfArrayPrin = ctreateTlfArray("SMS_status_prin");
       const promTlfArrayVipoln = ctreateTlfArray("SMS_status_vipoln");
@@ -47,48 +47,19 @@ const sentMasSMS = async () => {
           const tlfArrayOprosMail = tlfArrayOpros.filter((item, index) => {
             return tlfArrayOpros.indexOf(item) === index;
           });
+          const result =[]
           if (tlfArrayPrinMail.length > 1) {
             const normPrinTlf=normalizeTlf(tlfArrayPrinMail)
-            sentmail(
-              emailConfig.SMTPSentcliSMS.emailto,
-              normPrinTlf,
-              emailConfig.SMTPSentcliSMS.textprin
-            )
-            .then(()=>{
-              logger.info(emailConfig.SMTPSentcliSMS.emailto,
-                normPrinTlf,
-                emailConfig.SMTPSentcliSMS.textprin)
-            })
-
+            result.push(normPrinTlf)
           }
           if (tlfArrayVipolnMail.length > 1) {
             const normVipolnTlf=normalizeTlf(tlfArrayVipolnMail)
-            sentmail(
-              emailConfig.SMTPSentcliSMS.emailto,
-              normVipolnTlf,
-              emailConfig.SMTPSentcliSMS.textvipoln
-            )
-            .then(()=>{
-              logger.info(emailConfig.SMTPSentcliSMS.emailto,
-                normVipolnTlf,
-                emailConfig.SMTPSentcliSMS.textvipoln)
-            })
-
+            result.push(normVipolnTlf)
           }
           if (tlfArrayOprosMail.length > 1) {
-            const normOprosTlf=normalizeTlf(tlfArrayOprosMail)
-            sentmail(
-              emailConfig.SMTPSentcliSMS.emailto,
-              normOprosTlf,
-              emailConfig.SMTPSentcliSMS.textopros
-            )
-            .then(()=>{
-              logger.info(emailConfig.SMTPSentcliSMS.emailto,
-                normOprosTlf,
-                emailConfig.SMTPSentcliSMS.textopros);
-            })
-
+            result.push(tlfArrayOprosMail)
           }
+          return result
         }
       );
     ;
@@ -96,4 +67,4 @@ const sentMasSMS = async () => {
 
 
 
-export default sentMasSMS;
+export default createMasSMS;

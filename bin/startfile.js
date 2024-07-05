@@ -1,6 +1,6 @@
 import sentmail from "../email/sentfile.js";
 import { emailConfig } from "../config.js";
-import sentMasSMS from "../src/sentSMS.js";
+import createMasSMS from "../src/sentSMS.js";
 import updateGISbd from "../src/JSONtoSQLbd.js";
 import createJSONfromXLSX from "../src/emailDataToJSON.js";
 import createGISreport from "../src/GISbdtoXLSX.js";
@@ -64,7 +64,22 @@ setInterval(async () => {
 
 setInterval(async () => {
   try {
-    await sentMasSMS();
+    const massms = await createMasSMS();
+    await sentmail(
+      emailConfig.SMTPSentcliSMS.emailto,
+      massms[0],
+      emailConfig.SMTPSentcliSMS.textprin
+    )
+    await sentmail(
+      emailConfig.SMTPSentcliSMS.emailto,
+      massms[1],
+      emailConfig.SMTPSentcliSMS.textvipoln
+    );
+    await sentmail(
+      emailConfig.SMTPSentcliSMS.emailto,
+      massms[2],
+      emailConfig.SMTPSentcliSMS.textopros
+    )
   } catch (err) {
     console.log(err);
     logger.info(err);
