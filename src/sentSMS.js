@@ -48,17 +48,17 @@ const createMasSMS = async () => {
             return tlfArrayOpros.indexOf(item) === index;
           });
           const result =[]
-          if (tlfArrayPrinMail.length > 1) {
+        //  if (tlfArrayPrinMail.length > 1) {
             const normPrinTlf=normalizeTlf(tlfArrayPrinMail)
             result.push(normPrinTlf)
-          }
-          if (tlfArrayVipolnMail.length > 1) {
+         // }
+         // if (tlfArrayVipolnMail.length > 1) {
             const normVipolnTlf=normalizeTlf(tlfArrayVipolnMail)
             result.push(normVipolnTlf)
-          }
-          if (tlfArrayOprosMail.length > 1) {
+         // }
+         // if (tlfArrayOprosMail.length > 1) {
             result.push(tlfArrayOprosMail)
-          }
+         // }
           return result
         }
       );
