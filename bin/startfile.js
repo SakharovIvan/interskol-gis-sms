@@ -70,7 +70,7 @@ setInterval(async () => {
     if (massms[0].length() > 0) {
       await sentmail(
         emailConfig.SMTPSentcliSMS.emailto,
-        normalizeTlf(massms[0]),
+        await normalizeTlf(massms[0]),
         emailConfig.SMTPSentcliSMS.textprin
       );
     }
@@ -81,7 +81,7 @@ try{
     if (massms[1].length() > 0) {
       await sentmail(
         emailConfig.SMTPSentcliSMS.emailto,
-        normalizeTlf(massms[1]),
+        await normalizeTlf(massms[1]),
         emailConfig.SMTPSentcliSMS.textvipoln
       );
     }
@@ -92,7 +92,7 @@ try{
     if (massms[2].length() > 0) {
       await sentmail(
         emailConfig.SMTPSentcliSMS.emailto,
-        normalizeTlf(massms[2]),
+        await normalizeTlf(massms[2]),
         emailConfig.SMTPSentcliSMS.textopros
       );
     }
