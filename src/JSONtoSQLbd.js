@@ -12,12 +12,7 @@ import updatecalculationdata from './datacalculation.js'
 
 const logger = log.createSimpleLogger( { logFilePath:'sqlupdate.log', timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS' } );
 
-const normalizeTlf = (tlf) => {
-  return tlf.replaceAll(")", "")
-  .replaceAll("(", "")
-  .replaceAll(" ", "")
-  .replaceAll("+", "")
-};
+
 
 const createGISbd = async () => {
   try {
@@ -80,10 +75,10 @@ const updateGISbd = async (jsonfile) => {
           asc_adr,
           asc_ndk,
           asc_kod,
-          normalizeTlf(asc_telephone),
+          asc_telephone,
           asc_email,
           cli_name,
-          normalizeTlf(cli_telephone),
+          cli_telephone,
           vr,
           snNo_tool,
           matNo_tool,
@@ -133,10 +128,10 @@ const updateGISbd = async (jsonfile) => {
           asc_adr,
           asc_ndk,
           asc_kod,
-          normalizeTlf(asc_telephone),
+          asc_telephone,
           asc_email,
           cli_name,
-          normalizeTlf(cli_telephone),
+          cli_telephone,
           vr,
           snNo_tool,
           matNo_tool,

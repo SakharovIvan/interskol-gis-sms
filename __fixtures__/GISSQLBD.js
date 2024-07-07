@@ -135,10 +135,11 @@ const calculatedata = (
   asc_ndk,
   asc_kod,
   last_update_date,
+  norm_cli_telephone,
   term_rep_all = null,
   term_rep_wosogl = null
 ) => {
-  return `UPDATE GIS SET last_update_date = '${last_update_date}', term_rep_all = ${term_rep_all}, term_rep_wosogl=${term_rep_wosogl}
+  return `UPDATE GIS SET last_update_date = '${last_update_date}', term_rep_all = ${term_rep_all}, term_rep_wosogl=${term_rep_wosogl}, norm_cli_telephone =${norm_cli_telephone}
 WHERE asc_ndk = ${asc_ndk} and asc_kod=${asc_kod};`;
 };
 
@@ -169,7 +170,7 @@ const getGISdatabyData = () => {
 };
 
 const getTelephonestoSent = (date1, date2, status) => {
-  return `SELECT gis.cli_telephone, gis.asc_ndk, gis.asc_kod FROM GIS INNER JOIN SMSstatus ON 
+  return `SELECT gis.norm_cli_telephone, gis.asc_ndk, gis.asc_kod FROM GIS INNER JOIN SMSstatus ON 
 gis.asc_ndk=SMSstatus.asc_ndk and gis.asc_kod=SMSstatus.asc_kod 
 WHERE (gis.date_prin='${date1}' OR gis.date_prin='${date2}') AND SMSstatus.${status} = 'f';`;
 };
