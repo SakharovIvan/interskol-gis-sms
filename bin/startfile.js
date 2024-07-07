@@ -64,8 +64,9 @@ setInterval(async () => {
 
 setInterval(async () => {
   try {
-    if (massms[0].length()>0){
+
     const massms = await createMasSMS();
+    if (massms[0].length()>0){
     await sentmail(
       emailConfig.SMTPSentcliSMS.emailto,
       massms[0],
