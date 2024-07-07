@@ -63,11 +63,11 @@ setInterval(async () => {
   }
 }, mchour);
 
-setInterval(async () => {
+
   try {
     const massms = await createMasSMS();
     try {
-      if (await massms[0].length() > 0) {
+      if (await massms[0].length > 0) {
         await sentmail(
           emailConfig.SMTPSentcliSMS.emailto,
           await normalizeTlf(massms[0]),
@@ -79,7 +79,7 @@ setInterval(async () => {
     }
 
     try {
-      if (await massms[1].length() > 0) {
+      if (await massms[1].length > 0) {
         await sentmail(
           emailConfig.SMTPSentcliSMS.emailto,
           await normalizeTlf(massms[1]),
@@ -91,7 +91,7 @@ setInterval(async () => {
     }
 
     try {
-      if (await massms[2].length() > 0) {
+      if (await massms[2].length > 0) {
         await sentmail(
           emailConfig.SMTPSentcliSMS.emailto,
           await normalizeTlf(massms[2]),
