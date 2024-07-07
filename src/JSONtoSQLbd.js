@@ -95,30 +95,7 @@ const updateGISbd = async (jsonfile) => {
           rem_work)
         );
         await pool.query(updatesqlsmsStatusData(asc_ndk,asc_kod,cli_telephone))
-       // logger.info(`data update: ${
-       //   asc_name,
-       //   asc_gor,
-       //   asc_adr,
-       //   asc_ndk,
-       //   asc_kod,
-       //   asc_telephone,
-       //   asc_email,
-       //   cli_name,
-       //   cli_telephone,
-       //   vr,
-       //   snNo_tool,
-       //   matNo_tool,
-       //   dateofpurch_tool,
-       //   torgorg_tool,
-       //   date_prin,
-       //   date_dia,
-       //   date_sogl1,
-       //   date_sogl2,
-       //   date_ojod1,
-       //   date_ojod2,
-       //   date_vipoln,
-       //   date_vidach,
-       //   rem_work}`)
+
           
       } else {
         await pool.query(
@@ -148,31 +125,7 @@ const updateGISbd = async (jsonfile) => {
           rem_work
         ))
         await pool.query(addsqlsmsStatusData(asc_ndk,asc_kod,cli_telephone))
-        //logger.info(`data add: ${
-        //  asc_name,
-        //  asc_gor,
-        //  asc_adr,
-        //  asc_ndk,
-        //  asc_kod,
-        //  asc_telephone,
-        //  asc_email,
-        //  cli_name,
-        //  cli_telephone,
-        //  vr,
-        //  snNo_tool,
-        //  matNo_tool,
-        //  dateofpurch_tool,
-        //  torgorg_tool,
-        //  date_prin,
-        //  date_dia,
-        //  date_sogl1,
-        //  date_sogl2,
-        //  date_ojod1,
-        //  date_ojod2,
-        //  date_vipoln,
-        //  date_vidach,
-        //  rem_work}`)
-          
+
       }
       await updatecalculationdata(asc_ndk,asc_kod)
     }

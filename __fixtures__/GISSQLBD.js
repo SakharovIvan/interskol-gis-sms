@@ -139,7 +139,7 @@ const calculatedata = (
   term_rep_all = null,
   term_rep_wosogl = null
 ) => {
-  return `UPDATE GIS SET last_update_date = '${last_update_date}', term_rep_all = ${term_rep_all}, term_rep_wosogl=${term_rep_wosogl}, norm_cli_telephone =${norm_cli_telephone}
+  return `UPDATE GIS SET last_update_date = '${last_update_date}', term_rep_all = ${term_rep_all}, term_rep_wosogl=${term_rep_wosogl}, norm_cli_telephone = '${norm_cli_telephone}'
 WHERE asc_ndk = ${asc_ndk} and asc_kod=${asc_kod};`;
 };
 
