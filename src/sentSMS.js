@@ -16,12 +16,14 @@ const normalizeTlf = (obj) => {
   let newobj=''
 
   for (let i=0;i<obj.length;i++ ){
-    newobj=newobj+obj[i].replaceAll(")", "")
-    .replaceAll("(", "")
-    .replaceAll(" ", "")
-    .replaceAll("+", "");+','
+    newobj=newobj+obj[i]
+    //.replaceAll(")", "")
+    //.replaceAll("(", "")
+    //.replaceAll(" ", "")
+    //.replaceAll("+", "")
+    +','
   }
-  
+
   return newobj
 };
 
