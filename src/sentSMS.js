@@ -33,7 +33,7 @@ const createMasSMS = async () => {
         promTlfArrayOpros,
       ]);
       return promisesTlf.then(
-        async ([tlfArrayPrin, tlfArrayVipoln, tlfArrayOpros]) => {
+        ([tlfArrayPrin, tlfArrayVipoln, tlfArrayOpros]) => {
           console.log(tlfArrayPrin, tlfArrayVipoln, tlfArrayOpros)
           logger.info(`tlfArrayPrin ${tlfArrayPrin}`);
           logger.info(`tlfArrayVipoln ${tlfArrayVipoln}`);

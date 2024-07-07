@@ -7,7 +7,7 @@ import createGISreport from "../src/GISbdtoXLSX.js";
 import getPost from "../email/imap_readfile.js";
 
 const mcday = 86400000;
-const mchour = 3600000 ;
+const mchour = 3600000/6;
 const week = mcday * 7;
 const emailReport = "a.rogov@kls-gr.ru; i.sakharov@kls-gr.ru";
 import log from "simple-node-logger";
@@ -33,7 +33,8 @@ setInterval(async () => {
         logger.info(
           `GIS report sent ${
             (emailConfig.SMTPSentreport.emailto,
-            emailConfig.SMTPSentreport.subject)}`
+            emailConfig.SMTPSentreport.subject)
+          }`
         );
       });
     logger.info(`GIS report sent`);
@@ -50,7 +51,7 @@ setInterval(async () => {
     console.log(err);
     logger.info(err);
   }
-}, mchour /3);
+}, mchour / 3);
 
 setInterval(async () => {
   try {
@@ -64,28 +65,28 @@ setInterval(async () => {
 
 setInterval(async () => {
   try {
-
     const massms = await createMasSMS();
-    if (massms[0].length()>0){
-    await sentmail(
-      emailConfig.SMTPSentcliSMS.emailto,
-      massms[0],
-      emailConfig.SMTPSentcliSMS.textprin
-    )}
-    if (massms[1].length()>0){
-    await sentmail(
-      emailConfig.SMTPSentcliSMS.emailto,
-      massms[1],
-      emailConfig.SMTPSentcliSMS.textvipoln
-    );
-  }
-  if (massms[2].length()>0){
-    await sentmail(
-      emailConfig.SMTPSentcliSMS.emailto,
-      massms[2],
-      emailConfig.SMTPSentcliSMS.textopros
-    )
-  }
+    if (massms[0].length() > 0) {
+      await sentmail(
+        emailConfig.SMTPSentcliSMS.emailto,
+        massms[0],
+        emailConfig.SMTPSentcliSMS.textprin
+      );
+    }
+    if (massms[1].length() > 0) {
+      await sentmail(
+        emailConfig.SMTPSentcliSMS.emailto,
+        massms[1],
+        emailConfig.SMTPSentcliSMS.textvipoln
+      );
+    }
+    if (massms[2].length() > 0) {
+      await sentmail(
+        emailConfig.SMTPSentcliSMS.emailto,
+        massms[2],
+        emailConfig.SMTPSentcliSMS.textopros
+      );
+    }
   } catch (err) {
     console.log(err);
     logger.info(err);
