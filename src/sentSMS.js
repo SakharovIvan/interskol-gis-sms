@@ -9,17 +9,17 @@ const logger = log.createSimpleLogger({
 });
 logger.setLevel(emailConfig.logs.level || "debug");
 
-const normalizeTlf = (array) => {
-  console.log(array)
-  console.log(typeof array)
-  logger.info(`${array}: ${typeof array}`);
-
-  return array
-    .toString()
-    .replaceAll(")", "")
-    .replaceAll("(", "")
-    .replaceAll(" ", "")
-    .replaceAll("+", "");
+const normalizeTlf = (obj) => {
+  console.log(obj)
+  console.log(typeof obj)
+  logger.info(`${obj}: ${typeof obj}`);
+const newobj = obj
+.toString()
+.replaceAll(")", "")
+.replaceAll("(", "")
+.replaceAll(" ", "")
+.replaceAll("+", "");
+  return newobj
 };
 
 const createMasSMS = async () => {
