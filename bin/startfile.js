@@ -63,6 +63,7 @@ setInterval(async () => {
     const massms = await createMasSMS();
     try {
       if ((await massms[0].length) > 0) {
+        logger.info(massms[0]);
         await sentmail(
           emailConfig.SMTPSentcliSMS.emailto,
           massms[0],
@@ -75,6 +76,7 @@ setInterval(async () => {
 
     try {
       if ((await massms[1].length) > 0) {
+        logger.info(massms[1]);
         await sentmail(
           emailConfig.SMTPSentcliSMS.emailto,
           massms[1],
@@ -87,6 +89,7 @@ setInterval(async () => {
 
     try {
       if ((await massms[2].length) > 0) {
+        logger.info(massms[2]);
         await sentmail(
           emailConfig.SMTPSentcliSMS.emailto,
           massms[2],

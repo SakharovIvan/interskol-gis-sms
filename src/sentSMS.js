@@ -38,17 +38,17 @@ const createMasSMS = async () => {
       .filter((item, index) => {
         return tlfArrayPrin.indexOf(item) === index;
       })
-      .map((tlf) => normalizeTlf(tlf));
+      //.map((tlf) => normalizeTlf(tlf));
     const tlfArrayVipolnMail = tlfArrayVipoln
       .filter((item, index) => {
         return tlfArrayVipoln.indexOf(item) === index;
       })
-      .map((tlf) => normalizeTlf(tlf));
+     // .map((tlf) => normalizeTlf(tlf));
     const tlfArrayOprosMail = tlfArrayOpros
       .filter((item, index) => {
         return tlfArrayOpros.indexOf(item) === index;
       })
-      .map((tlf) => normalizeTlf(tlf));
+      //.map((tlf) => normalizeTlf(tlf));
     // const result =[]
     //  if (tlfArrayPrinMail.length > 1) {
     // const normPrinTlf=normalizeTlf(tlfArrayPrinMail)
