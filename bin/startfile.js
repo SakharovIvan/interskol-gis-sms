@@ -51,8 +51,8 @@ setInterval(async () => {
       .then(() => {
         logger.info(
           `GIS report sent ${
-            (emailConfig.SMTPSentreport.emailto,
-            emailConfig.SMTPSentreport.subject)
+            emailConfig.SMTPSentreport.emailto,
+            emailConfig.SMTPSentreport.subject
           }`
         );
       });
@@ -70,36 +70,36 @@ setInterval(async () => {
       if (await massms[0].length > 0) {
         await sentmail(
           emailConfig.SMTPSentcliSMS.emailto,
-          await normalizeTlf(await massms[0]),
+          massms[0],
           emailConfig.SMTPSentcliSMS.textprin
         );
       }
     } catch (err) {
-      logger.info("tlfArrayPrinMail", err);
+      logger.info("tlfArrayPrinMail ", err);
     }
 
     try {
       if (await massms[1].length > 0) {
         await sentmail(
           emailConfig.SMTPSentcliSMS.emailto,
-          await normalizeTlf(await massms[1]),
+          massms[1],
           emailConfig.SMTPSentcliSMS.textvipoln
         );
       }
     } catch(err) {
-      logger.info("tlfArrayVipolnMail", err);
+      logger.info("tlfArrayVipolnMail ", err);
     }
 
     try {
       if (await massms[2].length > 0) {
         await sentmail(
           emailConfig.SMTPSentcliSMS.emailto,
-          await normalizeTlf(await massms[2]),
+          massms[2],
           emailConfig.SMTPSentcliSMS.textopros
         );
       }
     } catch (err) {
-      logger.info("tlfArrayVipolnMail", err);
+      logger.info("tlfArrayVipolnMail ", err);
     }
   } catch (err) {
     console.log(err);
