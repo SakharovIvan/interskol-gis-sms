@@ -59,7 +59,7 @@ setInterval(async () => {
 }, mchour + mchour / 60);
 
 try {
-  sentSMS();
+  await sentSMS();
 } catch (err) {
   console.log(err);
   logger.info(err);

@@ -57,12 +57,14 @@ const sentsmsmas = async (massms) => {
   }
 };
 
-export default setInterval(async () => {
-  try {
-    const massms = await createMasSMS();
-    await sentsmsmas(massms);
-  } catch (err) {
-    console.log(err);
-    logger.info(err);
-  }
-}, mchour + mchour / 60);
+export default () => {
+  setInterval(async () => {
+    try {
+      const massms = await createMasSMS();
+      await sentsmsmas(massms);
+    } catch (err) {
+      console.log(err);
+      logger.info(err);
+    }
+  }, mchour + mchour / 60);
+};
