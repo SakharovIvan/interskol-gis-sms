@@ -7,7 +7,7 @@ import createGISreport from "../src/GISbdtoXLSX.js";
 import getPost from "../email/imap_readfile.js";
 
 const mcday = 86400000;
-const mchour = 3600000 / 6;
+const mchour = 3600000 / 12;
 const week = mcday * 7;
 const emailReport = "a.rogov@kls-gr.ru; i.sakharov@kls-gr.ru";
 import log from "simple-node-logger";
@@ -51,8 +51,8 @@ setInterval(async () => {
       .then(() => {
         logger.info(
           `GIS report sent ${
-            emailConfig.SMTPSentreport.emailto,
-            emailConfig.SMTPSentreport.subject
+            (emailConfig.SMTPSentreport.emailto,
+            emailConfig.SMTPSentreport.subject)
           }`
         );
       });
@@ -67,7 +67,7 @@ setInterval(async () => {
   try {
     const massms = await createMasSMS();
     try {
-      if (await massms[0].length > 0) {
+      if ((await massms[0].length) > 0) {
         await sentmail(
           emailConfig.SMTPSentcliSMS.emailto,
           massms[0],
@@ -79,19 +79,19 @@ setInterval(async () => {
     }
 
     try {
-      if (await massms[1].length > 0) {
+      if ((await massms[1].length) > 0) {
         await sentmail(
           emailConfig.SMTPSentcliSMS.emailto,
           massms[1],
           emailConfig.SMTPSentcliSMS.textvipoln
         );
       }
-    } catch(err) {
+    } catch (err) {
       logger.info("tlfArrayVipolnMail ", err);
     }
 
     try {
-      if (await massms[2].length > 0) {
+      if ((await massms[2].length) > 0) {
         await sentmail(
           emailConfig.SMTPSentcliSMS.emailto,
           massms[2],
