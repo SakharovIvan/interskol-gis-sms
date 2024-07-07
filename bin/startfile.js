@@ -72,10 +72,11 @@ setInterval(async () => {
 const sentsmsmas =async (massms)=>{
   try {
     if ((await massms[0].length) > 0) {
-      logger.info(massms[0]);
+      logger.info(normalizeTlf(massms[0]));
+      const massms0 = normalizeTlf(massms[0])
       await sentmail(
         emailConfig.SMTPSentcliSMS.emailto,
-        `${massms[0]}`,
+        `${massms0}`,
         emailConfig.SMTPSentcliSMS.textprin
       );
     }
@@ -85,10 +86,11 @@ const sentsmsmas =async (massms)=>{
 
   try {
     if ((await massms[1].length) > 0) {
-      logger.info(massms[1]);
+      logger.info(normalizeTlf(massms[1]));
+      const massms1 = normalizeTlf(massms[1])
       await sentmail(
         emailConfig.SMTPSentcliSMS.emailto,
-        `${massms[1]}`,
+        `${massms1}`,
         emailConfig.SMTPSentcliSMS.textvipoln
       );
     }
@@ -98,10 +100,11 @@ const sentsmsmas =async (massms)=>{
 
   try {
     if ((await massms[2].length) > 0) {
-      logger.info(massms[2]);
+      logger.info(normalizeTlf(massms[2]));
+      const massms2 = normalizeTlf(massms[2])
       await sentmail(
         emailConfig.SMTPSentcliSMS.emailto,
-        `${massms[2]}`,
+        `${massms2}`,
         emailConfig.SMTPSentcliSMS.textopros
       );
     }
