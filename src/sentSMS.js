@@ -13,7 +13,7 @@ const normalizeTlf = (obj) => {
   console.log(obj)
   console.log(typeof obj)
   logger.info(`${obj}: ${typeof obj}`);
-const newobj = obj
+const newobj = [obj]
 .toString()
 .replaceAll(")", "")
 .replaceAll("(", "")
