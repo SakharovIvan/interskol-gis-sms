@@ -10,6 +10,10 @@ const logger = log.createSimpleLogger({
 logger.setLevel(emailConfig.logs.level || "debug");
 
 const normalizeTlf = (array) => {
+  console.log(array)
+  console.log(typeof array)
+  logger.info(`${array}: ${typeof array}`);
+
   return array
     .toString()
     .replaceAll(")", "")

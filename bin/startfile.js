@@ -98,7 +98,7 @@ const sentsmsmas = async (massms) => {
       );
     }
   } catch (err) {
-    logger.info("tlfArrayVipolnMail ", err);
+    logger.info("tlfArrayOprosMail ", err);
   }
 };
 
