@@ -18,57 +18,6 @@ const logger = log.createSimpleLogger({
 });
 logger.setLevel(emailConfig.logs.level || "debug");
 
-setInterval(async () => {
-  try {
-    getPost();
-  } catch (err) {
-    console.log(err);
-    logger.info(err);
-  }
-}, mchour / 3);
-
-setInterval(async () => {
-  try {
-    const json = createJSONfromXLSX("i.sakharov_LLWarranty17062024");
-    await updateGISbd(json);
-  } catch (err) {
-    console.log(err);
-    logger.info(err);
-  }
-}, mchour / 3);
-
-setInterval(async () => {
-  try {
-    await createGISreport();
-    await sentmail(
-      emailConfig.SMTPSentreport.emailto,
-      emailConfig.SMTPSentreport.subject,
-      "SomeText",
-      "GISdata.xlsx"
-    );
-
-    await logger.info(
-      `GIS report sent ${
-        (emailConfig.SMTPSentreport.emailto, emailConfig.SMTPSentreport.subject)
-      }`
-    );
-  } catch (err) {
-    console.log(err);
-    logger.info(err);
-  }
-}, mchour + mchour/60 );
-
-setInterval(async () => {
-  try {
-    const massms = await createMasSMS();
-    await sentsmsmas(massms)
-  } catch (err) {
-    console.log(err);
-    logger.info(err);
-  }
-}, mchour + mchour/60);
-
-
 const sentsmsmas =async (massms)=>{
   try {
     if ((await massms[0].length) > 0) {
@@ -112,3 +61,53 @@ const sentsmsmas =async (massms)=>{
     logger.info("tlfArrayVipolnMail ", err);
   }
 }
+
+setInterval(async () => {
+  try {
+    getPost();
+  } catch (err) {
+    console.log(err);
+    logger.info(err);
+  }
+}, mchour / 3);
+
+setInterval(async () => {
+  try {
+    const json = createJSONfromXLSX("i.sakharov_LLWarranty17062024");
+    await updateGISbd(json);
+  } catch (err) {
+    console.log(err);
+    logger.info(err);
+  }
+}, mchour / 3);
+
+setInterval(async () => {
+  try {
+    await createGISreport();
+    await sentmail(
+      emailConfig.SMTPSentreport.emailto,
+      emailConfig.SMTPSentreport.subject,
+      "SomeText",
+      "GISdata.xlsx"
+    );
+
+    await logger.info(
+      `GIS report sent ${
+        (emailConfig.SMTPSentreport.emailto, emailConfig.SMTPSentreport.subject)
+      }`
+    );
+  } catch (err) {
+    console.log(err);
+    logger.info(err);
+  }
+}, mchour + mchour/60 )
+
+setInterval(async () => {
+  try {
+    const massms = await createMasSMS();
+    await sentsmsmas(massms)
+  } catch (err) {
+    console.log(err);
+    logger.info(err);
+  }
+}, mchour + mchour/60);
