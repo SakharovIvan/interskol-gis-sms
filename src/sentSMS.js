@@ -50,11 +50,11 @@ const createMasSMS = async () => {
           const result =[]
         //  if (tlfArrayPrinMail.length > 1) {
            // const normPrinTlf=normalizeTlf(tlfArrayPrinMail)
-            result.push(normPrinTlf)
+            result.push(tlfArrayPrinMail)
          // }
          // if (tlfArrayVipolnMail.length > 1) {
             //const normVipolnTlf=normalizeTlf(tlfArrayVipolnMail)
-            result.push(normVipolnTlf)
+            result.push(tlfArrayVipolnMail)
          // }
          // if (tlfArrayOprosMail.length > 1) {
             result.push(tlfArrayOprosMail)
