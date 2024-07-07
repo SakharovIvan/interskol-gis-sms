@@ -63,7 +63,7 @@ setInterval(async () => {
   }
 }, mchour);
 
-
+setInterval(async () => {
   try {
     const massms = await createMasSMS();
     try {
