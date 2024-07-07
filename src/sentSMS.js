@@ -3,7 +3,6 @@ import { ctreateTlfArray, ctreateTlfArrayOpros } from "../sms/cliTLF.js";
 
 import log from "simple-node-logger";
 import { emailConfig } from "../config.js";
-import sentmail from "../email/sentfile.js";
 
 const logger = log.createSimpleLogger({
   logFilePath: "logger.log",

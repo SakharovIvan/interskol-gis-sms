@@ -39,24 +39,19 @@ setInterval(async () => {
 
 setInterval(async () => {
   try {
-    createGISreport()
-      .then(() => {
-        sentmail(
-          emailConfig.SMTPSentreport.emailto,
-          emailConfig.SMTPSentreport.subject,
-          "SomeText",
-          "GISdata.xlsx"
-        );
-      })
-      .then(() => {
-        logger.info(
-          `GIS report sent ${
-            (emailConfig.SMTPSentreport.emailto,
-            emailConfig.SMTPSentreport.subject)
-          }`
-        );
-      });
-    logger.info(`GIS report sent`);
+    await createGISreport();
+    await sentmail(
+      emailConfig.SMTPSentreport.emailto,
+      emailConfig.SMTPSentreport.subject,
+      "SomeText",
+      "GISdata.xlsx"
+    );
+
+    await logger.info(
+      `GIS report sent ${
+        (emailConfig.SMTPSentreport.emailto, emailConfig.SMTPSentreport.subject)
+      }`
+    );
   } catch (err) {
     console.log(err);
     logger.info(err);
