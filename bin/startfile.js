@@ -110,4 +110,4 @@ setInterval(async () => {
     console.log(err);
     logger.info(err);
   }
-}, mchour/20);
+}, mchour/30);

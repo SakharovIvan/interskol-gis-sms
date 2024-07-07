@@ -13,13 +13,15 @@ const normalizeTlf = (obj) => {
   console.log(obj)
   console.log(typeof obj)
   logger.info(`${obj}: ${typeof obj}:${Object.keys(obj)}`);
-  Object.keys(obj)
-const newobj = [obj]
-.toString()
-.replaceAll(")", "")
-.replaceAll("(", "")
-.replaceAll(" ", "")
-.replaceAll("+", "");
+  let newobj=''
+
+  for (let i=0;i<obj.length;i++ ){
+    newobj=newobj+obj[i].replaceAll(")", "")
+    .replaceAll("(", "")
+    .replaceAll(" ", "")
+    .replaceAll("+", "");+','
+  }
+  
   return newobj
 };
 
