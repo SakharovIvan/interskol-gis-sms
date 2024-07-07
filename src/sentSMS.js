@@ -10,10 +10,10 @@ const logger = log.createSimpleLogger({
 logger.setLevel(emailConfig.logs.level || "debug");
 
 const normalizeTlf = (tlf) => {
-  return `${tlf}`.replaceAll(")", "")
-  .replaceAll("(", "")
-  .replaceAll(" ", "")
-  .replaceAll("+", "")
+  return `${tlf}`.replace(/)/g, "")
+  .replace(/(/g, "")
+  .replace(/ /g, "")
+  .replace(/+/g, "")
 };
 
 const createMasSMS = async () => {
