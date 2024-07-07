@@ -7,7 +7,7 @@ import createGISreport from "../src/GISbdtoXLSX.js";
 import getPost from "../email/imap_readfile.js";
 
 const mcday = 86400000;
-const mchour = 3600000 / 12;
+const mchour = 3600000;
 const week = mcday * 7;
 const emailReport = "a.rogov@kls-gr.ru; i.sakharov@kls-gr.ru";
 import log from "simple-node-logger";
@@ -56,7 +56,7 @@ setInterval(async () => {
     console.log(err);
     logger.info(err);
   }
-}, mchour);
+}, mchour + mchour/60 );
 
 setInterval(async () => {
   try {
@@ -66,7 +66,7 @@ setInterval(async () => {
     console.log(err);
     logger.info(err);
   }
-}, mchour);
+}, mchour + mchour/60);
 
 
 const sentsmsmas =async (massms)=>{
