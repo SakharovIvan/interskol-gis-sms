@@ -12,7 +12,8 @@ logger.setLevel(emailConfig.logs.level || "debug");
 const normalizeTlf = (obj) => {
   console.log(obj)
   console.log(typeof obj)
-  logger.info(`${obj}: ${typeof obj}`);
+  logger.info(`${obj}: ${typeof obj}:${Object.keys(obj)}`);
+  Object.keys(obj)
 const newobj = [obj]
 .toString()
 .replaceAll(")", "")
