@@ -49,11 +49,11 @@ const createMasSMS = async () => {
           });
           const result =[]
         //  if (tlfArrayPrinMail.length > 1) {
-            const normPrinTlf=normalizeTlf(tlfArrayPrinMail)
+           // const normPrinTlf=normalizeTlf(tlfArrayPrinMail)
             result.push(normPrinTlf)
          // }
          // if (tlfArrayVipolnMail.length > 1) {
-            const normVipolnTlf=normalizeTlf(tlfArrayVipolnMail)
+            //const normVipolnTlf=normalizeTlf(tlfArrayVipolnMail)
             result.push(normVipolnTlf)
          // }
          // if (tlfArrayOprosMail.length > 1) {
@@ -67,4 +67,4 @@ const createMasSMS = async () => {
 
 
 
-export default createMasSMS;
+export {createMasSMS,normalizeTlf};

@@ -1,6 +1,6 @@
 import sentmail from "../email/sentfile.js";
 import { emailConfig } from "../config.js";
-import createMasSMS from "../src/sentSMS.js";
+import {createMasSMS,normalizeTlf} from "../src/sentSMS.js";
 import updateGISbd from "../src/JSONtoSQLbd.js";
 import createJSONfromXLSX from "../src/emailDataToJSON.js";
 import createGISreport from "../src/GISbdtoXLSX.js";
@@ -69,21 +69,21 @@ setInterval(async () => {
     if (massms[0].length() > 0) {
       await sentmail(
         emailConfig.SMTPSentcliSMS.emailto,
-        massms[0],
+        normalizeTlf(massms[0]),
         emailConfig.SMTPSentcliSMS.textprin
       );
     }
     if (massms[1].length() > 0) {
       await sentmail(
         emailConfig.SMTPSentcliSMS.emailto,
-        massms[1],
+        normalizeTlf(massms[1]),
         emailConfig.SMTPSentcliSMS.textvipoln
       );
     }
     if (massms[2].length() > 0) {
       await sentmail(
         emailConfig.SMTPSentcliSMS.emailto,
-        massms[2],
+        normalizeTlf(massms[2]),
         emailConfig.SMTPSentcliSMS.textopros
       );
     }
