@@ -10,7 +10,7 @@ const logger = log.createSimpleLogger({
 logger.setLevel(emailConfig.logs.level || "debug");
 
 const normalizeTlf = (tlf) => {
-  return tlf    .replaceAll(")", "")
+  return `${tlf}`.replaceAll(")", "")
   .replaceAll("(", "")
   .replaceAll(" ", "")
   .replaceAll("+", "")
