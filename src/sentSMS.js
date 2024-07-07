@@ -50,7 +50,7 @@ const createMasSMS = async () => {
       .filter((item, index) => {
         return tlfArrayOpros.indexOf(item) === index;
       })
-
+      logger.info([tlfArrayPrinMail, tlfArrayVipolnMail, tlfArrayOprosMail]);
     return [tlfArrayPrinMail, tlfArrayVipolnMail, tlfArrayOprosMail];
   });
 };
