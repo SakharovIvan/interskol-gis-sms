@@ -12,12 +12,12 @@ const week = mcday * 7;
 const emailReport = "a.rogov@kls-gr.ru; i.sakharov@kls-gr.ru";
 import log from "simple-node-logger";
 
-const normalizeTlf = (tlf) => {
-  return `${tlf}`.replace(/\)/g, "")
-  .replace(/\(/g, "")
-  .replace(/ /g, "")
-  .replace(/\+/g, "")
-};
+//const normalizeTlf = (tlf) => {
+//  return `${tlf}`.replace(/\)/g, "")
+//  .replace(/\(/g, "")
+//  .replace(/ /g, "")
+//  .replace(/\+/g, "")
+//};
 
 const logger = log.createSimpleLogger({
   logFilePath: "logger.log",
