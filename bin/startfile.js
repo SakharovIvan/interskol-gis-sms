@@ -61,7 +61,7 @@ setInterval(async () => {
     console.log(err);
     logger.info(err);
   }
-}, mchour / 3);
+}, mchour / 3+10);
 
 setInterval(async () => {
   try {
