@@ -12,6 +12,13 @@ const week = mcday * 7;
 const emailReport = "a.rogov@kls-gr.ru; i.sakharov@kls-gr.ru";
 import log from "simple-node-logger";
 
+const normalizeTlf = (tlf) => {
+  return `${tlf}`.replace(/\)/g, "")
+  .replace(/\(/g, "")
+  .replace(/ /g, "")
+  .replace(/\+/g, "")
+};
+
 const logger = log.createSimpleLogger({
   logFilePath: "logger.log",
   timestampFormat: "YYYY-MM-DD HH:mm:ss.SSS",
@@ -65,7 +72,7 @@ const sentsmsmas = async (massms) => {
      // const massms0 = normalizeTlf(massms[0]);
       await sentmail(
         emailConfig.SMTPSentcliSMS.emailto,
-        `${massms[0]}`,
+        normalizeTlf(massms[0]),
         emailConfig.SMTPSentcliSMS.textprin
       );
     }
@@ -79,7 +86,7 @@ const sentsmsmas = async (massms) => {
      // const massms1 = normalizeTlf(massms[1]);
       await sentmail(
         emailConfig.SMTPSentcliSMS.emailto,
-        `${massms[1]}`,
+        normalizeTlf(massms[1]),
         emailConfig.SMTPSentcliSMS.textvipoln
       );
     }
@@ -93,7 +100,7 @@ const sentsmsmas = async (massms) => {
       //const massms2 = normalizeTlf(massms[2]);
       await sentmail(
         emailConfig.SMTPSentcliSMS.emailto,
-        `${massms[2]}`,
+        normalizeTlf(massms[2]),
         emailConfig.SMTPSentcliSMS.textopros
       );
     }

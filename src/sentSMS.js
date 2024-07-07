@@ -36,19 +36,16 @@ const createMasSMS = async () => {
       .filter((item, index) => {
         return tlfArrayPrin.indexOf(item) === index;
       })
-      .map((tlf)=>normalizeTlf(tlf))
       logger.info(typeof tlfArrayPrinMail)
     const tlfArrayVipolnMail = tlfArrayVipoln
       .filter((item, index) => {
         return tlfArrayVipoln.indexOf(item) === index;
       })
-      .map((tlf)=>normalizeTlf(tlf))
       logger.info(typeof tlfArrayVipolnMail)
     const tlfArrayOprosMail = tlfArrayOpros
       .filter((item, index) => {
         return tlfArrayOpros.indexOf(item) === index;
       })
-      .map((tlf)=>normalizeTlf(tlf))
       logger.info(typeof tlfArrayOprosMail)
       logger.info([tlfArrayPrinMail, tlfArrayVipolnMail, tlfArrayOprosMail]);
     return [tlfArrayPrinMail, tlfArrayVipolnMail, tlfArrayOprosMail];
