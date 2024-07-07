@@ -42,14 +42,17 @@ const createMasSMS = async () => {
       .filter((item, index) => {
         return tlfArrayPrin.indexOf(item) === index;
       })
+      logger.info(typeof tlfArrayPrinMail)
     const tlfArrayVipolnMail = tlfArrayVipoln
       .filter((item, index) => {
         return tlfArrayVipoln.indexOf(item) === index;
       })
+      logger.info(typeof tlfArrayVipolnMail)
     const tlfArrayOprosMail = tlfArrayOpros
       .filter((item, index) => {
         return tlfArrayOpros.indexOf(item) === index;
       })
+      logger.info(typeof tlfArrayOprosMail)
       logger.info([tlfArrayPrinMail, tlfArrayVipolnMail, tlfArrayOprosMail]);
     return [tlfArrayPrinMail, tlfArrayVipolnMail, tlfArrayOprosMail];
   });
