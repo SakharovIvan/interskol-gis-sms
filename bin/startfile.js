@@ -61,11 +61,12 @@ setInterval(async () => {
     console.log(err);
     logger.info(err);
   }
-}, mchour / 3+10);
+}, mchour / 3);
 
 setInterval(async () => {
   try {
     const massms = await createMasSMS();
+    try{
     if (massms[0].length() > 0) {
       await sentmail(
         emailConfig.SMTPSentcliSMS.emailto,
@@ -73,6 +74,10 @@ setInterval(async () => {
         emailConfig.SMTPSentcliSMS.textprin
       );
     }
+  }catch(err){
+    logger.info('tlfArrayPrinMail',err);
+  }
+try{
     if (massms[1].length() > 0) {
       await sentmail(
         emailConfig.SMTPSentcliSMS.emailto,
@@ -80,6 +85,10 @@ setInterval(async () => {
         emailConfig.SMTPSentcliSMS.textvipoln
       );
     }
+  }catch{
+    logger.info('tlfArrayVipolnMail',err);
+  }
+  try{
     if (massms[2].length() > 0) {
       await sentmail(
         emailConfig.SMTPSentcliSMS.emailto,
@@ -87,6 +96,10 @@ setInterval(async () => {
         emailConfig.SMTPSentcliSMS.textopros
       );
     }
+  }catch{
+    logger.info('tlfArrayOprosMail',err);
+  }
+
   } catch (err) {
     console.log(err);
     logger.info(err);
