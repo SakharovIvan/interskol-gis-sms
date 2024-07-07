@@ -61,46 +61,51 @@ setInterval(async () => {
 setInterval(async () => {
   try {
     const massms = await createMasSMS();
-    try {
-      if ((await massms[0].length) > 0) {
-        logger.info(massms[0]);
-        await sentmail(
-          emailConfig.SMTPSentcliSMS.emailto,
-          massms[0],
-          emailConfig.SMTPSentcliSMS.textprin
-        );
-      }
-    } catch (err) {
-      logger.info("tlfArrayPrinMail ", err);
-    }
-
-    try {
-      if ((await massms[1].length) > 0) {
-        logger.info(massms[1]);
-        await sentmail(
-          emailConfig.SMTPSentcliSMS.emailto,
-          massms[1],
-          emailConfig.SMTPSentcliSMS.textvipoln
-        );
-      }
-    } catch (err) {
-      logger.info("tlfArrayVipolnMail ", err);
-    }
-
-    try {
-      if ((await massms[2].length) > 0) {
-        logger.info(massms[2]);
-        await sentmail(
-          emailConfig.SMTPSentcliSMS.emailto,
-          massms[2],
-          emailConfig.SMTPSentcliSMS.textopros
-        );
-      }
-    } catch (err) {
-      logger.info("tlfArrayVipolnMail ", err);
-    }
+    await sentsmsmas(massms)
   } catch (err) {
     console.log(err);
     logger.info(err);
   }
 }, mchour);
+
+
+const sentsmsmas =async (massms)=>{
+  try {
+    if ((await massms[0].length) > 0) {
+      logger.info(massms[0]);
+      await sentmail(
+        emailConfig.SMTPSentcliSMS.emailto,
+        massms[0],
+        emailConfig.SMTPSentcliSMS.textprin
+      );
+    }
+  } catch (err) {
+    logger.info("tlfArrayPrinMail ", err);
+  }
+
+  try {
+    if ((await massms[1].length) > 0) {
+      logger.info(massms[1]);
+      await sentmail(
+        emailConfig.SMTPSentcliSMS.emailto,
+        massms[1],
+        emailConfig.SMTPSentcliSMS.textvipoln
+      );
+    }
+  } catch (err) {
+    logger.info("tlfArrayVipolnMail ", err);
+  }
+
+  try {
+    if ((await massms[2].length) > 0) {
+      logger.info(massms[2]);
+      await sentmail(
+        emailConfig.SMTPSentcliSMS.emailto,
+        massms[2],
+        emailConfig.SMTPSentcliSMS.textopros
+      );
+    }
+  } catch (err) {
+    logger.info("tlfArrayVipolnMail ", err);
+  }
+}
