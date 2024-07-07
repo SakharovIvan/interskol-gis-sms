@@ -3,10 +3,10 @@ import {calculatedata, getGISdatabyFilter} from '../__fixtures__/GISSQLBD.js'
 const milSecinDay = 86400000
 
 const normalizeTlf = (tlf) => {
-    return `${tlf}`.replace(/)/g, "")
-    .replace(/(/g, "")
+    return `${tlf}`.replace(/\)/g, "")
+    .replace(/\(/g, "")
     .replace(/ /g, "")
-    .replace(/+/g, "")
+    .replace(/\+/g, "")
   };
 
 const updatecalculationdata = async (asc_ndk, asc_kod)=>{
