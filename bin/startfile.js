@@ -86,7 +86,7 @@ setInterval(async () => {
           emailConfig.SMTPSentcliSMS.textvipoln
         );
       }
-    } catch {
+    } catch(err) {
       logger.info("tlfArrayVipolnMail", err);
     }
 
