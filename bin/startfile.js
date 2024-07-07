@@ -75,7 +75,7 @@ const sentsmsmas =async (massms)=>{
       logger.info(massms[0]);
       await sentmail(
         emailConfig.SMTPSentcliSMS.emailto,
-        massms[0],
+        `${massms[0]}`,
         emailConfig.SMTPSentcliSMS.textprin
       );
     }
@@ -88,7 +88,7 @@ const sentsmsmas =async (massms)=>{
       logger.info(massms[1]);
       await sentmail(
         emailConfig.SMTPSentcliSMS.emailto,
-        massms[1],
+        `${massms[1]}`,
         emailConfig.SMTPSentcliSMS.textvipoln
       );
     }
@@ -101,7 +101,7 @@ const sentsmsmas =async (massms)=>{
       logger.info(massms[2]);
       await sentmail(
         emailConfig.SMTPSentcliSMS.emailto,
-        massms[2],
+        `${massms[2]}`,
         emailConfig.SMTPSentcliSMS.textopros
       );
     }
