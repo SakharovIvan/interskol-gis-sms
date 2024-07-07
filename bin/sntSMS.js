@@ -1,6 +1,5 @@
 import sentmail from "../email/sentfile.js";
 import { emailConfig } from "../config.js";
-
 import { createMasSMS, normalizeTlf } from "../src/sentSMS.js";
 
 const mcday = 86400000;
@@ -58,7 +57,7 @@ const sentsmsmas = async (massms) => {
   }
 };
 
-setInterval(async () => {
+export default setInterval(async () => {
   try {
     const massms = await createMasSMS();
     await sentsmsmas(massms);

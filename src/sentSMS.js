@@ -38,29 +38,15 @@ const createMasSMS = async () => {
       .filter((item, index) => {
         return tlfArrayPrin.indexOf(item) === index;
       })
-      //.map((tlf) => normalizeTlf(tlf));
     const tlfArrayVipolnMail = tlfArrayVipoln
       .filter((item, index) => {
         return tlfArrayVipoln.indexOf(item) === index;
       })
-     // .map((tlf) => normalizeTlf(tlf));
     const tlfArrayOprosMail = tlfArrayOpros
       .filter((item, index) => {
         return tlfArrayOpros.indexOf(item) === index;
       })
-      //.map((tlf) => normalizeTlf(tlf));
-    // const result =[]
-    //  if (tlfArrayPrinMail.length > 1) {
-    // const normPrinTlf=normalizeTlf(tlfArrayPrinMail)
-    // result.push(tlfArrayPrinMail)
-    // }
-    // if (tlfArrayVipolnMail.length > 1) {
-    //const normVipolnTlf=normalizeTlf(tlfArrayVipolnMail)
-    //result.push(tlfArrayVipolnMail)
-    // }
-    // if (tlfArrayOprosMail.length > 1) {
-    //result.push(tlfArrayOprosMail)
-    // }
+
     return [tlfArrayPrinMail, tlfArrayVipolnMail, tlfArrayOprosMail];
   });
 };

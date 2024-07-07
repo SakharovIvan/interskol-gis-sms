@@ -1,6 +1,6 @@
 import sentmail from "../email/sentfile.js";
 import { emailConfig } from "../config.js";
-
+import sentSMS from "./sntSMS.js";
 import updateGISbd from "../src/JSONtoSQLbd.js";
 import createJSONfromXLSX from "../src/emailDataToJSON.js";
 import createGISreport from "../src/GISbdtoXLSX.js";
@@ -17,8 +17,6 @@ const logger = log.createSimpleLogger({
   timestampFormat: "YYYY-MM-DD HH:mm:ss.SSS",
 });
 logger.setLevel(emailConfig.logs.level || "debug");
-
-
 
 setInterval(async () => {
   try {
@@ -58,5 +56,11 @@ setInterval(async () => {
     console.log(err);
     logger.info(err);
   }
-}, mchour + mchour/60 )
+}, mchour + mchour / 60);
 
+try {
+  sentSMS();
+} catch (err) {
+  console.log(err);
+  logger.info(err);
+}
