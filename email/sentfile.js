@@ -22,10 +22,10 @@ const sentmail = async (emailto, subject, text = "", attFile = "") => {
       html: text,
       attachments: [
         {
-          filename: attFile,
-          content: fs.createReadStream(
-            emailConfig.SMTPSentreport.attachment + `${attFile}`
-          ),
+          //filename: attFile,
+          //content: fs.createReadStream(
+          path:  emailConfig.SMTPSentreport.attachment + `${attFile}`
+         // ),
         },
       ],
     });

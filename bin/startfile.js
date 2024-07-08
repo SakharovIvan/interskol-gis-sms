@@ -32,7 +32,7 @@ setInterval(async () => {
     console.log(err);
     logger.info(err);
   }
-}, mchour / 60);
+}, mchour / 10);
 
 setInterval(async () => {
   try {
@@ -43,7 +43,7 @@ setInterval(async () => {
     console.log(err);
     logger.info(err);
   }
-}, mchour / 60);
+}, mchour / 6);
 
 setInterval(async () => {
   try {
@@ -54,7 +54,7 @@ setInterval(async () => {
       "GISdata.xlsx"
     );
 
-    await logger.info(
+    logger.info(
       `GIS report sent ${
         (emailConfig.SMTPSentreport.emailto, emailConfig.SMTPSentreport.subject)
       }`
