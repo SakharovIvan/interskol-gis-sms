@@ -13,6 +13,7 @@ const sentmail = async (emailto, subject, text = "", attFile = "") => {
       text: text,
       html: text,
     });
+    return
   } else {
     await transporter.sendMail({
       from: "<gis@kls-gr.ru>",
@@ -29,6 +30,7 @@ const sentmail = async (emailto, subject, text = "", attFile = "") => {
         },
       ],
     });
+    return
   }
 };
 
