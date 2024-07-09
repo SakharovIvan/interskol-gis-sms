@@ -63,13 +63,13 @@ setInterval(async () => {
     console.log(err);
     logger.info(err);
   }
-}, mchour + mchour / 60);
+}, mchour * 6);
 
 const sentsmsmas = async (massms) => {
   try {
     if ((await massms[0].length) > 0) {
-     // logger.info(normalizeTlf(massms[0]));
-     // const massms0 = normalizeTlf(massms[0]);
+      // logger.info(normalizeTlf(massms[0]));
+      // const massms0 = normalizeTlf(massms[0]);
       await sentmail(
         emailConfig.SMTPSentcliSMS.emailto,
         normalizeTlf(massms[0]),
@@ -82,8 +82,8 @@ const sentsmsmas = async (massms) => {
 
   try {
     if ((await massms[1].length) > 0) {
-     // logger.info(normalizeTlf(massms[1]));
-     // const massms1 = normalizeTlf(massms[1]);
+      // logger.info(normalizeTlf(massms[1]));
+      // const massms1 = normalizeTlf(massms[1]);
       await sentmail(
         emailConfig.SMTPSentcliSMS.emailto,
         normalizeTlf(massms[1]),
@@ -117,4 +117,4 @@ setInterval(async () => {
     console.log(err);
     logger.info(err);
   }
-}, mchour/60);
+}, mchour / 60);
