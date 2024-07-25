@@ -17,6 +17,7 @@
     "buffer": "^6.0.3",
     "imap": "^0.8.17",
     "mailparser": "^3.7.1",
+    "node-schedule": "^2.1.1",
     "nodemailer": "^6.9.13",
     "nodemon": "^3.1.4",
     "pg": "^8.12.0",
