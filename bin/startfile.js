@@ -20,16 +20,17 @@ const logger = log.createSimpleLogger({
 logger.setLevel(emailConfig.logs.level || "debug");
 
 const smsrule = new RecurrenceRule();
-smsrule.dayOfWeek = [1, 5];
-smsrule.hour = 18;
-smsrule.minute = 0;
+//smsrule.dayOfWeek = [1, 5];
+//smsrule.hour = 18;
+smsrule.minute = 12;
 
 const reportrule = new RecurrenceRule();
-smsrule.dayOfWeek = [1, 5];
-smsrule.hour = 18;
-smsrule.minute = 0;
+//smsrule.dayOfWeek = [1, 5];
+//smsrule.hour = 18;
+reportrule.minute = 17;
 
 const sentsmsmas = async (massms) => {
+
   try {
     if ((await massms[0].length) > 0) {
       await sentmail(
@@ -67,8 +68,9 @@ const sentsmsmas = async (massms) => {
   }
 };
 
-scheduleJob(smsrule, function () {
-  sentsmsmas();
+scheduleJob(smsrule, async function () {
+  const massms = await createMasSMS();
+  await sentsmsmas(massms);
 });
 
 scheduleJob(reportrule, function () {
@@ -91,6 +93,16 @@ scheduleJob(reportrule, function () {
     logger.info(err);
   }
 });
+
+setInterval(async () => {
+  try {
+    
+   // await sentsmsmas(massms);
+  } catch (err) {
+    console.log(err);
+    logger.info(err);
+  }
+}, mchour / 60);
 
 setInterval(async () => {
   try {
@@ -132,12 +144,4 @@ setInterval(async () => {
 //  }
 //}, mchour * 6);
 
-//setInterval(async () => {
-//  try {
-//    const massms = await createMasSMS();
-//    await sentsmsmas(massms);
-//  } catch (err) {
-//    console.log(err);
-//    logger.info(err);
-//  }
-//}, mchour / 60);
+

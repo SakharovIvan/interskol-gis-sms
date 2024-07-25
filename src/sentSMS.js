@@ -18,8 +18,8 @@ const normalizeTlf = (tlf) => {
 
 const createMasSMS = async () => {
   //createGISreport();
-  const promTlfArrayPrin = ctreateTlfArray("SMS_status_prin");
-  const promTlfArrayVipoln = ctreateTlfArray("SMS_status_vipoln");
+  const promTlfArrayPrin = ctreateTlfArray("SMS_status_prin","date_prin");
+  const promTlfArrayVipoln = ctreateTlfArray("SMS_status_vipoln","date_vipoln");
   const promTlfArrayOpros = ctreateTlfArrayOpros();
 
   const promisesTlf = Promise.all([
