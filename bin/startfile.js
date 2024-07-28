@@ -11,13 +11,13 @@ const mcday = 86400000;
 const mchour = 3600000;
 const week = mcday * 7;
 const emailReport = "a.rogov@kls-gr.ru; i.sakharov@kls-gr.ru";
-import log from "simple-node-logger";
-
-const logger = log.createSimpleLogger({
-  logFilePath: "logger.log",
-  timestampFormat: "YYYY-MM-DD HH:mm:ss.SSS",
-});
-logger.setLevel(emailConfig.logs.level || "debug");
+//import log from "simple-node-logger";
+//
+//const logger = log.createSimpleLogger({
+//  logFilePath: "logger.log",
+//  timestampFormat: "YYYY-MM-DD HH:mm:ss.SSS",
+//});
+//logger.setLevel(emailConfig.logs.level || "debug");
 
 const smsrule = new RecurrenceRule();
 //smsrule.dayOfWeek = [1, 5];
@@ -30,7 +30,6 @@ const reportrule = new RecurrenceRule();
 reportrule.minute = 17;
 
 const sentsmsmas = async (massms) => {
-
   try {
     if ((await massms[0].length) > 0) {
       await sentmail(
@@ -40,9 +39,8 @@ const sentsmsmas = async (massms) => {
       );
     }
   } catch (err) {
-    logger.info("tlfArrayPrinMail ", err);
+  //  logger.info("tlfArrayPrinMail ", err);
   }
-
   try {
     if ((await massms[1].length) > 0) {
       await sentmail(
@@ -52,9 +50,8 @@ const sentsmsmas = async (massms) => {
       );
     }
   } catch (err) {
-    logger.info("tlfArrayVipolnMail ", err);
+ //   logger.info("tlfArrayVipolnMail ", err);
   }
-
   try {
     if ((await massms[2].length) > 0) {
       await sentmail(
@@ -64,7 +61,7 @@ const sentsmsmas = async (massms) => {
       );
     }
   } catch (err) {
-    logger.info("tlfArrayOprosMail ", err);
+//    logger.info("tlfArrayOprosMail ", err);
   }
 };
 
@@ -81,16 +78,16 @@ scheduleJob(reportrule, function () {
       "SomeText",
       "GISdata.xlsx"
     ).then(() => {
-      logger.info(
-        `GIS report sent ${
-          (emailConfig.SMTPSentreport.emailto,
-          emailConfig.SMTPSentreport.subject)
-        }`
-      );
+//      logger.info(
+//        `GIS report sent ${
+//          (emailConfig.SMTPSentreport.emailto,
+//          emailConfig.SMTPSentreport.subject)
+//        }`
+//      );
     });
   } catch (err) {
     console.log(err);
-    logger.info(err);
+//    logger.info(err);
   }
 });
 
@@ -100,7 +97,7 @@ setInterval(async () => {
    // await sentsmsmas(massms);
   } catch (err) {
     console.log(err);
-    logger.info(err);
+//    logger.info(err);
   }
 }, mchour / 60);
 
@@ -109,7 +106,7 @@ setInterval(async () => {
     getPost();
   } catch (err) {
     console.log(err);
-    logger.info(err);
+//    logger.info(err);
   }
 }, mchour / 10);
 
@@ -120,7 +117,7 @@ setInterval(async () => {
     await createGISreport();
   } catch (err) {
     console.log(err);
-    logger.info(err);
+//    logger.info(err);
   }
 }, mchour / 6);
 
