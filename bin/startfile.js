@@ -25,8 +25,8 @@ smsrule.hour = 18;
 smsrule.minute = 12;
 
 const reportrule = new RecurrenceRule();
-smsrule.dayOfWeek = [1, 5];
-smsrule.hour = 18;
+reportrule.dayOfWeek = [1, 5];
+reportrule.hour = 18;
 reportrule.minute = 17;
 
 const sentsmsmas = async (massms) => {
@@ -78,12 +78,12 @@ scheduleJob(reportrule, function () {
       "SomeText",
       "GISdata.xlsx"
     ).then(() => {
-//      logger.info(
-//        `GIS report sent ${
-//          (emailConfig.SMTPSentreport.emailto,
-//          emailConfig.SMTPSentreport.subject)
-//        }`
-//      );
+      logger.info(
+        `GIS report sent ${
+          (emailConfig.SMTPSentreport.emailto,
+          emailConfig.SMTPSentreport.subject)
+        }`
+      );
     });
   } catch (err) {
     console.log(err);
@@ -91,15 +91,6 @@ scheduleJob(reportrule, function () {
   }
 });
 
-setInterval(async () => {
-  try {
-    
-   // await sentsmsmas(massms);
-  } catch (err) {
-    console.log(err);
-//    logger.info(err);
-  }
-}, mchour / 60);
 
 setInterval(async () => {
   try {
@@ -108,7 +99,7 @@ setInterval(async () => {
     console.log(err);
 //    logger.info(err);
   }
-}, mchour / 10);
+}, mchour / 20);
 
 setInterval(async () => {
   try {
@@ -119,26 +110,6 @@ setInterval(async () => {
     console.log(err);
 //    logger.info(err);
   }
-}, mchour / 6);
-
-//setInterval(async () => {
-//  try {
-//    await sentmail(
-//      emailConfig.SMTPSentreport.emailto,
-//      emailConfig.SMTPSentreport.subject,
-//      "SomeText",
-//      "GISdata.xlsx"
-//    );
-//
-//    logger.info(
-//      `GIS report sent ${
-//        (emailConfig.SMTPSentreport.emailto, emailConfig.SMTPSentreport.subject)
-//      }`
-//    );
-//  } catch (err) {
-//    console.log(err);
-//    logger.info(err);
-//  }
-//}, mchour * 6);
+}, mchour);
 
 
