@@ -21,12 +21,12 @@ const emailReport = "a.rogov@kls-gr.ru; i.sakharov@kls-gr.ru";
 
 const smsrule = new RecurrenceRule();
 smsrule.dayOfWeek = [1, 5];
-smsrule.hour = 18;
-smsrule.minute = 12;
+smsrule.hour = [13,14,15,16,17,18];
+
 
 const reportrule = new RecurrenceRule();
 reportrule.dayOfWeek = [1, 5];
-reportrule.hour = 18;
+//reportrule.hour = 18;
 reportrule.minute = 17;
 
 const sentsmsmas = async (massms) => {
