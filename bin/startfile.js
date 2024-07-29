@@ -20,13 +20,13 @@ const emailReport = "a.rogov@kls-gr.ru; i.sakharov@kls-gr.ru";
 //logger.setLevel(emailConfig.logs.level || "debug");
 
 const smsrule = new RecurrenceRule();
-//smsrule.dayOfWeek = [1, 5];
-//smsrule.hour = 18;
+smsrule.dayOfWeek = [1, 5];
+smsrule.hour = 18;
 smsrule.minute = 12;
 
 const reportrule = new RecurrenceRule();
-//smsrule.dayOfWeek = [1, 5];
-//smsrule.hour = 18;
+smsrule.dayOfWeek = [1, 5];
+smsrule.hour = 18;
 reportrule.minute = 17;
 
 const sentsmsmas = async (massms) => {
