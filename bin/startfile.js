@@ -26,7 +26,7 @@ smsrule.hour = [13,14,15,16,17,18];
 
 const reportrule = new RecurrenceRule();
 reportrule.dayOfWeek = [1, 5];
-//reportrule.hour = 18;
+reportrule.hour = 15;
 reportrule.minute = 17;
 
 const sentsmsmas = async (massms) => {
