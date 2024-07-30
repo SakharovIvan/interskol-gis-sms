@@ -172,7 +172,7 @@ const getGISdatabyData = () => {
 const getTelephonestoSent = (date1, date2, status, date_type) => {
   return `SELECT gis.cli_telephone, gis.asc_ndk, gis.asc_kod FROM GIS INNER JOIN SMSstatus ON 
 gis.asc_ndk=SMSstatus.asc_ndk and gis.asc_kod=SMSstatus.asc_kod 
-WHERE (gis.${date_type}='${date1}' OR gis.${date_type}='${date2}') AND SMSstatus.${status} = 'f';`;
+WHERE (gis.${date_type}='${date1}' OR gis.${date_type}='${date2}') AND SMSstatus.${status} = 'f' LIMIT 19;`;
 };
 
 export {
