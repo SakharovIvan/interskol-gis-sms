@@ -21,7 +21,7 @@ const emailReport = "a.rogov@kls-gr.ru; i.sakharov@kls-gr.ru";
 
 const smsrule = new RecurrenceRule();
 smsrule.dayOfWeek = [1, 5];
-smsrule.hour = [13,14,15,16,17,18];
+smsrule.hour = [9,18];
 
 
 const reportrule = new RecurrenceRule();
