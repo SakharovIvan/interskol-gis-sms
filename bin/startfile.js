@@ -21,8 +21,8 @@ const emailReport = "a.rogov@kls-gr.ru; i.sakharov@kls-gr.ru";
 
 const smsrule = new RecurrenceRule();
 smsrule.dayOfWeek = [1, 5];
-smsrule.hour = [9,18];
-
+//smsrule.hour = 13
+reportrule.minute = 1;
 
 const reportrule = new RecurrenceRule();
 reportrule.dayOfWeek = [1, 5];
@@ -39,7 +39,7 @@ const sentsmsmas = async (massms) => {
       );
     }
   } catch (err) {
-  //  logger.info("tlfArrayPrinMail ", err);
+    //  logger.info("tlfArrayPrinMail ", err);
   }
   try {
     if ((await massms[1].length) > 0) {
@@ -50,7 +50,7 @@ const sentsmsmas = async (massms) => {
       );
     }
   } catch (err) {
- //   logger.info("tlfArrayVipolnMail ", err);
+    //   logger.info("tlfArrayVipolnMail ", err);
   }
   try {
     if ((await massms[2].length) > 0) {
@@ -61,7 +61,7 @@ const sentsmsmas = async (massms) => {
       );
     }
   } catch (err) {
-//    logger.info("tlfArrayOprosMail ", err);
+    //    logger.info("tlfArrayOprosMail ", err);
   }
 };
 
@@ -87,17 +87,16 @@ scheduleJob(reportrule, function () {
     });
   } catch (err) {
     console.log(err);
-//    logger.info(err);
+    //    logger.info(err);
   }
 });
-
 
 setInterval(async () => {
   try {
     getPost();
   } catch (err) {
     console.log(err);
-//    logger.info(err);
+    //    logger.info(err);
   }
 }, mchour / 20);
 
@@ -108,8 +107,6 @@ setInterval(async () => {
     await createGISreport();
   } catch (err) {
     console.log(err);
-//    logger.info(err);
+    //    logger.info(err);
   }
 }, mchour);
-
-
