@@ -18,7 +18,7 @@ const logger = log.createSimpleLogger({
   timestampFormat: "YYYY-MM-DD HH:mm:ss.SSS",
 });
 logger.setLevel(emailConfig.logs.level || "debug");
-logger.info("Process", err);
+logger.info("Process");
 
 const smsrule = new RecurrenceRule();
 smsrule.dayOfWeek = [new Range(1,5)];
