@@ -5,7 +5,7 @@ import updateGISbd from "../src/JSONtoSQLbd.js";
 import createJSONfromXLSX from "../src/emailDataToJSON.js";
 import createGISreport from "../src/GISbdtoXLSX.js";
 import getPost from "../email/imap_readfile.js";
-import { RecurrenceRule, scheduleJob } from "node-schedule";
+import { RecurrenceRule, scheduleJob, Range } from "node-schedule";
 
 const mcday = 86400000;
 const mchour = 3600000;
@@ -20,12 +20,12 @@ const emailReport = "a.rogov@kls-gr.ru; i.sakharov@kls-gr.ru";
 //logger.setLevel(emailConfig.logs.level || "debug");
 
 const smsrule = new RecurrenceRule();
-//smsrule.dayOfWeek = [0, new schedule.Range(1,5)];
+smsrule.dayOfWeek = [new Range(1,5)];
 //smsrule.hour = 13
 smsrule.minute = 25;
 
 const reportrule = new RecurrenceRule();
-//reportrule.dayOfWeek = [0, new schedule.Range(1,5)];
+reportrule.dayOfWeek = [new Range(1,5)];
 //reportrule.hour = 15;
 reportrule.minute  = 17;
 
