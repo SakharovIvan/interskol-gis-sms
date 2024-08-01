@@ -22,7 +22,7 @@ const emailReport = "a.rogov@kls-gr.ru; i.sakharov@kls-gr.ru";
 const smsrule = new RecurrenceRule();
 smsrule.dayOfWeek = [0, new schedule.Range(1,5)];
 //smsrule.hour = 13
-smsrule.minute = 30;
+smsrule.minute = 25;
 
 const reportrule = new RecurrenceRule();
 reportrule.dayOfWeek = [0, new schedule.Range(1,5)];
@@ -78,12 +78,7 @@ scheduleJob(reportrule, function () {
       "SomeText",
       "GISdata.xlsx"
     ).then(() => {
-      logger.info(
-        `GIS report sent ${
-          (emailConfig.SMTPSentreport.emailto,
-          emailConfig.SMTPSentreport.subject)
-        }`
-      );
+console.log('Report sent')
     });
   } catch (err) {
     console.log(err);
