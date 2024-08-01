@@ -22,7 +22,7 @@ const emailReport = "a.rogov@kls-gr.ru; i.sakharov@kls-gr.ru";
 const smsrule = new RecurrenceRule();
 smsrule.dayOfWeek = [0, new schedule.Range(1,5)];
 //smsrule.hour = 13
-smsrule.minute = 1;
+smsrule.minute = 30;
 
 const reportrule = new RecurrenceRule();
 reportrule.dayOfWeek = [0, new schedule.Range(1,5)];
