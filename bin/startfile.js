@@ -23,12 +23,12 @@ logger.info("Process");
 const smsrule = new RecurrenceRule();
 smsrule.dayOfWeek = [new Range(1,5)];
 //smsrule.hour = 13
-smsrule.minute = 30;
+smsrule.minute = 20;
 
 const reportrule = new RecurrenceRule();
 reportrule.dayOfWeek = [new Range(1,5)];
 //reportrule.hour = 15;
-reportrule.minute  = 30 ;
+reportrule.minute  = 20 ;
 
 const sentsmsmas = async (massms) => {
   try {
