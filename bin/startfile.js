@@ -65,9 +65,12 @@ const sentsmsmas = async (massms) => {
   }
 };
 
-scheduleJob(smsrule, async function () {
-  const massms = await createMasSMS();
-  await sentsmsmas(massms);
+scheduleJob(smsrule,  function () {
+  createMasSMS()
+  .then((massms)=>{
+    sentsmsmas(massms)
+  })
+
 });
 
 scheduleJob(reportrule, function () {
