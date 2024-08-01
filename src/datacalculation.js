@@ -17,8 +17,8 @@ const updatecalculationdata = async (asc_ndk, asc_kod)=>{
       let term_rep_all = null
       let term_rep_wosogl = null
       let norm_cli_telephone= normalizeTlf(gisbd.cli_telephone)
-        if (gisbd.date_vipoln!==''){
-             term_rep_all= Math.round((parseDate(gisbd.date_vipoln)-parseDate(gisbd.date_prin))/milSecinDay)
+        if (gisbd.date_vidach!==''){
+             term_rep_all= Math.round((parseDate(gisbd.date_vidach)-parseDate(gisbd.date_prin))/milSecinDay)
             if(gisbd.date_sogl2!==''){
                 term_rep_wosogl= term_rep_all - Math.round((parseDate(gisbd.date_sogl2)-parseDate(gisbd.date_sogl1))/milSecinDay)
 
