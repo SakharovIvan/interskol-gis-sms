@@ -20,15 +20,16 @@ const logger = log.createSimpleLogger({
 logger.setLevel(emailConfig.logs.level || "debug");
 logger.info("Process");
 
-const smsrule = new RecurrenceRule();
-smsrule.dayOfWeek = [new Range(1,5)];
-//smsrule.hour = 13
-smsrule.minute = 20;
+const smsrule = "* */5 15 * * 1-5";
+//new RecurrenceRule();
+//smsrule.dayOfWeek = [new Range(1,5)];
+////smsrule.hour = 13
+//smsrule.minute = 20;
 
 const reportrule = new RecurrenceRule();
-reportrule.dayOfWeek = [new Range(1,5)];
+reportrule.dayOfWeek = [new Range(1, 5)];
 //reportrule.hour = 15;
-reportrule.minute  = 20 ;
+reportrule.minute = 20;
 
 const sentsmsmas = async (massms) => {
   try {
@@ -66,12 +67,10 @@ const sentsmsmas = async (massms) => {
   }
 };
 
-scheduleJob(smsrule,  function () {
-  createMasSMS()
-  .then((massms)=>{
-    sentsmsmas(massms)
-  })
-
+scheduleJob(smsrule, function () {
+  createMasSMS().then((massms) => {
+    sentsmsmas(massms);
+  });
 });
 
 scheduleJob(reportrule, function () {
@@ -82,7 +81,7 @@ scheduleJob(reportrule, function () {
       "SomeText",
       "GISdata.xlsx"
     ).then(() => {
-console.log('Report sent')
+      console.log("Report sent");
     });
   } catch (err) {
     console.log(err);
