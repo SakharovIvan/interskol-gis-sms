@@ -20,12 +20,12 @@ const emailReport = "a.rogov@kls-gr.ru; i.sakharov@kls-gr.ru";
 //logger.setLevel(emailConfig.logs.level || "debug");
 
 const smsrule = new RecurrenceRule();
-smsrule.dayOfWeek = [1, 5];
+smsrule.dayOfWeek = [0, new schedule.Range(1,5)];
 //smsrule.hour = 13
 smsrule.minute = 1;
 
 const reportrule = new RecurrenceRule();
-reportrule.dayOfWeek = [1, 5];
+reportrule.dayOfWeek = [0, new schedule.Range(1,5)];
 reportrule.hour = 15;
 reportrule.minute = 17;
 
