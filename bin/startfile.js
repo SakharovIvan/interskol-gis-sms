@@ -21,10 +21,6 @@ logger.setLevel(emailConfig.logs.level || "debug");
 logger.info("Process");
 
 const smsrule = "*/5 14 * * 1-5";
-//new RecurrenceRule();
-//smsrule.dayOfWeek = [new Range(1,5)];
-////smsrule.hour = 13
-//smsrule.minute = 20;
 
 const reportrule = "0 15 * * 1-5";
 
