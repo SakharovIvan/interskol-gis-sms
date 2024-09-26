@@ -34,7 +34,7 @@ const sentsmsmas = async (massms) => {
       );
     }
   } catch (err) {
-    //  logger.info("tlfArrayPrinMail ", err);
+    console.log(err);
   }
   try {
     if ((await massms[1].length) > 0) {
@@ -45,7 +45,7 @@ const sentsmsmas = async (massms) => {
       );
     }
   } catch (err) {
-    //   logger.info("tlfArrayVipolnMail ", err);
+    console.log(err);
   }
   try {
     if ((await massms[2].length) > 0) {
@@ -56,7 +56,7 @@ const sentsmsmas = async (massms) => {
       );
     }
   } catch (err) {
-    //    logger.info("tlfArrayOprosMail ", err);
+    console.log(err);
   }
 };
 
@@ -66,30 +66,29 @@ scheduleJob(smsrule, function () {
   });
 });
 
-scheduleJob(reportrule, function () {
-  try {
-    sentmail(
-      emailConfig.SMTPSentreport.emailto,
-      emailConfig.SMTPSentreport.subject,
-      "SomeText",
-      "GISdata.xlsx"
-    ).then(() => {
-      console.log("Report sent");
-    });
-  } catch (err) {
-    console.log(err);
-    //    logger.info(err);
-  }
-});
+//scheduleJob(reportrule, function () {
+//  try {
+//    sentmail(
+//      emailConfig.SMTPSentreport.emailto,
+//      emailConfig.SMTPSentreport.subject,
+//      "SomeText",
+//      "GISdata.xlsx"
+//    ).then(() => {
+//      console.log("Report sent");
+//    });
+//  } catch (err) {
+//    console.log(err);
+//    //    logger.info(err);
+//  }
+//});
 
 setInterval(async () => {
   try {
     getPost();
   } catch (err) {
     console.log(err);
-    //    logger.info(err);
   }
-}, mchour / 20);
+}, mchour / 6);
 
 setInterval(async () => {
   try {
@@ -98,6 +97,5 @@ setInterval(async () => {
     await createGISreport();
   } catch (err) {
     console.log(err);
-    //    logger.info(err);
   }
 }, mchour);
