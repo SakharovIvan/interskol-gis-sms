@@ -12,7 +12,7 @@ for (let i=0; i<sheets.length;i++){
         data.push(res)
     })
 }
-console.log('createJSONfromXLSX done')
+//console.log('createJSONfromXLSX done')
 return data
 }
 
