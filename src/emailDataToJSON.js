@@ -1,6 +1,6 @@
 import reader from 'xlsx'
 
-const createJSONfromXLSX=  (filename)=>{
+function createJSONfromXLSX (filename){
 const file =  reader.readFile('./downloads/'+filename+'.XLSX')
 let data =[]
 const sheets = file.SheetNames
@@ -12,7 +12,6 @@ for (let i=0; i<sheets.length;i++){
         data.push(res)
     })
 }
-//console.log('createJSONfromXLSX done')
 return data
 }
 

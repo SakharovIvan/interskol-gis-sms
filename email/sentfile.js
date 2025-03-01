@@ -1,6 +1,5 @@
 import nodemailer from "nodemailer";
 import { emailConfig } from "../config.js";
-import fs from "fs";
 
 let transporter = nodemailer.createTransport(emailConfig.nodemailer);
 

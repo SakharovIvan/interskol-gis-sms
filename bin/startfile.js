@@ -1,10 +1,7 @@
 import sentmail from "../email/sentfile.js";
 import { emailConfig } from "../config.js";
-import { createMasSMS, normalizeTlf } from "../src/sentSMS.js";
-import updateGISbd from "../src/JSONtoSQLbd.js";
-import createJSONfromXLSX from "../src/emailDataToJSON.js";
-import createGISreport from "../src/GISbdtoXLSX.js";
-import getPost from "../email/imap_readfile.js";
+import getPost from '../email/imap_readfile.js'
+import { sms_job, gis_DB_job } from "../src/index.js";
 import { RecurrenceRule, scheduleJob, Range } from "node-schedule";
 
 const mcday = 86400000;
@@ -24,46 +21,9 @@ const smsrule = "*/5 14 * * 1-5";
 
 const reportrule = "0 15 * * 1-5";
 
-const sentsmsmas = async (massms) => {
-  try {
-    if ((await massms[0].length) > 0) {
-      await sentmail(
-        emailConfig.SMTPSentcliSMS.emailto,
-        normalizeTlf(massms[0]),
-        emailConfig.SMTPSentcliSMS.textprin
-      );
-    }
-  } catch (err) {
-    console.log(err);
-  }
-  try {
-    if ((await massms[1].length) > 0) {
-      await sentmail(
-        emailConfig.SMTPSentcliSMS.emailto,
-        normalizeTlf(massms[1]),
-        emailConfig.SMTPSentcliSMS.textvipoln
-      );
-    }
-  } catch (err) {
-    console.log(err);
-  }
-  try {
-    if ((await massms[2].length) > 0) {
-      await sentmail(
-        emailConfig.SMTPSentcliSMS.emailto,
-        normalizeTlf(massms[2]),
-        emailConfig.SMTPSentcliSMS.textopros
-      );
-    }
-  } catch (err) {
-    console.log(err);
-  }
-};
-
 scheduleJob(smsrule, function () {
-  createMasSMS().then((massms) => {
-    sentsmsmas(massms);
-  });
+
+
 });
 
 //scheduleJob(reportrule, function () {
@@ -78,24 +38,26 @@ scheduleJob(smsrule, function () {
 //    });
 //  } catch (err) {
 //    console.log(err);
-//    //    logger.info(err);
 //  }
 //});
 
-setInterval(async () => {
+setInterval( () => {
   try {
-    getPost();
+    getPost()
+   setTimeout(async() => {
+    console.log('gis_DB_job started')
+    await gis_DB_job();
+   }, ); 
   } catch (err) {
     console.log(err);
   }
-}, mchour / 6);
+}, mchour / 60);
 
 setInterval(async () => {
   try {
-    const json = createJSONfromXLSX("i.sakharov_LLWarranty17062024");
-    await updateGISbd(json);
-    await createGISreport();
+    console.log('sms_job started')
+    await sms_job();
   } catch (err) {
     console.log(err);
   }
-}, mchour);
+}, mchour/60);

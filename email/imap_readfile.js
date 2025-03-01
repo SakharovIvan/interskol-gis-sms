@@ -6,11 +6,7 @@ import Imap from "imap";
 const imap = new Imap(config.imap);
 
 // Simple logger:
-import log from "simple-node-logger";
 const getPost = () => {
-  //const logger = log.createSimpleLogger( config.logs.simpleNodeLogger || { logFilePath:'mail-downloader.log', timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS' } );
-  //logger.setLevel(config.logs.level || 'debug');
-
   const markAsRead =
     config.imapOptions && config.imapOptions.markAsRead
       ? config.imapOptions.markAsRead
@@ -64,7 +60,7 @@ const getPost = () => {
   function buildAttMessageFunction(attachment, emailFrom, emailDate) {
     const filename = attachment.params.name;
     const encoding = attachment.encoding;
-
+    console.log(emailFrom)
     return function (msg, seqno) {
       var prefix = "(#" + seqno + ") ";
       msg.on("body", function (stream, info) {
@@ -127,26 +123,23 @@ const getPost = () => {
               });
               stream.once("end", function () {
                 const parsedHeader = Imap.parseHeader(buffer);
-                //  logger.debug(prefix + 'Parsed header: %s', parsedHeader);
                 // set to global vars so they can be used later to format filename:
                 emailFrom = parsedHeader.from[0];
                 emailDate = parsedHeader.date[0];
-                //  logger.info(`Email from ${emailFrom} with date ${emailDate}`);
               });
             });
 
             msg.once("attributes", function (attrs) {
               const attachments = findAttachmentParts(attrs.struct);
-              //  logger.debug(prefix + 'Has attachments: %d', attachments.length);
-              //  logger.info(`Email with ${attachments.length} attachemnts`);
               for (var i = 0, len = attachments.length; i < len; ++i) {
                 const attachment = attachments[i];
-                //   logger.debug(prefix + 'Fetching attachment %s', attachment.params.name);
                 var f = imap.fetch(attrs.uid, {
                   bodies: [attachment.partID],
                   struct: true,
                 });
                 //build function to process attachment message
+                      if(emailFrom!=='GIS Info INTERSKOL <gis@kls-gr.ru>'){return}
+
                 f.on(
                   "message",
                   buildAttMessageFunction(attachment, emailFrom, emailDate)
@@ -155,16 +148,13 @@ const getPost = () => {
             });
 
             msg.once("end", function () {
-              // logger.debug(prefix + 'Finished email');
             });
           });
 
           f.once("error", function (err) {
-            //  logger.error('Fetch error: ' + err);
           });
 
           f.once("end", function () {
-            //logger.info('Done fetching all messages!');
             imap.end();
           });
         }
@@ -177,7 +167,6 @@ const getPost = () => {
   });
 
   imap.once("end", function () {
-    //logger.info('Connection ended');
   });
 
   imap.connect();
