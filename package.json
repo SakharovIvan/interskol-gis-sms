@@ -4,9 +4,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon bin/startfile.js",
-    "start": "node bin/startfile.js",
-    "stop": "node bin/startfile.js",
+    "dev": "nodemon bin/index.dev.js",
+    "start": "node bin/index.js",
+    "stop": "node bin/index.js",
     "test": "jest"
   },
   "author": "",

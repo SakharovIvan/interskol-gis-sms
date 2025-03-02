@@ -9,7 +9,7 @@ class GiS_Service {
     let parsed = [];
     fs.readFile("./downloads/" + filename, "utf8", (err, data) => {
       if (err) {
-        return console.log( err);
+        return console.log(err);
       }
       const { JSDOM } = jsdom;
       global.DOMParser = new JSDOM().window.DOMParser;
@@ -77,6 +77,18 @@ class GiS_Service {
       cb(parsed);
     });
   }
+  async firstUploadDB(data) {
+    const promises = data.map((el) => {
+      const asc_info = ASCInfo.findOne({
+        where: { organization_name: { [Op.like]: "%" + el.asc_name + "%" } },
+        raw: true,
+      });
+      return { ...el, asc_kod: asc_info.gis_code };
+    });
+    Promise.all(promises).then((data_with_asc_info) => {
+      GIS.bulkCreate(data_with_asc_info);
+    });
+  }
 
   async upsertDB(data) {
     try {
@@ -99,7 +111,7 @@ class GiS_Service {
             if (obj) {
               return obj.update({ asc_kod, ...data_to_DB });
             }
-            GIS.create({ asc_kod, ...data_to_DB })
+            GIS.create({ asc_kod, ...data_to_DB });
             return;
           });
       });
@@ -116,18 +128,22 @@ class GiS_Service {
 function upd(data) {
   try {
     const gisService = new GiS_Service();
-//console.log(data[0])
-if(!data[0]){return}
-   return gisService
+    //console.log(data[0])
+    if (!data[0]) {
+      return;
+    }
+    return gisService
       .upsertDB(data[0])
       .then(() => {
-        console.log(data.length+'data length')
-        upd(data.slice(1))})
+        console.log(data.length + "data length");
+        upd(data.slice(1));
+      })
       .catch((err) => console.log(err));
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
+
 export async function GIS_SERVICE_FUNC() {
   const filename = "gis.xml";
   try {
@@ -144,17 +160,17 @@ export async function GIS_SERVICE_FUNC() {
         for (let i = 0; i < Math.ceil(res.length / size); i++) {
           subarray[i] = res.slice(i * size, i * size + size);
         }
-        upd(subarray)
+        upd(subarray);
       }
     });
     setTimeout(() => {
-      fs.unlink('./downloads/'+filename,(err) => {
-        if (err) {return console.log( err)};
-        console.log('path/file.txt was deleted');
-      })
-    }, );
-
-
+      fs.unlink("./downloads/" + filename, (err) => {
+        if (err) {
+          return console.log(err);
+        }
+        console.log("path/file.txt was deleted");
+      });
+    });
   } catch (error) {
     console.log(error);
   }

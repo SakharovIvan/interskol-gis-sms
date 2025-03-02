@@ -1,4 +1,4 @@
-import { Sequelize, DataTypes, Model } from "sequelize";
+import { Sequelize, DataTypes, Model, EagerLoadingError } from "sequelize";
 import { sequelize } from "../../config.js";
 //class GIS extends Model {}
 //class smsStatus extends Model {}
@@ -98,11 +98,28 @@ const GIS = sequelize.define(
     hooks: {
       afterCreate: (gis, options) => {
         console.log(gis.dataValues);
-        smsStatus.create({
-          asc_ndk: gis.dataValues.asc_ndk,
-          asc_kod: gis.dataValues.asc_kod,
-          cli_telephone: gis.dataValues.cli_telephone,
-        },  { returning: false});
+        smsStatus.create(
+          {
+            asc_ndk: gis.dataValues.asc_ndk,
+            asc_kod: gis.dataValues.asc_kod,
+            cli_telephone: gis.dataValues.cli_telephone,
+          },
+          { returning: false }
+        );
+      },
+      afterBulkCreate: (gis, options) => {
+        const promises = gis.map((el) => {
+          smsStatus.create(
+            {
+              asc_ndk: el.dataValues.asc_ndk,
+              asc_kod: el.dataValues.asc_kod,
+              cli_telephone: el.dataValues.cli_telephone,
+              SMS_status_opros: true,
+            },
+            { returning: false }
+          );
+        });
+        Promise.all(promises);
       },
     },
   }
@@ -198,9 +215,9 @@ try {
   GIS.sync().then(() => console.log("Connection to GIS DB is OK"));
   smsStatus.sync().then(() => console.log("Connection to smsStatus DB is OK"));
   ASCInfo.sync().then(() => console.log("Connection to ASCInfo DB is OK"));
- // GIS.hasOne(smsStatus);
- // smsStatus.belongsTo(GIS);
- // GIS.create({ asc_kod:123,asc_ndk:123 })
+  // GIS.hasOne(smsStatus);
+  // smsStatus.belongsTo(GIS);
+  // GIS.create({ asc_kod:123,asc_ndk:123 })
   //const c = await GIS.findAll({
   //  attributes: [
   //    "cli_telephone",
@@ -212,7 +229,7 @@ try {
   //  include: {
   //    model: smsStatus,
   //    as: "smsStatus",
-//
+  //
   //    on: {
   //      col1: Sequelize.where(
   //        Sequelize.col("gis.asc_kod"),
