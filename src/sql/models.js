@@ -1,5 +1,5 @@
 import { Sequelize, DataTypes, Model, EagerLoadingError } from "sequelize";
-import { sequelize } from "../../config.js";
+import { sequelize ,ascSeq } from "../../config.js";
 //class GIS extends Model {}
 //class smsStatus extends Model {}
 
@@ -188,7 +188,7 @@ const smsStatus = sequelize.define(
   }
 );
 
-const ASCInfo = sequelize.define(
+const ASCInfo = ascSeq.define(
   "ASCInfos",
   {
     id: {
