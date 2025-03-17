@@ -19,9 +19,8 @@ logger.info("Process");
 
 const smsrule = "*/5 14 * * 1-5";
 
-const reportrule = "0 15 * * 1-5";
+const reportrule = "0 15 * * 0-4";
 
-scheduleJob(smsrule, function () {});
 
 scheduleJob(reportrule, function () {
   try {
@@ -31,7 +30,7 @@ scheduleJob(reportrule, function () {
         sentmail(
           emailConfig.SMTPSentreport.emailto,
           emailConfig.SMTPSentreport.subject,
-          "SomeText",
+          "Отчет ДСО",
           "GISdata.xlsx"
         );
       })

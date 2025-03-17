@@ -78,16 +78,24 @@ class GiS_Service {
     });
   }
   async firstUploadDB(data) {
-    const promises = data.map((el) => {
-      const asc_info = ASCInfo.findOne({
-        where: { organization_name: { [Op.like]: "%" + el.asc_name + "%" } },
-        raw: true,
+    try {
+      const promises = data.map(async (el) => {
+        const asc_info = await ASCInfo.findOne({
+          where: { organization_name: { [Op.like]: "%" + el.asc_name + "%" } },
+          raw: true,
+        });
+        
+        return { ...el, asc_kod: asc_info?asc_info.gis_code:1408 };
       });
-      return { ...el, asc_kod: asc_info.gis_code };
-    });
-    Promise.all(promises).then((data_with_asc_info) => {
-      GIS.bulkCreate(data_with_asc_info);
-    });
+
+      Promise.all(promises).then((data_with_asc_info) => {
+        console.log(data_with_asc_info)
+        GIS.bulkCreate(data_with_asc_info);
+      }).catch((err)=>console.log(err))
+    } catch (error) {
+      console.log(error)
+    }
+
   }
 
   async upsertDB(data) {
@@ -123,6 +131,7 @@ class GiS_Service {
       console.log(error);
     }
   }
+  
 }
 
 function upd(data) {

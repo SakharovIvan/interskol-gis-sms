@@ -1,6 +1,6 @@
 import sentmail from "../../email/sentfile.js";
 import { emailConfig } from "../../config.js";
-import { stringify } from "ts-jest";
+
 class MTS_service {
   subarray(array) {
     let size = 15; //размер подмассива

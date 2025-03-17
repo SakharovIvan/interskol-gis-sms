@@ -1,3 +1,5 @@
+import XLSX from "xlsx";
+
 const sqlformatdate = (number = 0) => {
   let now = new Date();
   now.setDate(now.getDate() - number);
@@ -38,6 +40,13 @@ const normalizeTlf = (tlf) => {
     .replace(/\(/g, "")
     .replace(/ /g, "")
     .replace(/\+/g, "");
+};
+export const createXLSXfromJSON = (jsa) => {
+  const worksheet = XLSX.utils.json_to_sheet(jsa);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "List 1");
+  XLSX.writeFile(workbook, "GISdata.xlsx");
+  return;
 };
 
 export { sqlformatdate, normalizeTlf, datedif };

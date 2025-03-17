@@ -215,40 +215,7 @@ try {
   GIS.sync().then(() => console.log("Connection to GIS DB is OK"));
   smsStatus.sync().then(() => console.log("Connection to smsStatus DB is OK"));
   ASCInfo.sync().then(() => console.log("Connection to ASCInfo DB is OK"));
-  // GIS.hasOne(smsStatus);
-  // smsStatus.belongsTo(GIS);
-  // GIS.create({ asc_kod:123,asc_ndk:123 })
-  //const c = await GIS.findAll({
-  //  attributes: [
-  //    "cli_telephone",
-  //    "asc_kod",
-  //    "asc_ndk",
-  //    "date_prin",
-  //    "date_vipoln",
-  //  ],
-  //  include: {
-  //    model: smsStatus,
-  //    as: "smsStatus",
-  //
-  //    on: {
-  //      col1: Sequelize.where(
-  //        Sequelize.col("gis.asc_kod"),
-  //        "=",
-  //        Sequelize.col("smsStatus.asc_kod")
-  //      ),
-  //      col2: Sequelize.where(
-  //        Sequelize.col("gis.asc_ndk"),
-  //        "=",
-  //        Sequelize.col("smsStatus.asc_ndk")
-  //      ),
-  //    },
-  //    attributes: ["cli_telephone", "asc_kod", "asc_ndk"],
-  //    where: { SMS_status_prin: false },
-  //    required: true,
-  //  },
-  //  raw: true,
-  //});
-  //console.log(c)
+
 } catch (error) {
   console.log(error);
 }

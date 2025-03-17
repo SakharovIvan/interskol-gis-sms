@@ -1,7 +1,7 @@
 import { GIS, smsStatus, ASCInfo } from "../sql/models.js";
 import { Op } from "sequelize";
 import { datedif } from "../../utils/formatters.js";
-import { createXLSXfromJSON } from "../GISbdtoXLSX.js";
+import { createXLSXfromJSON } from "../../utils/formatters.js";
 class Report_service {
   async ThisYearList() {
     const data = await GIS.findAll({
@@ -26,23 +26,22 @@ class Report_service {
       .filter((el) => el.srok_vip <= 3)
       .map(
         ({
-          id,
-          asc_adr,
-          asc_telephone,
-          asc_email,
-          torgorg_tool,
-          rem_work,
-          dateofpurch_tool,
-          last_update_date,
-          term_rep_all,
-          term_rep_wosogl,
-          date_ojod1,
-          date_ojod2,
-          date_dia,
-          date_vipoln,
+          snno_tool,
+          date_prin,
+          date_vidach,
+          cli_telephone,
+          srok_vip,
 
           ...data
-        }) => data
+        }) => {
+          return {
+            snno_tool,
+            date_prin,
+            date_vidach,
+            cli_telephone,
+            srok_vip,
+          };
+        }
       );
     return newdata;
   }

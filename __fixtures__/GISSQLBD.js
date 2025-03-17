@@ -184,6 +184,6 @@ export {
   getGISdatabyFilter,
   getGISdatabyData,
   getTelephonestoSent,
-  addsqlsmsStatusData,
-  updatesqlsmsStatusData,
+  addsqlsmsStatusData,// 
+  updatesqlsmsStatusData,//+
 };
