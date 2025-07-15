@@ -1,4 +1,4 @@
-import { GIS, smsStatus, ASCInfo } from "../sql/models.js";
+import { GIS, smsStatus, ASCInfo } from "../models/models.js";
 import { Op } from "sequelize";
 import { datedif } from "../../utils/formatters.js";
 import { createXLSXfromJSON } from "../../utils/formatters.js";

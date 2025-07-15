@@ -1,5 +1,5 @@
 import { Sequelize, DataTypes, Model, EagerLoadingError } from "sequelize";
-import { sequelize ,ascSeq } from "../../config.js";
+import { sequelize, ascSeq } from "../../config.js";
 //class GIS extends Model {}
 //class smsStatus extends Model {}
 
@@ -210,12 +210,40 @@ const ASCInfo = ascSeq.define(
   }
 );
 
-export { GIS, smsStatus, ASCInfo };
+const gis_repair_sp = ascSeq.define(
+  "GIS_REP_SP",
+  {
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: Sequelize.UUIDV4,
+    },
+    gis_code: {
+      type: DataTypes.INTEGER,
+    },
+    asc_ndk: {
+      type: DataTypes.INTEGER,
+    },
+    spmatNo: {
+      type: DataTypes.STRING,
+    },
+    qty: {
+      type: DataTypes.INTEGER,
+    },
+  },
+  {
+    tableName: "GIS_REP_SP",
+    sequelize,
+    createdAt: true,
+  }
+);
+
+export { GIS, smsStatus, ASCInfo, gis_repair_sp };
 try {
   GIS.sync().then(() => console.log("Connection to GIS DB is OK"));
   smsStatus.sync().then(() => console.log("Connection to smsStatus DB is OK"));
   ASCInfo.sync().then(() => console.log("Connection to ASCInfo DB is OK"));
-
+  gis_repair_sp.sync().then(() => console.log("Connection to gis_sp DB is OK"));
 } catch (error) {
   console.log(error);
 }

@@ -13,7 +13,7 @@ export async function sms_job() {
 
 export async function gis_DB_job() {
     try {
-        await GIS_SERVICE_FUNC()
+        await GIS_SERVICE_FUNC(true)
     } catch (error) {
         console.log(error)
     } 

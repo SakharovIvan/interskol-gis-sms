@@ -1,15 +1,9 @@
 import getPost from "../email/imap_readfile.js";
-import gisService from "../src/services/gis-service.js";
+import { GIS_SERVICE_FUNC } from "../src/services/gis-service.js";
 
 try {
-//  getPost();
-
-  //setTimeout( () => {
-    const filename = "gis.xml";
-    gisService.parseDataFromXML(filename, (res) => {
-      gisService.firstUploadDB(res);
-    });
-  //}, 0);
+  const filename = "gis.xml";
+  await GIS_SERVICE_FUNC();
 } catch (err) {
   console.log(err);
 }

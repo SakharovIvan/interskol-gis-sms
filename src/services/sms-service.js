@@ -1,4 +1,4 @@
-import { GIS, smsStatus, ASCInfo } from "../sql/models.js";
+import { GIS, smsStatus, ASCInfo } from "../models/models.js";
 import { Op } from "sequelize";
 import Sequelize from "sequelize";
 import { datedif, normalizeTlf } from "../../utils/formatters.js";
