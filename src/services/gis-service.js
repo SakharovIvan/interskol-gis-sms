@@ -82,6 +82,7 @@ export async function GIS_SERVICE_FUNC(del = false) {
   const filename = "gis.xml";
   try {
     fs.readFile("./downloads/" + filename, "utf8", (err, res) => {
+      if(!res){return}
       const parsed = parseDataFromXML(res);
       const promises = parsed.map(async (el) => {
         try {
