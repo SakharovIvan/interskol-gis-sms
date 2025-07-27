@@ -65,7 +65,7 @@ GisRoute.get("/check", (req, res) => {
     return res.json({ msg: `Set ${param} for your request`, status: 400 });
   }
   return gis_repair_sp
-    .findAll({ where: { asc_ndk, gis_code, spmatNo }, raw: true })
+    .findAll({ where: { asc_ndk:Number(asc_ndk), gis_code:Number(gis_code), spmatNo }, raw: true })
     .then((gis_with_sp) => {
       if (gis_with_sp.length!==0) {
         res.json({ status: 200 });

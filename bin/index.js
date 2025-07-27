@@ -2,7 +2,7 @@ import sentmail from "../email/sentfile.js";
 import { emailConfig } from "../config.js";
 import getPost from "../email/imap_readfile.js";
 import { sms_job, gis_DB_job } from "../src/index.js";
-import {  scheduleJob } from "node-schedule";
+import { scheduleJob } from "node-schedule";
 import reportService from "../src/services/report-service.js";
 import express from "express";
 import cors from "cors";
@@ -73,10 +73,10 @@ const app = express();
 dotenv.config();
 const corsOptions = {
   origin: process.env.APP_URL,
-  credentials: true, 
+  credentials: true,
   optionSuccessStatus: 200,
-methods: 'GET, POST',
-allowedHeaders: 'Content-Type,Authorization'
+  methods: "GET, POST",
+  allowedHeaders: "Content-Type,Authorization",
 };
 
 const PORT = process.env.PORT || 1000;
@@ -87,7 +87,7 @@ app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
     extended: true,
-  }),
+  })
 );
 
 app.get("/gisservice", (req, res) => {
