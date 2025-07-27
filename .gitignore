@@ -7,3 +7,5 @@
 /downloads
 /logger.log
 /__test__
+.env
+.babelrc
