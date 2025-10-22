@@ -1,4 +1,3 @@
-import getPost from "../email/imap_readfile.js";
 import { GIS_SERVICE_FUNC } from "../src/services/gis-service.js";
 
 try {

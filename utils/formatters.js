@@ -9,12 +9,20 @@ const sqlformatdate = (number = 0) => {
   month <= 9 ? (month = `0${month}`) : (month = month);
   return `${day}-${month}-${year}`;
 };
+function normalize_GIS_date(str) {
+    if (str === '') {
+    return null;
+  }
+  const arr = str.split("-");
 
+  return new Date([Number(arr[1]), Number(arr[0]) + 1, Number(arr[2])]);
+}
+const mileseconds_days = 1000 * 60 * 60 * 24;
+const mileseconds_hors = 1000 * 60 * 60;
 function datedif(srt, srt2 = new Date()) {
   if (!srt) {
     return;
   }
-
   const array = srt.split("-");
   const srt_date = new Date(
     array[2],
@@ -29,7 +37,7 @@ function datedif(srt, srt2 = new Date()) {
       Number(array2[1]) - 1,
       Number(array2[0]) + 1
     );
-    return Math.floor((srt_date -srt_date2 ) / (24 * 3600 * 1000));
+    return Math.floor((srt_date - srt_date2) / (24 * 3600 * 1000));
   }
   return Math.floor((srt2 - srt_date) / (24 * 3600 * 1000));
 }
@@ -41,6 +49,7 @@ const normalizeTlf = (tlf) => {
     .replace(/ /g, "")
     .replace(/\+/g, "");
 };
+
 export const createXLSXfromJSON = (jsa) => {
   const worksheet = XLSX.utils.json_to_sheet(jsa);
   const workbook = XLSX.utils.book_new();
@@ -49,5 +58,4 @@ export const createXLSXfromJSON = (jsa) => {
   return;
 };
 
-export { sqlformatdate, normalizeTlf, datedif };
-
+export { sqlformatdate, normalizeTlf, datedif, normalize_GIS_date };
