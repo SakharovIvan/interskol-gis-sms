@@ -69,7 +69,7 @@ export class Tool {
     this.matno_tool = el.getAttribute("NN");
     this.purchase_tool = el.getAttribute("DATAPRO");
     this.torgorg_tool = el.getAttribute("ADRT");
-    this.NFC = el.getAttribute("NFC");
+    this.nfc = el.getAttribute("NFC");
     this.ADRT = el.getAttribute("ADRT");
     this.DATE_MANIFACTURE = el.getAttribute("DTPR");
   }

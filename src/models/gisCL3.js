@@ -51,10 +51,7 @@ const Repairs_GIS_DB = sequelizeGIS.define(
     asc_id: { type: DataTypes.UUID },
     client_id: { type: DataTypes.UUID },
     vr: { type: DataTypes.TEXT },
-    snno_tool: { type: DataTypes.TEXT },
-    matno_tool: { type: DataTypes.TEXT },
-    torgorg_tool: { type: DataTypes.TEXT },
-    purchase_tool: { type: DataTypes.DATEONLY },
+    tool_id: { type: DataTypes.UUID },
     prin: { type: DataTypes.DATEONLY },
     dia: { type: DataTypes.DATEONLY },
     accept_1: { type: DataTypes.DATEONLY },
@@ -63,6 +60,31 @@ const Repairs_GIS_DB = sequelizeGIS.define(
     sp_wait_2: { type: DataTypes.DATEONLY },
     vipoln: { type: DataTypes.DATEONLY },
     vidach: { type: DataTypes.DATEONLY },
+  },
+  {
+    tableName: "Repairs_SP",
+    sequelizeGIS,
+    createdAt: true,
+    updatedAt: true,
+  }
+);
+
+const Tools = sequelizeGIS.define(
+  "Tools",
+  {
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: Sequelize.UUIDV4,
+    },
+    snno_tool: { type: DataTypes.TEXT },
+    matno_tool: { type: DataTypes.TEXT },
+    torgorg_tool: { type: DataTypes.TEXT },
+    manifacture_data: { type: DataTypes.DATEONLY },
+    purchase_tool: { type: DataTypes.DATEONLY },
+    nfc: { type: DataTypes.TEXT },
+    mct_check: { type: DataTypes.BOOLEAN },
+    mct_check_res: { type: DataTypes.BOOLEAN },
   },
   {
     tableName: "Repairs_SP",
@@ -118,6 +140,11 @@ const Clients_GIS_DB = sequelizeGIS.define("Clinents", {
   },
 });
 
+const Work_DB = sequelizeGIS.define("Works", {
+  gis_code: { type: DataTypes.INTEGER, primaryKey: true },
+  name: { type: DataTypes.TEXT },
+});
+
 const Organizations = sequelizeGIS.define(
   "Organizatoions",
   {
@@ -125,6 +152,12 @@ const Organizations = sequelizeGIS.define(
       type: DataTypes.UUID,
       primaryKey: true,
       defaultValue: Sequelize.UUIDV4,
+    },
+    name: {
+      type: DataTypes.TEXT,
+    },
+    addres: {
+      type: DataTypes.TEXT,
     },
   },
   {
@@ -135,4 +168,12 @@ const Organizations = sequelizeGIS.define(
   }
 );
 
-export { ASC_GIS_DB, Repairs_GIS_DB, Repairs_SP_GIS_DB, Clients_GIS_DB };
+export {
+  Tools,
+  Organizations,
+  Work_DB,
+  ASC_GIS_DB,
+  Repairs_GIS_DB,
+  Repairs_SP_GIS_DB,
+  Clients_GIS_DB,
+};
