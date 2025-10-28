@@ -1,5 +1,14 @@
 import { Op } from "sequelize";
 import { normalize_GIS_date } from "../../utils/formatters.js";
+import {
+  ASC_GIS_DB,
+  Clients_GIS_DB,
+  Organizations,
+  Repairs_GIS_DB,
+  Repairs_SP_GIS_DB,
+  Tools,
+  Work_DB,
+} from "./gisCL3.js";
 
 export const DATA_TYPES = {
   1: "xml",
@@ -8,31 +17,30 @@ export const DATA_TYPES = {
 
 export class Repair {
   ndk;
-  asc_id;
-  client_id;
-  tool_id;
+  asc;
+  client;
+  tool;
   vr;
   prin;
   dia;
   accept_1;
   accept_2;
   sp_wait_1;
+  sp_wait_1;
   sp_wait_2;
   vipoln;
   vidach;
   SP_list = [];
-  constructor({ data, GIS_VR_codes, tool, type = DATA_TYPES[1] }) {
+  constructor({ data, GIS_VR_codes, type = DATA_TYPES[1] }) {
     switch (type) {
       case DATA_TYPES[1]:
-        this.set_XML(data, { GIS_VR_codes, tool });
+        this.set_XML(data, { GIS_VR_codes });
     }
   }
-  set_XML(el, { GIS_VR_codes, tool }) {
+  set_XML(el, { GIS_VR_codes }) {
     try {
       this.vr = GIS_VR_codes[Number(el.getAttribute("VR"))];
       this.ndk = Number(el.getAttribute("NDK"));
-
-      this.client_gis = el.getAttribute("SKL");
       this.prin = normalize_GIS_date(el.getAttribute("DATP"));
       this.dia = normalize_GIS_date(el.getAttribute("DATD"));
       this.accept_1 = normalize_GIS_date(el.getAttribute("DATYN"));
@@ -41,19 +49,111 @@ export class Repair {
       this.sp_wait_2 = normalize_GIS_date(el.getAttribute("DATOZK"));
       this.vipoln = normalize_GIS_date(el.getAttribute("DATI"));
       this.vidach = normalize_GIS_date(el.getAttribute("DATW"));
+      this.KSC = Number(el.getAttribute("KSC"));
+      this.SKL = Number(el.getAttribute("SKL"));
+      this.SN = el.getAttribute("SN");
       const records = el.querySelectorAll("RECORD");
       for (const el of records) {
         this.SP_list.push({
           Repair_id: null,
           spmatNo: el.getAttribute("NN"),
-          work:el.getAttribute("PRR"),
-          qty:el.getAttribute("KOL"),
-          price:el.getAttribute("CENAF"),
+          work: Number(el.getAttribute("PRR")) === 1,
+          qty: el.getAttribute("KOL"),
+          price: el.getAttribute("CENAF"),
         });
       }
     } catch (error) {
       console.log(error);
     }
+  }
+  async init() {
+    this.asc = (
+      await ASC_GIS_DB.findOne({
+        where: {
+          gis_code: this.KSC,
+        },
+      })
+    ).dataValues;
+    this.client = (
+      await Clients_GIS_DB.findOne({
+        where: { gis_code: this.SKcL },
+      })
+    ).dataValues;
+    this.tool = (
+      await Tools.findOne({ where: { snno_tool: this.SN } })
+    ).dataValues;
+    const cur_work = this.SP_list.filter((el) => el.work);
+    this.work = (
+      await Work_DB.findOne({ where: { gis_code: cur_work[0].spmatNo } })
+    ).dataValues;
+  }
+
+  async DB_upd() {
+    try {
+      Repairs_GIS_DB.findOne({
+        where: { ndk: this.ndk, asc_id: this.asc.id },
+      })
+        .then((res) => {
+          if (!res) {
+            return Repairs_GIS_DB.create({
+              ndk: this.ndk,
+              asc_id: this.asc.id,
+              work_id: this.work.gis_code,
+              client_id: this.client.id,
+              vr: this.vr,
+              tool_id: this.tool.id,
+              prin: this.prin,
+              dia: this.dia,
+              accept_1: this.accept_1,
+              accept_2: this.accept_2,
+              sp_wait_1: this.sp_wait_1,
+              sp_wait_2: this.sp_wait_2,
+              vipoln: this.vipoln,
+              vidach: this.vidach,
+            }).then((res) => {
+              this.id = res.dataValues.id;
+            });
+          }
+          return res
+            .update({
+              work_id: this.work.gis_code,
+              client_id: this.client.id,
+              vr: this.vr,
+              tool_id: this.tool.id,
+              prin: this.prin,
+              dia: this.dia,
+              accept_1: this.accept_1,
+              accept_2: this.accept_2,
+              sp_wait_1: this.sp_wait_1,
+              sp_wait_2: this.sp_wait_2,
+              vipoln: this.vipoln,
+              vidach: this.vidach,
+            })
+            .then((res) => {
+              this.id = res.dataValues.id;
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+          console.log(this);
+        });
+    } catch (error) {
+      console.log(error);
+      console.log(this);
+    }
+  }
+  async SP_List_DB_upd() {
+    await Repairs_SP_GIS_DB.destroy({
+        where: { Repair_id: this.id }})
+    const promises = this.SP_list.map(async (el) => {
+          Repairs_SP_GIS_DB.create({
+            Repair_id: this.id,
+            spmatNo: el.spmatNo,
+            qty: el.qty,
+            price: el.price,
+          });
+    });
+    Promise.all(promises).catch((err)=>console.log(err))
   }
 }
 
@@ -67,40 +167,53 @@ export class Tool {
   set_XML(el) {
     this.snno_tool = el.getAttribute("SN");
     this.matno_tool = el.getAttribute("NN");
-    this.purchase_tool = el.getAttribute("DATAPRO");
-    this.torgorg_tool = el.getAttribute("ADRT");
+    this.purchase_tool = normalize_GIS_date(el.getAttribute("DATAPRO"));
     this.nfc = el.getAttribute("NFC");
     this.ADRT = el.getAttribute("ADRT");
-    this.DATE_MANIFACTURE = el.getAttribute("DTPR");
+    this.manifacture_data = normalize_GIS_date(el.getAttribute("DTPR"));
+  }
+  async init() {
+    const torgOrg = await Organizations.findOne({
+      where: {
+        gis_code: this.ADRT,
+      },
+    });
+    this.organization_id = torgOrg.dataValues.id || null;
+  }
+  async DB_upd() {
+    try {
+      Tools.findOne({ where: { snno_tool: this.snno_tool } })
+        .then((res) => {
+          if (!res) {
+            return Tools.create({
+              snno_tool: this.snno_tool,
+              matno_tool: this.matno_tool,
+              purchase_tool: this.purchase_tool,
+              nfc: this.nfc,
+              manifacture_data: this.manifacture_data,
+              organization_id: this.organization_id,
+            });
+          }
+          return res.update({
+            matno_tool: this.matno_tool,
+            purchase_tool: this.purchase_tool,
+            nfc: this.nfc,
+            manifacture_data: this.manifacture_data,
+            organization_id: this.organization_id,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 
-export class Client {
-  set_XML() {}
-}
-
-export class ASC {
+export class Work {
   gis_code;
-  C1_code;
-  organization_name;
-  Indeks;
-  addres;
-  Tlf;
-  email;
-  Raschet_schet_bank;
-  Korr_schet_bank;
-  BIK_bank;
-  Name_bank;
-  organization_INN;
-  OKPO;
-  email_2;
-  skid;
-  contract_DSO;
-  contract_DSO_date;
-  contract_shipment;
-  contract_shipment_date;
-  DSO_region;
-  KPP;
+  name;
   constructor({ data, type = DATA_TYPES[1] }) {
     switch (type) {
       case DATA_TYPES[1]:
@@ -108,26 +221,20 @@ export class ASC {
     }
   }
   set_XML(el) {
-    this.gis_code = el.getAttribute("KSC");
-    this.C1_code = el.getAttribute("KODKA");
-    this.organization_name = el.getAttribute("NAME");
-    this.Indeks = el.getAttribute("");
-    this.addres = el.getAttribute("");
-    this.Tlf = el.getAttribute("");
-    this.email = el.getAttribute("");
-    this.Raschet_schet_bank = el.getAttribute("");
-    this.Korr_schet_bank = el.getAttribute("");
-    this.BIK_bank = el.getAttribute("");
-    this.Name_bank = el.getAttribute("");
-    this.organization_INN = el.getAttribute("INN");
-    this.OKPO = el.getAttribute("");
-    this.email_2 = el.getAttribute("");
-    this.skid = el.getAttribute("");
-    this.contract_DSO = el.getAttribute("");
-    this.contract_DSO_date = el.getAttribute("");
-    this.contract_shipment = el.getAttribute("");
-    this.contract_shipment_date = el.getAttribute("");
-    this.DSO_region = el.getAttribute("");
-    this.KPP = el.getAttribute("");
+    this.gis_code = Number(el.getAttribute("KOD"));
+    this.name = el.getAttribute("NAME");
+  }
+  async DB_upd() {
+    Work_DB.findOne({ where: { gis_code: this.gis_code } }).then((res) => {
+      if (!res) {
+       return Work_DB.create({
+          gis_code: this.gis_code,
+          name: this.name,
+        });
+      }
+      return res.update({
+        name: this.name,
+      });
+    });
   }
 }

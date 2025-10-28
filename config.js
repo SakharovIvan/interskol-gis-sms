@@ -1,4 +1,6 @@
 import { Sequelize } from "sequelize";
+import dotenv from 'dotenv'
+dotenv.config();
 
 const emailConfig = {
   imap: {
@@ -52,7 +54,7 @@ const sequelizeGIS = new Sequelize({
   user: process.env.DATABASE_USERNAME,
   password: process.env.DATABASE_PASSWORD,
   host: process.env.DATABASE_HOST,
-  port: process.env.DATABASE_PORT,
+  port: Number(process.env.DATABASE_PORT),
   logging: false,
 });
 

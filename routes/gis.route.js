@@ -1,6 +1,5 @@
 import { Router } from "express";
-import { GIS, gis_repair_sp } from "../src/models/models.js";
-
+import { Repairs_SP_GIS_DB,Repairs_GIS_DB } from "../src/models/gisCL3";
 const GisRoute = new Router();
 
 GisRoute.get("", (req, res) => {

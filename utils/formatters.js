@@ -10,12 +10,20 @@ const sqlformatdate = (number = 0) => {
   return `${day}-${month}-${year}`;
 };
 function normalize_GIS_date(str) {
-    if (str === '') {
+  if (str === "") {
     return null;
   }
   const arr = str.split("-");
+  if (arr.length === 1) {
+    const arr = str.split(".");
+    return new Date([Number(arr[0]) , 1, Number(arr[1])]);
+  }
+  const res = new Date([Number(arr[1]), Number(arr[0]) , Number(arr[2])]);
+  if (res.toString() !== "Invalid Date") {
+    return res;
+  }
 
-  return new Date([Number(arr[1]), Number(arr[0]) + 1, Number(arr[2])]);
+  return new Date([Number(arr[2]), Number(arr[1])]);
 }
 const mileseconds_days = 1000 * 60 * 60 * 24;
 const mileseconds_hors = 1000 * 60 * 60;

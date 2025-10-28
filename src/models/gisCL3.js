@@ -1,15 +1,15 @@
-import { Sequelize, DataTypes, Model, EagerLoadingError } from "sequelize";
+import { Sequelize, DataTypes, Model,  } from "sequelize";
 import { sequelizeGIS } from "../../config.js";
 
-const ASC_GIS_DB = sequelizeGIS.define(
-  "ASC",
+class ASC_GIS_DB extends Model {}
+ASC_GIS_DB.init(
   {
     id: {
       type: DataTypes.UUID,
       primaryKey: true,
       defaultValue: Sequelize.UUIDV4,
     },
-    gis_code: { type: DataTypes.INTEGER },
+    gis_code: { type: DataTypes.BIGINT },
     C1_code: { type: DataTypes.STRING },
     organization_name: { type: DataTypes.STRING },
     Indeks: { type: DataTypes.STRING },
@@ -33,22 +33,23 @@ const ASC_GIS_DB = sequelizeGIS.define(
   },
   {
     tableName: "ASC",
-    sequelizeGIS,
+    sequelize:sequelizeGIS,
     createdAt: true,
     updatedAt: true,
   }
 );
 
-const Repairs_GIS_DB = sequelizeGIS.define(
-  "Repairs",
+class Repairs_GIS_DB extends Model {}
+Repairs_GIS_DB.init(
   {
     id: {
       type: DataTypes.UUID,
       primaryKey: true,
       defaultValue: Sequelize.UUIDV4,
     },
-    ndk: { type: DataTypes.INTEGER },
+    ndk: { type: DataTypes.BIGINT },
     asc_id: { type: DataTypes.UUID },
+    work_id: { type: DataTypes.BIGINT },
     client_id: { type: DataTypes.UUID },
     vr: { type: DataTypes.TEXT },
     tool_id: { type: DataTypes.UUID },
@@ -62,15 +63,15 @@ const Repairs_GIS_DB = sequelizeGIS.define(
     vidach: { type: DataTypes.DATEONLY },
   },
   {
-    tableName: "Repairs_SP",
-    sequelizeGIS,
+    tableName: "Repairs",
+    sequelize:sequelizeGIS,
     createdAt: true,
     updatedAt: true,
   }
 );
 
-const Tools = sequelizeGIS.define(
-  "Tools",
+class Tools extends Model {}
+Tools.init(
   {
     id: {
       type: DataTypes.UUID,
@@ -79,23 +80,23 @@ const Tools = sequelizeGIS.define(
     },
     snno_tool: { type: DataTypes.TEXT },
     matno_tool: { type: DataTypes.TEXT },
-    torgorg_tool: { type: DataTypes.TEXT },
     manifacture_data: { type: DataTypes.DATEONLY },
     purchase_tool: { type: DataTypes.DATEONLY },
     nfc: { type: DataTypes.TEXT },
     mct_check: { type: DataTypes.BOOLEAN },
     mct_check_res: { type: DataTypes.BOOLEAN },
+    organization_id: { type: DataTypes.TEXT },
   },
   {
-    tableName: "Repairs_SP",
-    sequelizeGIS,
+    tableName: "Tools",
+    sequelize:sequelizeGIS,
     createdAt: true,
     updatedAt: true,
   }
 );
 
-const Repairs_SP_GIS_DB = sequelizeGIS.define(
-  "Repairs_SP",
+class Repairs_SP_GIS_DB extends Model {}
+Repairs_SP_GIS_DB.init(
   {
     id: {
       type: DataTypes.UUID,
@@ -108,9 +109,6 @@ const Repairs_SP_GIS_DB = sequelizeGIS.define(
     spmatNo: {
       type: DataTypes.STRING,
     },
-    work: {
-      type: DataTypes.BOOLEAN,
-    },
     qty: {
       type: DataTypes.INTEGER,
     },
@@ -120,38 +118,58 @@ const Repairs_SP_GIS_DB = sequelizeGIS.define(
   },
   {
     tableName: "Repairs_SP",
-    sequelizeGIS,
+    sequelize:sequelizeGIS,
     createdAt: true,
     updatedAt: true,
   }
 );
 
-const Clients_GIS_DB = sequelizeGIS.define("Clinents", {
+class Clients_GIS_DB extends Model {}
+Clients_GIS_DB.init( {
   id: {
     type: DataTypes.UUID,
     primaryKey: true,
     defaultValue: Sequelize.UUIDV4,
   },
+  gis_code: { type: DataTypes.BIGINT, primaryKey: true },
+  fiz: { type: DataTypes.BOOLEAN },
   name: {
     type: DataTypes.TEXT,
   },
   telephone: {
     type: DataTypes.TEXT,
   },
-});
+},
+  {
+    tableName: "Clients",
+    sequelize:sequelizeGIS,
+    createdAt: true,
+    updatedAt: true,
+  });
 
-const Work_DB = sequelizeGIS.define("Works", {
-  gis_code: { type: DataTypes.INTEGER, primaryKey: true },
+class Work_DB extends Model {}
+Work_DB.init({
+  gis_code: { type: DataTypes.BIGINT, primaryKey: true },
   name: { type: DataTypes.TEXT },
-});
+},
+  {
+    tableName: "Works",
+    sequelize:sequelizeGIS,
+    createdAt: true,
+    updatedAt: true,
+  });
 
-const Organizations = sequelizeGIS.define(
-  "Organizatoions",
+class Organizations extends Model {}
+Organizations.init(
   {
     id: {
       type: DataTypes.UUID,
       primaryKey: true,
       defaultValue: Sequelize.UUIDV4,
+    },
+    gis_code: { type: DataTypes.BIGINT, primaryKey: true },
+    telephone: {
+      type: DataTypes.TEXT,
     },
     name: {
       type: DataTypes.TEXT,
@@ -162,7 +180,7 @@ const Organizations = sequelizeGIS.define(
   },
   {
     tableName: "Organizatoions",
-    sequelizeGIS,
+    sequelize:sequelizeGIS,
     createdAt: true,
     updatedAt: true,
   }
