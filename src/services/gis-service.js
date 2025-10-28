@@ -37,7 +37,7 @@ export async function GIS_SERVICE_FUNC(del = false) {
       if (!res) {
         return;
       }
-      const parsed = parseDataFromXML(res);
+      parseDataFromXML(res);
     });
 
     if (del) {
