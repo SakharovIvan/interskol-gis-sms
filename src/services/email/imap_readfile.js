@@ -1,4 +1,4 @@
-import { emailConfig as config } from "../config.js";
+import { emailConfig as config } from "../../../config.js";
 
 import fs from "fs";
 import { Base64Decode } from "base64-stream";
@@ -7,10 +7,7 @@ const imap = new Imap(config.imap);
 
 // Simple logger:
 const getPost = () => {
-  const markAsRead =
-    config.imapOptions && config.imapOptions.markAsRead
-      ? config.imapOptions.markAsRead
-      : false;
+  const markAsRead =false;
   // var emailDate;
   // var emailFrom;
   function formatFilename(filename, emailFrom, emailDate) {
@@ -152,6 +149,7 @@ const getPost = () => {
           });
 
           f.once("error", function (err) {
+            console.log(err)
           });
 
           f.once("end", function () {
@@ -163,12 +161,13 @@ const getPost = () => {
   });
 
   imap.once("error", function (err) {
-    //logger.error(err);
+    console.log(err);
   });
 
   imap.once("end", function () {
   });
 
   imap.connect();
+  return
 };
 export default getPost;

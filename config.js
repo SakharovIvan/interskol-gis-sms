@@ -9,10 +9,12 @@ const emailConfig = {
     host: process.env.SMTP_HOST,
     port: process.env.SMTP_PORT,
     tls: true,
+    connTimeout:20000,
+    authTimeout:10000
   },
   nodemailer: {
-    host: "smtp.lancloud.ru",
-    port: 465,
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT,
     secure: true,
     auth: {
       user: process.env.SMTP_USER,
@@ -51,7 +53,7 @@ const emailConfig = {
 const sequelizeGIS = new Sequelize({
   dialect: "postgres",
   database: process.env.DATABASE_NAME,
-  user: process.env.DATABASE_USERNAME,
+  username: process.env.DATABASE_USERNAME,
   password: process.env.DATABASE_PASSWORD,
   host: process.env.DATABASE_HOST,
   port: Number(process.env.DATABASE_PORT),

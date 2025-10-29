@@ -11,6 +11,12 @@ GisRoute.get("", async (req, res) => {
   const options = req.query;
   const { spmatNo, gis_code, asc_ndk, cli_telephone, snno_tool } = options;
   //search by cli tlf
+  if (!(spmatNo || gis_code || asc_ndk || cli_telephone || snno_tool)) {
+    return res.json({
+      status: 404,
+      msg: "There is no paramteres to search",
+    });
+  }
   if (cli_telephone) {
     const client = await Clients_GIS_DB.findOne({
       where: { telephone: cli_telephone },

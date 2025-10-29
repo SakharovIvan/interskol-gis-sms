@@ -1,3 +1,4 @@
+import { normalizeTlf } from "../../utils/formatters.js";
 import { ASC_GIS_DB, Clients_GIS_DB, Organizations } from "./gisCL3.js";
 import { DATA_TYPES } from "./repair.dto.js";
 
@@ -35,7 +36,7 @@ export class ASC {
     this.organization_name = el.getAttribute("NAME");
     this.Indeks = el.getAttribute("");
     this.addres = el.getAttribute("");
-    this.Tlf = el.getAttribute("");
+    this.Tlf = normalizeTlf(el.getAttribute(""))
     this.email = el.getAttribute("");
     this.Raschet_schet_bank = el.getAttribute("");
     this.Korr_schet_bank = el.getAttribute("");
@@ -122,7 +123,7 @@ export class Client {
     try {
       this.gis_code = Number(el.getAttribute("KOD"));
       this.name = el.getAttribute("NAME");
-      this.telephone = el.getAttribute("TLF");
+      this.telephone = normalizeTlf(el.getAttribute("TLF"))
       this.fiz = Number(el.getAttribute("PFIZ")) === 0;
     } catch (error) {
       console.log(error);
@@ -145,7 +146,7 @@ export class Client {
           fiz: this.fiz,
         });
       }
-    );
+    ).catch((err)=>{console.log(err, this)})
   }
 }
 
@@ -165,7 +166,7 @@ export class Organization {
       this.gis_code = Number(el.getAttribute("KOD"));
       this.name = el.getAttribute("NAME");
       this.addres=el.getAttribute("ADR")
-      this.telephone = el.getAttribute("TLF");
+      this.telephone = normalizeTlf(el.getAttribute("TLF"));
     } catch (error) {
       console.log(error);
     }

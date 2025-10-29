@@ -110,10 +110,10 @@ Repairs_SP_GIS_DB.init(
       type: DataTypes.STRING,
     },
     qty: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL,
     },
     price: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL,
     },
   },
   {

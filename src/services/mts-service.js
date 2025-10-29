@@ -1,4 +1,3 @@
-import sentmail from "../../email/sentfile.js";
 import { emailConfig } from "../../config.js";
 
 class MTS_service {

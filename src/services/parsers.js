@@ -68,8 +68,10 @@ export async function parse_Repairs_fromXML(doc, GIS_VR_codes) {
     return acc;
   }, []);
   const promises = res_filterd.map(async (el) => {
-    await el.init();
-    return await el.DB_upd();
+    el.init()
+      .then(() => el.DB_upd())
+      .then(() => el.SP_List_DB_upd());
+    return el;
   });
   return Promise.all(promises);
 }

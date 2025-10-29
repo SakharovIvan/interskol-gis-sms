@@ -22,9 +22,12 @@ async function parseDataFromXML(data) {
     await parseOrganizations(doc);
     await parse_Work(doc);
     await parse_Clients(doc);
-    await parse_tool_fromXML(doc);
-    await parse_Repairs_fromXML(doc, GIS_VR_codes);
-    return repairs;
+    setTimeout(async () => {
+      await parse_tool_fromXML(doc);
+      await parse_Repairs_fromXML(doc, GIS_VR_codes);
+    });
+
+    return 'DB updated'
   } catch (error) {
     console.log(error);
   }
@@ -35,21 +38,21 @@ export async function GIS_SERVICE_FUNC(del = false) {
   try {
     fs.readFile("./downloads/" + filename, "utf8", (err, res) => {
       if (!res) {
+        console.log('no files in downloads folder')
         return;
       }
-      parseDataFromXML(res);
-    });
-
-    if (del) {
-      setTimeout(() => {
-        fs.unlink("./downloads/" + filename, (err) => {
-          if (err) {
-            return console.log(err);
-          }
-          console.log("path/file.txt was deleted");
-        });
+      parseDataFromXML(res).then((parse_res) => {
+        console.log(parse_res);
+        //if (del) {
+        //  fs.unlink("./downloads/" + filename, (err) => {
+        //    if (err) {
+        //      return console.log(err);
+        //    }
+        //    console.log("./downloads/" + filename + " was deleted");
+        //  });
+        //}
       });
-    }
+    });
   } catch (error) {
     console.log(error);
   }

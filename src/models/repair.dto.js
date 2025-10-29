@@ -76,7 +76,7 @@ export class Repair {
     ).dataValues;
     this.client = (
       await Clients_GIS_DB.findOne({
-        where: { gis_code: this.SKcL },
+        where: { gis_code: this.SKL },
       })
     ).dataValues;
     this.tool = (
@@ -143,17 +143,29 @@ export class Repair {
     }
   }
   async SP_List_DB_upd() {
-    await Repairs_SP_GIS_DB.destroy({
-        where: { Repair_id: this.id }})
+    try {
+      const repair = await Repairs_GIS_DB.findOne({
+        where: { ndk: this.ndk, asc_id: this.asc.id },
+        raw: true,
+      });
+      if (repair) {
+        await Repairs_SP_GIS_DB.destroy({
+          where: { Repair_id: repair.id },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
     const promises = this.SP_list.map(async (el) => {
-          Repairs_SP_GIS_DB.create({
-            Repair_id: this.id,
-            spmatNo: el.spmatNo,
-            qty: el.qty,
-            price: el.price,
-          });
+      Repairs_SP_GIS_DB.create({
+        Repair_id: this.id,
+        spmatNo: el.spmatNo,
+        qty: el.qty,
+        price: el.price,
+      });
     });
-    Promise.all(promises).catch((err)=>console.log(err))
+    Promise.all(promises).catch((err) => console.log(err));
   }
 }
 
@@ -177,8 +189,19 @@ export class Tool {
       where: {
         gis_code: this.ADRT,
       },
+      raw: true,
     });
-    this.organization_id = torgOrg.dataValues.id || null;
+    if (torgOrg) {
+      this.organization_id = torgOrg.id;
+      return;
+    }
+    const torgOrg_test = await Organizations.findOne({
+      where: {
+        gis_code: 4,
+      },
+      raw: true,
+    });
+    this.organization_id = torgOrg_test.id;
   }
   async DB_upd() {
     try {
@@ -227,7 +250,7 @@ export class Work {
   async DB_upd() {
     Work_DB.findOne({ where: { gis_code: this.gis_code } }).then((res) => {
       if (!res) {
-       return Work_DB.create({
+        return Work_DB.create({
           gis_code: this.gis_code,
           name: this.name,
         });

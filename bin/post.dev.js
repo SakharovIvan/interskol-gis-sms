@@ -1,4 +1,4 @@
-import getPost from "../email/imap_readfile.js";
+import getPost from '../src/services/email/imap_readfile.js'
 try {
   getPost();
 
