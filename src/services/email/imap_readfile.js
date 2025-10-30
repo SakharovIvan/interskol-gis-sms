@@ -7,7 +7,7 @@ const imap = new Imap(config.imap);
 
 // Simple logger:
 const getPost = () => {
-  const markAsRead =false;
+  const markAsRead =true;
   // var emailDate;
   // var emailFrom;
   function formatFilename(filename, emailFrom, emailDate) {
