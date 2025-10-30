@@ -84,9 +84,9 @@ export class Repair {
     ).dataValues;
     try {
       const cur_work = this.SP_list.filter((el) => el.work);
-      if (cur_work.length === 1) {
+      if (cur_work[0].spmatNo) {
         this.work = (
-          await Work_DB.findOne({ where: { gis_code: cur_work[0].spmatNo } })
+          await Work_DB.findOne({ where: { gis_code: Number(cur_work[0].spmatNo) } })
         ).dataValues;
       }
       this.work = null;
