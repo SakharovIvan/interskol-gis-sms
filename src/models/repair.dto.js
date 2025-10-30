@@ -82,12 +82,17 @@ export class Repair {
     this.tool = (
       await Tools.findOne({ where: { snno_tool: this.SN } })
     ).dataValues;
-    const cur_work = this.SP_list.filter((el) => el.work);
-    if(cur_work.length===1){
-    this.work = (
-      await Work_DB.findOne({ where: { gis_code: cur_work[0].spmatNo } })
-    ).dataValues;}
-    this.work =null
+    try {
+      const cur_work = this.SP_list.filter((el) => el.work);
+      if (cur_work.length === 1) {
+        this.work = (
+          await Work_DB.findOne({ where: { gis_code: cur_work[0].spmatNo } })
+        ).dataValues;
+      }
+      this.work = null;
+    } catch (error) {
+      this.work = null;
+    }
   }
 
   async DB_upd() {
