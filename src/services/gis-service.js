@@ -27,7 +27,7 @@ async function parseDataFromXML(data) {
       await parse_Repairs_fromXML(doc, GIS_VR_codes);
     });
 
-    return 'DB updated'
+    return "DB updated";
   } catch (error) {
     console.log(error);
   }
@@ -38,22 +38,23 @@ export async function GIS_SERVICE_FUNC(del = false) {
   try {
     fs.readFile("./downloads/" + filename, "utf8", (err, res) => {
       if (!res) {
-        console.log('no files in downloads folder')
+        console.log("no files in downloads folder");
         return;
       }
       parseDataFromXML(res).then((parse_res) => {
         console.log(parse_res);
-        //if (del) {
-        //  fs.unlink("./downloads/" + filename, (err) => {
-        //    if (err) {
-        //      return console.log(err);
-        //    }
-        //    console.log("./downloads/" + filename + " was deleted");
-        //  });
-        //}
       });
     });
   } catch (error) {
     console.log(error);
+  } finally {
+    if (del) {
+      fs.unlink("./downloads/" + filename, (err) => {
+        if (err) {
+          return console.log(err);
+        }
+        console.log("./downloads/" + filename + " was deleted");
+      });
+    }
   }
 }
