@@ -18,10 +18,27 @@ async function parseDataFromXML(data) {
     const doc = parser.parseFromString(data, "text/xml");
 
     const GIS_VR_codes = await parse_VR_fromXML(doc);
-    await parse_ASC_fromXML(doc);
-    await parseOrganizations(doc);
-    await parse_Work(doc);
-    await parse_Clients(doc);
+    try {
+      await parse_ASC_fromXML(doc);
+    } catch (error) {
+      console.log("problem with asc parsing", error);
+    }
+
+    try {
+      await parseOrganizations(doc);
+    } catch (error) {
+      console.log("problem with parseOrganizations ", error);
+    }
+    try {
+      await parse_Work(doc);
+    } catch (error) {
+      console.log("problem with parse_Work ", error);
+    }
+    try {
+      await parse_Clients(doc);
+    } catch (error) {
+      console.log("problem with parse_Clients ", error);
+    }
     setTimeout(async () => {
       await parse_tool_fromXML(doc);
       await parse_Repairs_fromXML(doc, GIS_VR_codes);
