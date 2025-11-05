@@ -84,7 +84,7 @@ export class Repair {
         await Tools.findOne({ where: { snno_tool: this.SN } })
       ).dataValues;
     } catch (error) {
-      console.log(this.tool, error)
+      console.log(this.tool, error);
     }
 
     try {
@@ -166,20 +166,19 @@ export class Repair {
         await Repairs_SP_GIS_DB.destroy({
           where: { Repair_id: repair.id },
         });
+        const promises = this.SP_list.map(async (el) => {
+          Repairs_SP_GIS_DB.create({
+            Repair_id: repair.id,
+            spmatNo: el.spmatNo,
+            qty: el.qty,
+            price: el.price,
+          });
+        });
+        Promise.all(promises).catch((err) => console.log(err));
       }
     } catch (error) {
       console.log(error);
     }
-
-    const promises = this.SP_list.map(async (el) => {
-      Repairs_SP_GIS_DB.create({
-        Repair_id: this.id,
-        spmatNo: el.spmatNo,
-        qty: el.qty,
-        price: el.price,
-      });
-    });
-    Promise.all(promises).catch((err) => console.log(err));
   }
 }
 
