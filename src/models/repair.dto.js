@@ -79,19 +79,26 @@ export class Repair {
         where: { gis_code: this.SKL },
       })
     ).dataValues;
-    this.tool = (
-      await Tools.findOne({ where: { snno_tool: this.SN } })
-    ).dataValues;
+    try {
+      this.tool = (
+        await Tools.findOne({ where: { snno_tool: this.SN } })
+      ).dataValues;
+    } catch (error) {
+      console.log(this.tool, error)
+    }
+
     try {
       const cur_work = this.SP_list.filter((el) => el.work);
       if (cur_work[0].spmatNo) {
         this.work = (
-          await Work_DB.findOne({ where: { gis_code: Number(cur_work[0].spmatNo) } })
+          await Work_DB.findOne({
+            where: { gis_code: Number(cur_work[0].spmatNo) },
+          })
         ).dataValues;
       }
-      this.work = {gis_code:101};
+      this.work = { gis_code: 101 };
     } catch (error) {
-      this.work = {gis_code:101};
+      this.work = { gis_code: 101 };
     }
   }
 
