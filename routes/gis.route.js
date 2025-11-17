@@ -3,7 +3,7 @@ import {
   Repairs_SP_GIS_DB,
   Repairs_GIS_DB,
   Clients_GIS_DB,
-  Tools,
+  Tools,ASC_GIS_DB
 } from "../src/models/gisCL3.js";
 const GisRoute = new Router();
 
@@ -99,7 +99,7 @@ GisRoute.get("", async (req, res) => {
 });
 
 GisRoute.get("/tool", async (req, res) => {
-    const options = req.query;
+  const options = req.query;
   const { snno_tool, tool_id } = options;
   if (!(snno_tool, tool_id)) {
     return res.json({
@@ -123,6 +123,30 @@ GisRoute.get("/tool", async (req, res) => {
   }
   return res.json(tool);
 });
+
+GisRoute.get("/asc", async (req, res) => {
+  const options = req.query;
+  const { asc_id } = options;
+  if (!(asc_id)) {
+    return res.json({
+      status: 404,
+      msg: "There is no paramteres to search",
+    });
+  }
+  const search = {};
+  if (asc_id) {
+    search.id = asc_id;
+  }
+  const asc = await ASC_GIS_DB.findOne({ where: search, raw: true });
+  if (!asc) {
+    return res.json({
+      status: 404,
+      msg: "There is no info by asc_id " + asc_id ,
+    });
+  }
+  return res.json(asc);
+});
+
 GisRoute.get("/check", async (req, res) => {
   const options = req.query;
   const { asc_ndk, gis_code, spmatNo } = options;
