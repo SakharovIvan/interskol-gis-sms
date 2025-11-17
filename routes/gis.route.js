@@ -9,7 +9,8 @@ const GisRoute = new Router();
 
 GisRoute.get("", async (req, res) => {
   const options = req.query;
-  const { spmatNo, gis_code, asc_ndk, cli_telephone, snno_tool } = options;
+  const { spmatNo, gis_code, asc_ndk, cli_telephone, snno_tool, tool_id } =
+    options;
   //search by cli tlf
   if (!(spmatNo || gis_code || asc_ndk || cli_telephone || snno_tool)) {
     return res.json({
@@ -35,8 +36,15 @@ GisRoute.get("", async (req, res) => {
     return res.json(repairList);
   }
   //search by snno_tool
-  if (snno_tool) {
-    const tool = await Tools.findOne({ where: { snno_tool }, raw: true });
+  if (snno_tool || tool_id) {
+    const search = {};
+    if (snno_tool !== null) {
+      search.snno_tool = snno_tool;
+    }
+    if (tool_id !== null) {
+      search.tool_id = tool_id;
+    }
+    const tool = await Tools.findOne({ where: { search }, raw: true });
     if (!tool) {
       return res.json({
         status: 404,
