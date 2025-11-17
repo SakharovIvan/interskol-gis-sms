@@ -97,7 +97,9 @@ GisRoute.get("", async (req, res) => {
     });
   }
 });
+
 GisRoute.get("/tool", async (req, res) => {
+    const options = req.query;
   const { snno_tool, tool_id } = options;
   if (!(snno_tool, tool_id)) {
     return res.json({
