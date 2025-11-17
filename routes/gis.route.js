@@ -36,15 +36,15 @@ GisRoute.get("", async (req, res) => {
     return res.json(repairList);
   }
   //search by snno_tool
-  if (snno_tool || tool_id) {
+  if (snno_tool ) {
     const search = {};
     if (snno_tool ) {
       search.snno_tool = snno_tool;
     }
     if (tool_id ) {
-      search.tool_id = tool_id;
+      search.id = tool_id;
     }
-    const tool = await Tools.findOne({ where: search, raw: true });
+    const tool = await Tools.findOne({ where: snno_tool, raw: true });
     if (!tool) {
       return res.json({
         status: 404,
