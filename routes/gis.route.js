@@ -12,7 +12,9 @@ GisRoute.get("", async (req, res) => {
   const { spmatNo, gis_code, asc_ndk, cli_telephone, snno_tool, tool_id } =
     options;
   //search by cli tlf
-  if (!(spmatNo || gis_code || asc_ndk || cli_telephone || snno_tool)) {
+  if (
+    !(spmatNo || gis_code || asc_ndk || cli_telephone || snno_tool || tool_id)
+  ) {
     return res.json({
       status: 404,
       msg: "There is no paramteres to search",
@@ -38,10 +40,10 @@ GisRoute.get("", async (req, res) => {
   //search by snno_tool
   if (snno_tool || tool_id) {
     const search = {};
-    if (snno_tool ) {
+    if (snno_tool) {
       search.snno_tool = snno_tool;
     }
-    if (tool_id ) {
+    if (tool_id) {
       search.id = tool_id;
     }
     const tool = await Tools.findOne({ where: search, raw: true });
@@ -95,7 +97,30 @@ GisRoute.get("", async (req, res) => {
     });
   }
 });
-
+GisRoute.get("/tool", async (req, res) => {
+  const { snno_tool, tool_id } = options;
+  if (!(snno_tool, tool_id)) {
+    return res.json({
+      status: 404,
+      msg: "There is no paramteres to search",
+    });
+  }
+  const search = {};
+  if (snno_tool) {
+    search.snno_tool = snno_tool;
+  }
+  if (tool_id) {
+    search.id = tool_id;
+  }
+  const tool = await Tools.findOne({ where: search, raw: true });
+  if (!tool) {
+    return res.json({
+      status: 404,
+      msg: "There is no info by snno_tool" + snno_tool,
+    });
+  }
+  return res.json(tool);
+});
 GisRoute.get("/check", async (req, res) => {
   const options = req.query;
   const { asc_ndk, gis_code, spmatNo } = options;
