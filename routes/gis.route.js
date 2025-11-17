@@ -36,7 +36,7 @@ GisRoute.get("", async (req, res) => {
     return res.json(repairList);
   }
   //search by snno_tool
-  if (snno_tool ) {
+  if (snno_tool || tool_id) {
     const search = {};
     if (snno_tool ) {
       search.snno_tool = snno_tool;
