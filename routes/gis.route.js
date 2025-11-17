@@ -38,10 +38,10 @@ GisRoute.get("", async (req, res) => {
   //search by snno_tool
   if (snno_tool || tool_id) {
     const search = {};
-    if (snno_tool !== null) {
+    if (snno_tool ) {
       search.snno_tool = snno_tool;
     }
-    if (tool_id !== null) {
+    if (tool_id ) {
       search.tool_id = tool_id;
     }
     const tool = await Tools.findOne({ where: search, raw: true });
