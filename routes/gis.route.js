@@ -44,7 +44,7 @@ GisRoute.get("", async (req, res) => {
     if (tool_id ) {
       search.id = tool_id;
     }
-    const tool = await Tools.findOne({ where: snno_tool, raw: true });
+    const tool = await Tools.findOne({ where: search, raw: true });
     if (!tool) {
       return res.json({
         status: 404,
