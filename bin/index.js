@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 import { GisRoute } from "../routes/gis.route.js";
 import bodyParser from "body-parser";
 import getPost from '../src/services/email/imap_readfile.js'
+import { emailConfig } from "../config.js";
 const mcday = 86400000;
 const mchour = 3600000;
 const week = mcday * 7;
@@ -39,7 +40,7 @@ const reportrule = "0 15 * * 0-4";
 //  }
 //});
 //
-
+console.log(emailConfig)
 setInterval(() => {
   try {
     getPost();
